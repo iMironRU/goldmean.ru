@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CorpForm } from "@/components/gift/CorpForm";
 import { Disclosure } from "@/components/gift/Disclosure";
 import { GiftCallback } from "@/components/gift/GiftCallback";
@@ -6,7 +7,6 @@ import { GiftConstructor } from "@/components/gift/GiftConstructor";
 import { GiftFaq } from "@/components/gift/GiftFaq";
 import { GiftTerms } from "@/components/gift/GiftTerms";
 import { ImageSlot } from "@/components/ImageSlot";
-import { formatPrice } from "@/lib/content/catalog";
 import { gift } from "@/lib/content/site";
 
 export const metadata: Metadata = {
@@ -37,22 +37,11 @@ export default function GiftPage() {
         </div>
       </div>
 
-      {/* ── Заказ: короткий путь и конструктор ────────────────────────────
-          Заявка выше конструктора намеренно: оплаты на сайте пока нет (§9),
-          и девять полей, которые заканчиваются ничем, хуже двух, которые
-          заканчиваются звонком. Конструктор из §8 остался целиком — ниже,
-          под раскрытием. Появится эквайринг — меняем порядок обратно. */}
-      <div id="gift-order" className="pad-x pad-y scroll-mt-[76px] border-b border-line">
-        <GiftCallback />
-
-        <div className="mt-[40px]">
-          <Disclosure label={gift.builderToggle.open} hint={gift.builderToggle.hint}>
-            <GiftConstructor />
-          </Disclosure>
-        </div>
-      </div>
-
-      {/* ── Три шага ──────────────────────────────────────────────────── */}
+      {/* ── Три шага ────────────────────────────────────────────────────
+          Выше заказа намеренно: блок отвечает на первый вопрос посетителя —
+          что вообще происходит после оплаты и как получатель это тратит. Под
+          формой он объяснял механику тому, кто уже её принял. Кто пришёл
+          готовым, минует блок кнопкой первого экрана: она ведёт на #gift-order. */}
       <div className="pad-x pad-y border-b border-line bg-cool">
         <div className="h2-sec">{gift.stepsTitle}</div>
         <div className="grid-auto mt-[32px] gap-[32px] [--col-min:240px]">
@@ -66,31 +55,42 @@ export default function GiftPage() {
         </div>
       </div>
 
-      {/* ── На что хватит сертификата ─────────────────────────────────── */}
-      <div className="pad-x pad-y border-b border-line">
-        <div className="h2-sec">{gift.picksTitle}</div>
-        <p className="mt-[14px] max-w-[520px] text-[15px] leading-[1.65] text-muted">
-          {gift.picksLead}
-        </p>
-        <div className="grid-fill mt-[32px] gap-[28px_20px] [--col-min:200px]">
-          {gift.picks.slice(0, gift.picksShown).map((p) => (
-            <div key={p.id}>
-              <div className="aspect-square bg-cool">
-                <ImageSlot photo={`Фото: ${p.name}`} />
-              </div>
-              <div className="mt-[12px] text-[11px] uppercase tracking-[.14em] text-muted">
-                {p.brand}
-              </div>
-              <div className="mt-[4px] font-display text-[20px] leading-[1.15]">{p.name}</div>
-              <div className="mt-[6px] text-[13px]">
-                {"price" in p && typeof p.price === "number"
-                  ? formatPrice(p.price)
-                  : ("priceText" in p ? p.priceText : "")}
-              </div>
-            </div>
-          ))}
+      {/* ── Витрина одной строкой ─────────────────────────────────────
+          Здесь стоял блок «На что хватит сертификата» — восемь плиток на 2,5
+          экрана телефона, которые ни на что не отвечали: привязать их к
+          выбранному номиналу нельзя (самые дешёвые часы в каталоге — 42 000 ₽,
+          цен на украшения заказчик ещё не дал), а без привязки это просто
+          картинки после формы заказа. Порядок цен показывает каталог, где они
+          настоящие и есть фильтры. Тексты блока не удалены — лежат в
+          content/gift.json под ключом _picksКомментарий. */}
+      <div className="pad-x border-b border-line py-[28px]">
+        <div className="flex flex-col gap-[16px] desktop:flex-row desktop:items-center desktop:justify-between desktop:gap-[32px]">
+          <p className="max-w-[560px] text-[15px] leading-[1.65] text-muted">
+            {gift.showcase.text}
+          </p>
+          <div className="grid gap-[12px] desktop:auto-cols-max desktop:grid-flow-col desktop:gap-[24px]">
+            {gift.showcase.links.map((l) => (
+              <Link key={l.href} href={l.href} className="link-action justify-self-start">
+                {l.label}
+              </Link>
+            ))}
+          </div>
         </div>
-        <p className="mt-[24px] text-[12px] text-muted">{gift.picksNote}</p>
+      </div>
+
+      {/* ── Заказ: короткий путь и конструктор ────────────────────────────
+          Заявка выше конструктора намеренно: оплаты на сайте пока нет (§9),
+          и девять полей, которые заканчиваются ничем, хуже двух, которые
+          заканчиваются звонком. Конструктор из §8 остался целиком — ниже,
+          под раскрытием. Появится эквайринг — меняем порядок обратно. */}
+      <div id="gift-order" className="pad-x pad-y scroll-mt-[76px] border-b border-line">
+        <GiftCallback />
+
+        <div className="mt-[40px]">
+          <Disclosure label={gift.builderToggle.open} hint={gift.builderToggle.hint}>
+            <GiftConstructor />
+          </Disclosure>
+        </div>
       </div>
 
       {/* ── Доставка ──────────────────────────────────────────────────── */}

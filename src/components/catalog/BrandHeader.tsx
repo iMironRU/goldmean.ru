@@ -54,7 +54,19 @@ export function BrandHeader({
           <p className="mt-[16px] max-w-[480px] text-[15px] leading-[1.65] text-muted">
             {brand.text}
           </p>
-          <div className="mt-[24px] flex flex-wrap gap-[10px]">
+          {/* Кнопки столбиком и выровнены по самой широкой: w-fit сжимает
+              контейнер до ширины самой длинной надписи, items-stretch
+              растягивает остальные до него.
+
+              В прототипе они стояли в строку, но там их было две. Третья
+              («Что сейчас в витрине») в колонку шапки уже не помещается: на
+              1280 px ряд переносился как 2+1 кнопками разной ширины. Столбик
+              одинаковых читается ровнее, чем ломаный ряд.
+
+              Во всю ширину не растягиваем — это сломало бы пропорции макета,
+              где кнопки обжаты по тексту, и «Все производители» выглядела бы
+              главным действием, хотя это возврат к списку. */}
+          <div className="mt-[24px] flex w-fit flex-col items-stretch gap-[10px]">
             <Link href="/contacts" data-page-cta className="btn-primary px-[24px] py-[14px]">
               {bookLabel}
             </Link>
@@ -63,14 +75,14 @@ export function BrandHeader({
               // ему не нужен. Плавность даёт scroll-behavior в globals.css.
               <a
                 href={anchor.href}
-                className="inline-flex min-h-[44px] items-center rounded-[3px] border border-line2 px-[24px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-line2 px-[24px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
               >
                 {anchor.label}
               </a>
             )}
             <Link
               href={base}
-              className="inline-flex min-h-[44px] items-center rounded-[3px] border border-line2 px-[24px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-line2 px-[24px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
             >
               {allLabel}
             </Link>

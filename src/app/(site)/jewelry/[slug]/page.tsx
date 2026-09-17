@@ -133,7 +133,10 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
       </div>
 
       <RelatedGrid
-        title={d.relatedTitle.replace("{brand}", j.brand)}
+        // Родительный падеж: «Ещё у Смоленских бриллиантов», а не «у
+        // Смоленские бриллианты». Шаблон в прототипе рассчитан на латинские
+        // названия, которые не склоняются.
+        title={d.relatedTitle.replace("{brand}", itemBrand?.genitive ?? j.brand)}
         tone="warm"
         items={relatedJewels(j).map((r) => ({
           key: r.id,

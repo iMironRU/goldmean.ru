@@ -6,6 +6,10 @@ export type Brand = {
   name: string;
   meta: string;
   text: string;
+  /** Родительный падеж — для заголовка «Ещё у …».
+   *  Есть у ювелирных производителей: их названия склоняются, в отличие от
+   *  латинских часовых марок. */
+  genitive?: string;
 };
 
 export type WatchModel = (typeof watchesJson.models)[number];

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Figtree } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -16,11 +16,13 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-// Текст и интерфейс. Кириллицы у Figtree нет — русский текст уходит в
-// системный фолбэк (см. комментарий в globals.css).
-const figtree = Figtree({
-  variable: "--font-figtree",
-  subsets: ["latin", "latin-ext"],
+// Текст и интерфейс. В токенах указан Figtree, но у него в Google Fonts нет
+// кириллицы — весь русский текст уходил бы в системный фолбэк и рисовался на
+// каждой машине своим шрифтом. Взяли Manrope: тот же геометрический гротеск,
+// кириллица есть, те же начертания 300/400/500/600.
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin", "latin-ext", "cyrillic"],
   weight: ["300", "400", "500", "600"],
   display: "swap",
 });
@@ -44,7 +46,7 @@ export default function RootLayout({
     // подавления React ругается на несовпадение при каждой загрузке главной.
     <html
       lang="ru"
-      className={`${cormorant.variable} ${figtree.variable}`}
+      className={`${cormorant.variable} ${manrope.variable}`}
       suppressHydrationWarning
     >
       <head>

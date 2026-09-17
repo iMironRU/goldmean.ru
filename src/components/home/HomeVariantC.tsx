@@ -16,7 +16,7 @@ export function HomeVariantC() {
         <div className="eyebrow mb-[20px] opacity-60">{v.eyebrow}</div>
         <h1 className="h1-hero max-w-[820px]">{v.title}</h1>
         <div className="mt-[28px] flex flex-wrap items-center gap-[12px]">
-          <Link href={site.cta.href} className="btn-primary btn-primary-inv">
+          <Link href={site.cta.href} data-page-cta className="btn-primary btn-primary-inv">
             {site.cta.label}
           </Link>
           <Link

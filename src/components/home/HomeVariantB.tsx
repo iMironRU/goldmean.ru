@@ -12,7 +12,7 @@ export function HomeVariantB() {
       <div className="pad-x pad-t pb-[24px]">
         <h1 className="h1-hero max-w-[900px]">{v.title}</h1>
         <div className="mt-[28px] flex flex-wrap items-center gap-[12px]">
-          <Link href={site.cta.href} className="btn-primary">
+          <Link href={site.cta.href} data-page-cta className="btn-primary">
             {site.cta.label}
           </Link>
           <span className="text-[13px] text-muted">

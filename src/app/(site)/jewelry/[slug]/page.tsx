@@ -132,7 +132,7 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
           <div className="mt-[4px] text-[12px] text-muted">{d.availability}</div>
 
           <div className="mt-[24px] flex flex-wrap gap-[10px]">
-            <Link href={bookHref} className="btn-primary flex-auto">
+            <Link href={bookHref} data-page-cta className="btn-primary flex-auto">
               {d.book}
             </Link>
             <Link

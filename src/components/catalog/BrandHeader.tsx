@@ -55,7 +55,7 @@ export function BrandHeader({
             {brand.text}
           </p>
           <div className="mt-[24px] flex flex-wrap gap-[10px]">
-            <Link href="/contacts" className="btn-primary px-[24px] py-[14px]">
+            <Link href="/contacts" data-page-cta className="btn-primary px-[24px] py-[14px]">
               {bookLabel}
             </Link>
             {anchor && (

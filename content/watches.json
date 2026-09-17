@@ -18,34 +18,304 @@
     "photo": "Часовой мастер за верстаком, лупа, естественный свет"
   },
   "brands": [
-    { "slug": "longines", "name": "Longines", "meta": "Швейцария · Сент-Имье · с 1832", "text": "Один из старейших часовых домов Швейцарии. Классические, авиационные и спортивные коллекции; крылатые песочные часы — самый старый действующий товарный знак в часовой отрасли." },
-    { "slug": "rado", "name": "Rado", "meta": "Швейцария · Ленгнау · с 1917", "text": "Мастера материалов: высокотехнологичная керамика, устойчивая к царапинам. Тонкие корпуса и лаконичный дизайн." },
-    { "slug": "hamilton", "name": "Hamilton", "meta": "Швейцария · Биль · с 1892", "text": "Американские корни, швейцарское производство. Полевые и авиационные часы, известные по десяткам фильмов." },
-    { "slug": "tissot", "name": "Tissot", "meta": "Швейцария · Ле-Локль · с 1853", "text": "Швейцарская классика в доступном сегменте: PRX, Le Locle, Seastar. Официальный хронометрист крупных спортивных лиг." },
-    { "slug": "certina", "name": "Certina", "meta": "Швейцария · Гренхен · с 1888", "text": "Надёжность как принцип: концепция двойной защиты DS, дайверские и спортивные модели." },
-    { "slug": "balmain", "name": "Balmain", "meta": "Швейцария · с 1987", "text": "Часы парижского дома моды, собранные в Швейцарии. Женские модели с фирменным орнаментом арабеск." },
-    { "slug": "maurice-lacroix", "name": "Maurice Lacroix", "meta": "Швейцария · Сеньлежье · с 1975", "text": "Независимая марка с собственными калибрами и характерным дизайном Aikon и Pontos." },
-    { "slug": "raymond-weil", "name": "Raymond Weil", "meta": "Швейцария · Женева · с 1976", "text": "Семейная женевская марка, вдохновлённая музыкой. Коллекции Freelancer, Maestro, Toccata." },
-    { "slug": "lduchen", "name": "L’Duchen", "meta": "Швейцария", "text": "Швейцарские часы в классическом и деловом стиле. Описание марки — от поставщика." },
-    { "slug": "jaguar", "name": "Jaguar", "meta": "Швейцария", "text": "Швейцарское подразделение группы Festina: спортивные и хронографические модели. Описание марки — от поставщика." },
-    { "slug": "frederique-constant", "name": "Frederique Constant", "meta": "Швейцария · Женева · с 1988", "text": "Доступная женевская классика с собственными мануфактурными калибрами; знаковая серия Slimline и открытое сердце Heart Beat." },
-    { "slug": "cover", "name": "Cover", "meta": "Швейцария", "text": "Швейцарские часы в тонком корпусе, женские и мужские модели. Описание марки — от поставщика." },
-    { "slug": "candino", "name": "Candino", "meta": "Швейцария · Хербетсвиль · с 1947", "text": "Классические швейцарские часы в среднем сегменте. Описание марки — от поставщика." }
+    {
+      "slug": "longines",
+      "name": "Longines",
+      "meta": "Швейцария · Сент-Имье · с 1832",
+      "text": "Один из старейших часовых домов Швейцарии. Классические, авиационные и спортивные коллекции; крылатые песочные часы — самый старый действующий товарный знак в часовой отрасли."
+    },
+    {
+      "slug": "rado",
+      "name": "Rado",
+      "meta": "Швейцария · Ленгнау · с 1917",
+      "text": "Мастера материалов: высокотехнологичная керамика, устойчивая к царапинам. Тонкие корпуса и лаконичный дизайн."
+    },
+    {
+      "slug": "hamilton",
+      "name": "Hamilton",
+      "meta": "Швейцария · Биль · с 1892",
+      "text": "Американские корни, швейцарское производство. Полевые и авиационные часы, известные по десяткам фильмов."
+    },
+    {
+      "slug": "tissot",
+      "name": "Tissot",
+      "meta": "Швейцария · Ле-Локль · с 1853",
+      "text": "Швейцарская классика в доступном сегменте: PRX, Le Locle, Seastar. Официальный хронометрист крупных спортивных лиг."
+    },
+    {
+      "slug": "certina",
+      "name": "Certina",
+      "meta": "Швейцария · Гренхен · с 1888",
+      "text": "Надёжность как принцип: концепция двойной защиты DS, дайверские и спортивные модели."
+    },
+    {
+      "slug": "balmain",
+      "name": "Balmain",
+      "meta": "Швейцария · с 1987",
+      "text": "Часы парижского дома моды, собранные в Швейцарии. Женские модели с фирменным орнаментом арабеск."
+    },
+    {
+      "slug": "maurice-lacroix",
+      "name": "Maurice Lacroix",
+      "meta": "Швейцария · Сеньлежье · с 1975",
+      "text": "Независимая марка с собственными калибрами и характерным дизайном Aikon и Pontos."
+    },
+    {
+      "slug": "raymond-weil",
+      "name": "Raymond Weil",
+      "meta": "Швейцария · Женева · с 1976",
+      "text": "Семейная женевская марка, вдохновлённая музыкой. Коллекции Freelancer, Maestro, Toccata."
+    },
+    {
+      "slug": "lduchen",
+      "name": "L’Duchen",
+      "meta": "Швейцария",
+      "text": "Швейцарские часы в классическом и деловом стиле. Описание марки — от поставщика."
+    },
+    {
+      "slug": "jaguar",
+      "name": "Jaguar",
+      "meta": "Швейцария",
+      "text": "Швейцарское подразделение группы Festina: спортивные и хронографические модели. Описание марки — от поставщика."
+    },
+    {
+      "slug": "frederique-constant",
+      "name": "Frederique Constant",
+      "meta": "Швейцария · Женева · с 1988",
+      "text": "Доступная женевская классика с собственными мануфактурными калибрами; знаковая серия Slimline и открытое сердце Heart Beat."
+    },
+    {
+      "slug": "cover",
+      "name": "Cover",
+      "meta": "Швейцария",
+      "text": "Швейцарские часы в тонком корпусе, женские и мужские модели. Описание марки — от поставщика."
+    },
+    {
+      "slug": "candino",
+      "name": "Candino",
+      "meta": "Швейцария · Хербетсвиль · с 1947",
+      "text": "Классические швейцарские часы в среднем сегменте. Описание марки — от поставщика."
+    }
   ],
   "models": [
-    { "id": "lg1", "brand": "Longines", "name": "Master Collection", "ref": "L2.893.4.78.6", "mechanism": "auto", "gender": "m", "size": "40", "price": 289000, "caliber": "Калибр L888.5, запас хода 72 ч", "case": "Сталь", "strap": "Кожа аллигатора, коричневая", "waterResistance": "30 м", "glass": "Сапфировое" },
-    { "id": "lg2", "brand": "Longines", "name": "DolceVita", "ref": "L5.512.4.71.6", "mechanism": "quartz", "gender": "f", "size": "23 × 37", "price": 178000, "caliber": "Кварцевый L178", "case": "Сталь", "strap": "Стальной браслет", "waterResistance": "30 м", "glass": "Сапфировое" },
-    { "id": "rd1", "brand": "Rado", "name": "Captain Cook", "ref": "R32505313", "mechanism": "auto", "gender": "m", "size": "42", "price": 245000, "caliber": "Калибр R763, 80 ч", "case": "Сталь, вращающийся безель", "strap": "Стальной браслет", "waterResistance": "300 м", "glass": "Сапфировое, куполообразное" },
-    { "id": "rd2", "brand": "Rado", "name": "True Thinline", "ref": "R27955702", "mechanism": "quartz", "gender": "f", "size": "39", "price": 198000, "caliber": "Кварцевый", "case": "Высокотехнологичная керамика", "strap": "Керамический браслет", "waterResistance": "30 м", "glass": "Сапфировое" },
-    { "id": "hm1", "brand": "Hamilton", "name": "Khaki Field Mechanical", "ref": "H69439931", "mechanism": "manual", "gender": "m", "size": "38", "price": 62000, "caliber": "H-50, ручной завод, 80 ч", "case": "Сталь", "strap": "Текстильный NATO", "waterResistance": "50 м", "glass": "Сапфировое" },
-    { "id": "hm2", "brand": "Hamilton", "name": "Jazzmaster Open Heart", "ref": "H32675540", "mechanism": "auto", "gender": "m", "size": "42", "price": 125000, "caliber": "H-10, 80 ч", "case": "Сталь", "strap": "Кожа, чёрная", "waterResistance": "50 м", "glass": "Сапфировое" },
-    { "id": "ts1", "brand": "Tissot", "name": "PRX Powermatic 80", "ref": "T137.407.11.041.00", "mechanism": "auto", "gender": "m", "size": "40", "price": 79000, "caliber": "Powermatic 80, 80 ч", "case": "Сталь", "strap": "Интегрированный стальной браслет", "waterResistance": "100 м", "glass": "Сапфировое" },
-    { "id": "ts2", "brand": "Tissot", "name": "Le Locle", "ref": "T006.407.11.033.00", "mechanism": "auto", "gender": "m", "size": "39", "price": 68000, "caliber": "Powermatic 80, 80 ч", "case": "Сталь", "strap": "Стальной браслет", "waterResistance": "30 м", "glass": "Сапфировое" },
-    { "id": "ts3", "brand": "Tissot", "name": "Bellissima", "ref": "T126.010.11.013.00", "mechanism": "quartz", "gender": "f", "size": "26", "price": 42000, "caliber": "Кварцевый ETA", "case": "Сталь", "strap": "Стальной браслет", "waterResistance": "50 м", "glass": "Сапфировое" },
-    { "id": "ce1", "brand": "Certina", "name": "DS Action Diver", "ref": "C032.807.11.041.00", "mechanism": "auto", "gender": "m", "size": "43", "price": 92000, "caliber": "Powermatic 80, 80 ч", "case": "Сталь, DS-концепт", "strap": "Стальной браслет", "waterResistance": "300 м", "glass": "Сапфировое" },
-    { "id": "ml1", "brand": "Maurice Lacroix", "name": "Aikon Automatic", "ref": "AI6008-SS002-430-1", "mechanism": "auto", "gender": "m", "size": "42", "price": 215000, "caliber": "ML115, 38 ч", "case": "Сталь", "strap": "Стальной браслет", "waterResistance": "200 м", "glass": "Сапфировое" },
-    { "id": "fc1", "brand": "Frederique Constant", "name": "Classics Index", "ref": "FC-303NN5B6", "mechanism": "auto", "gender": "m", "size": "40", "price": 145000, "caliber": "FC-303, 38 ч", "case": "Сталь", "strap": "Кожа, чёрная", "waterResistance": "50 м", "glass": "Сапфировое" },
-    { "id": "rw1", "brand": "Raymond Weil", "name": "Freelancer", "ref": "2780-ST-20001", "mechanism": "auto", "gender": "m", "size": "42", "price": 240000, "caliber": "RW1212, открытый баланс, 38 ч", "case": "Сталь", "strap": "Стальной браслет", "waterResistance": "100 м", "glass": "Сапфировое" },
-    { "id": "bm1", "brand": "Balmain", "name": "Beleganza", "ref": "B4111.33.22", "mechanism": "quartz", "gender": "f", "size": "32", "price": 58000, "caliber": "Кварцевый", "case": "Сталь", "strap": "Кожа, бежевая", "waterResistance": "30 м", "glass": "Сапфировое" }
-  ]
+    {
+      "id": "lg1",
+      "brand": "Longines",
+      "name": "Master Collection",
+      "ref": "L2.893.4.78.6",
+      "mechanism": "auto",
+      "gender": "m",
+      "size": "40",
+      "price": 289000,
+      "caliber": "Калибр L888.5, запас хода 72 ч",
+      "case": "Сталь",
+      "strap": "Кожа аллигатора, коричневая",
+      "waterResistance": "30 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "lg2",
+      "brand": "Longines",
+      "name": "DolceVita",
+      "ref": "L5.512.4.71.6",
+      "mechanism": "quartz",
+      "gender": "f",
+      "size": "23 × 37",
+      "price": 178000,
+      "caliber": "Кварцевый L178",
+      "case": "Сталь",
+      "strap": "Стальной браслет",
+      "waterResistance": "30 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "rd1",
+      "brand": "Rado",
+      "name": "Captain Cook",
+      "ref": "R32505313",
+      "mechanism": "auto",
+      "gender": "m",
+      "size": "42",
+      "price": 245000,
+      "caliber": "Калибр R763, 80 ч",
+      "case": "Сталь, вращающийся безель",
+      "strap": "Стальной браслет",
+      "waterResistance": "300 м",
+      "glass": "Сапфировое, куполообразное"
+    },
+    {
+      "id": "rd2",
+      "brand": "Rado",
+      "name": "True Thinline",
+      "ref": "R27955702",
+      "mechanism": "quartz",
+      "gender": "f",
+      "size": "39",
+      "price": 198000,
+      "caliber": "Кварцевый",
+      "case": "Высокотехнологичная керамика",
+      "strap": "Керамический браслет",
+      "waterResistance": "30 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "hm1",
+      "brand": "Hamilton",
+      "name": "Khaki Field Mechanical",
+      "ref": "H69439931",
+      "mechanism": "manual",
+      "gender": "m",
+      "size": "38",
+      "price": 62000,
+      "caliber": "H-50, ручной завод, 80 ч",
+      "case": "Сталь",
+      "strap": "Текстильный NATO",
+      "waterResistance": "50 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "hm2",
+      "brand": "Hamilton",
+      "name": "Jazzmaster Open Heart",
+      "ref": "H32675540",
+      "mechanism": "auto",
+      "gender": "m",
+      "size": "42",
+      "price": 125000,
+      "caliber": "H-10, 80 ч",
+      "case": "Сталь",
+      "strap": "Кожа, чёрная",
+      "waterResistance": "50 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "ts1",
+      "brand": "Tissot",
+      "name": "PRX Powermatic 80",
+      "ref": "T137.407.11.041.00",
+      "mechanism": "auto",
+      "gender": "m",
+      "size": "40",
+      "price": 79000,
+      "caliber": "Powermatic 80, 80 ч",
+      "case": "Сталь",
+      "strap": "Интегрированный стальной браслет",
+      "waterResistance": "100 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "ts2",
+      "brand": "Tissot",
+      "name": "Le Locle",
+      "ref": "T006.407.11.033.00",
+      "mechanism": "auto",
+      "gender": "m",
+      "size": "39",
+      "price": 68000,
+      "caliber": "Powermatic 80, 80 ч",
+      "case": "Сталь",
+      "strap": "Стальной браслет",
+      "waterResistance": "30 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "ts3",
+      "brand": "Tissot",
+      "name": "Bellissima",
+      "ref": "T126.010.11.013.00",
+      "mechanism": "quartz",
+      "gender": "f",
+      "size": "26",
+      "price": 42000,
+      "caliber": "Кварцевый ETA",
+      "case": "Сталь",
+      "strap": "Стальной браслет",
+      "waterResistance": "50 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "ce1",
+      "brand": "Certina",
+      "name": "DS Action Diver",
+      "ref": "C032.807.11.041.00",
+      "mechanism": "auto",
+      "gender": "m",
+      "size": "43",
+      "price": 92000,
+      "caliber": "Powermatic 80, 80 ч",
+      "case": "Сталь, DS-концепт",
+      "strap": "Стальной браслет",
+      "waterResistance": "300 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "ml1",
+      "brand": "Maurice Lacroix",
+      "name": "Aikon Automatic",
+      "ref": "AI6008-SS002-430-1",
+      "mechanism": "auto",
+      "gender": "m",
+      "size": "42",
+      "price": 215000,
+      "caliber": "ML115, 38 ч",
+      "case": "Сталь",
+      "strap": "Стальной браслет",
+      "waterResistance": "200 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "fc1",
+      "brand": "Frederique Constant",
+      "name": "Classics Index",
+      "ref": "FC-303NN5B6",
+      "mechanism": "auto",
+      "gender": "m",
+      "size": "40",
+      "price": 145000,
+      "caliber": "FC-303, 38 ч",
+      "case": "Сталь",
+      "strap": "Кожа, чёрная",
+      "waterResistance": "50 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "rw1",
+      "brand": "Raymond Weil",
+      "name": "Freelancer",
+      "ref": "2780-ST-20001",
+      "mechanism": "auto",
+      "gender": "m",
+      "size": "42",
+      "price": 240000,
+      "caliber": "RW1212, открытый баланс, 38 ч",
+      "case": "Сталь",
+      "strap": "Стальной браслет",
+      "waterResistance": "100 м",
+      "glass": "Сапфировое"
+    },
+    {
+      "id": "bm1",
+      "brand": "Balmain",
+      "name": "Beleganza",
+      "ref": "B4111.33.22",
+      "mechanism": "quartz",
+      "gender": "f",
+      "size": "32",
+      "price": 58000,
+      "caliber": "Кварцевый",
+      "case": "Сталь",
+      "strap": "Кожа, бежевая",
+      "waterResistance": "30 м",
+      "glass": "Сапфировое"
+    }
+  ],
+  "detail": {
+    "photoNote": "Фото производителя. Остальные ракурсы и посадку на руке покажем в салоне.",
+    "availability": "Наличие уточняется при записи. Возможен заказ.",
+    "book": "Записаться на примерку",
+    "ask": "Уточнить наличие",
+    "about": "Характеристики и фотографии — от производителя. В салоне подгоним браслет по запястью и покажем модель рядом с соседними по коллекции.",
+    "relatedTitle": "Ещё у {brand}",
+    "warranty": "Международная гарантия производителя"
+  }
 }

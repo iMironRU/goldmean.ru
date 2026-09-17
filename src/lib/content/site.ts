@@ -1,6 +1,7 @@
 import siteJson from "../../../content/site.json";
 import homeJson from "../../../content/home.json";
 import previewJson from "../../../content/preview.json";
+import giftJson from "../../../content/gift.json";
 
 export type NavItem = { href: string; label: string };
 
@@ -22,3 +23,8 @@ export const HOME_VARIANT: HomeVariant = (
 ).includes(homeJson.variantDefault)
   ? (homeJson.variantDefault as HomeVariant)
   : "a";
+
+// ─── Подарочный сертификат ───────────────────────────────────────────────
+
+export type Gift = typeof giftJson;
+export const gift: Gift = giftJson;

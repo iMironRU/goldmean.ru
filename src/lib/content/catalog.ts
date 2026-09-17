@@ -84,3 +84,56 @@ export function countLabel(n: number, forms: [string, string, string]): string {
 
 export const WATCH_FORMS: [string, string, string] = ["модель", "модели", "моделей"];
 export const JEWEL_FORMS: [string, string, string] = ["изделие", "изделия", "изделий"];
+
+// ─── Адреса карточек товара ──────────────────────────────────────────────
+
+// Референс в адресе — в нижнем регистре: «L2.893.4.78.6» → «l2.893.4.78.6».
+// Точки в сегменте безопасны, потому что trailingSlash:true закрывает адрес
+// слэшем и сервер не примет сегмент за имя файла.
+export function refSlug(ref: string): string {
+  return ref.toLowerCase();
+}
+
+export function modelByRef(ref: string): WatchModel | undefined {
+  const want = refSlug(ref);
+  return watches.models.find((m) => refSlug(m.ref) === want);
+}
+
+// Характеристики карточки часов (§7 хендоффа).
+export function watchSpecs(m: WatchModel): { k: string; v: string }[] {
+  return [
+    { k: "Механизм", v: MECH_NAMES[m.mechanism] ?? m.mechanism },
+    { k: "Калибр", v: m.caliber },
+    { k: "Диаметр", v: `${m.size} мм` },
+    { k: "Корпус", v: m.case },
+    { k: "Ремешок / браслет", v: m.strap },
+    { k: "Водозащита", v: m.waterResistance },
+    { k: "Стекло", v: m.glass },
+    { k: "Гарантия", v: watches.detail.warranty },
+  ];
+}
+
+// Характеристики карточки изделия (§7 хендоффа).
+export function jewelSpecs(j: JewelItem): { k: string; v: string }[] {
+  return [
+    { k: "Камни", v: j.stone },
+    { k: "Металл", v: j.metal },
+    { k: "Вес изделия", v: j.weight },
+    { k: "Производитель", v: j.brand },
+    { k: "Артикул", v: j.article },
+    { k: "Сертификат", v: jewelry.detail.certificate },
+  ];
+}
+
+// Похожие: сначала та же марка, потом остальные — как в прототипе.
+export function relatedModels(m: WatchModel, limit = 3): WatchModel[] {
+  const same = watches.models.filter((x) => x.brand === m.brand && x.id !== m.id);
+  const rest = watches.models.filter((x) => x.brand !== m.brand);
+  return [...same, ...rest].slice(0, limit);
+}
+
+export function relatedJewels(j: JewelItem, limit = 3): JewelItem[] {
+  const same = jewelry.items.filter((x) => x.brand === j.brand && x.id !== j.id);
+  const rest = jewelry.items.filter((x) => x.brand !== j.brand);
+  return [...same, ...rest].slice(0, limit);
+}

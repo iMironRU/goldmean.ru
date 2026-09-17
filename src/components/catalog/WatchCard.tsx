@@ -1,21 +1,26 @@
 import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
-import { formatPrice, type WatchModel } from "@/lib/content/catalog";
+import {
+  brandByName,
+  formatPrice,
+  refSlug,
+  watches,
+  type WatchModel,
+} from "@/lib/content/catalog";
 import { tagsFor } from "@/lib/catalog-tags";
 
 // Карточка модели часов (§6 хендоффа). Ярлыки характеристик лежат поверх
 // фотографии, в левом нижнем углу; у каждого — title с полной формулировкой.
-//
-// Название модели пока не ссылка: карточка товара (/watches/:brand/:ref) ещё
-// не свёрстана, и ссылка вела бы в 404.
 export function WatchCard({ model }: { model: WatchModel }) {
   const tags = tagsFor(model.mechanism, model.waterResistance, model.glass, model.case);
+  const brand = brandByName(watches.brands, model.brand);
+  const href = `/watches/${brand?.slug ?? ""}/${refSlug(model.ref)}`;
   // §7: кнопка записи переносит название модели в комментарий формы.
   const note = `${model.brand} ${model.name} (${model.ref})`;
 
   return (
     <div className="flex flex-col">
-      <div className="relative aspect-square bg-cool">
+      <Link href={href} className="relative block aspect-square bg-cool">
         <ImageSlot photo={`Фото от бренда: ${model.brand} ${model.name}`} tone="cool" />
         <div className="pointer-events-none absolute inset-x-[8px] bottom-[8px] flex flex-wrap gap-[4px]">
           {tags.map((t) => (
@@ -35,10 +40,12 @@ export function WatchCard({ model }: { model: WatchModel }) {
             </span>
           ))}
         </div>
-      </div>
+      </Link>
 
       <div className="mt-[14px] text-[11px] uppercase tracking-[.14em] text-muted">{model.brand}</div>
-      <div className="h3-card mt-[4px]">{model.name}</div>
+      <Link href={href} className="h3-card mt-[4px] block text-ink transition-colors hover:text-accent">
+        {model.name}
+      </Link>
       <div className="mt-[6px] font-mono text-[11px] text-muted">
         {model.ref} · {model.size} мм
       </div>

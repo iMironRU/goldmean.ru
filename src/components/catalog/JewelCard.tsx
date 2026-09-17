@@ -4,20 +4,21 @@ import type { JewelItem } from "@/lib/content/catalog";
 
 // Карточка изделия (§7 хендоффа). Фото 4:5 на тёплой подложке, камень
 // отдельной строкой, цена рядом с названием.
-//
-// Название пока не ссылка: карточка изделия (/jewelry/:id) ещё не свёрстана.
 export function JewelCard({ item }: { item: JewelItem }) {
   const note = `${item.brand} — ${item.name} (арт. ${item.article})`;
+  const href = `/jewelry/${item.id}`;
 
   return (
     <div className="flex flex-col">
-      <div className="aspect-4/5 bg-warm2">
+      <Link href={href} className="block aspect-4/5 bg-warm2">
         <ImageSlot photo={`Макро: ${item.name}, игра света в камне`} tone="warm" />
-      </div>
+      </Link>
 
       <div className="mt-[14px] text-[11px] uppercase tracking-[.14em] text-muted">{item.brand}</div>
       <div className="mt-[4px] flex items-baseline justify-between gap-[12px]">
-        <span className="font-display text-[26px] leading-[1.1] text-ink">{item.name}</span>
+        <Link href={href} className="font-display text-[26px] leading-[1.1] text-ink transition-colors hover:text-accent">
+          {item.name}
+        </Link>
         <span className="shrink-0 text-[12px] whitespace-nowrap text-muted">{item.price}</span>
       </div>
       <div className="mt-[6px] text-[13px] leading-[1.6] text-muted">{item.stone}</div>

@@ -81,6 +81,7 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
           bookLabel="Записаться на просмотр"
           allLabel="Все производители"
           tone="warm"
+          anchor={{ href: "#vitrina", label: jewelry.telegram.title }}
         />
         <Suspense fallback={<div className="pad-x py-[40px] text-[13px] text-muted">Загружаем изделия…</div>}>
           <JewelCatalog items={items} brandName={brand.name} />

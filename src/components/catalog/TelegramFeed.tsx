@@ -11,7 +11,9 @@ export function TelegramFeed() {
   const t = jewelry.telegram;
 
   return (
-    <div className="pad-x pad-y border-t border-line bg-warm">
+    // Якорь для кнопки в шапке производителя. scroll-mt — чтобы заголовок
+    // блока не уезжал под липкую шапку сайта.
+    <div id="vitrina" className="pad-x pad-y scroll-mt-[76px] border-t border-line bg-warm">
       <div className="mb-[24px] flex flex-wrap items-end justify-between gap-[16px]">
         <div>
           <div className="eyebrow mb-[10px] text-muted">{t.eyebrow}</div>

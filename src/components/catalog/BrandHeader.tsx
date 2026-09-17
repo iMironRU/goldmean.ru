@@ -12,6 +12,7 @@ export function BrandHeader({
   bookLabel,
   allLabel,
   tone,
+  anchor,
 }: {
   brand: Brand;
   base: string;
@@ -19,6 +20,13 @@ export function BrandHeader({
   bookLabel: string;
   allLabel: string;
   tone: "cool" | "warm";
+  /**
+   * Необязательная третья кнопка — переход к блоку на этой же странице.
+   * У производителей украшений это лента «Что сейчас в витрине»: она стоит
+   * в самом низу, и без кнопки о ней никто не узнает. У часовых марок такого
+   * блока нет, поэтому кнопка не показывается.
+   */
+  anchor?: { href: string; label: string };
 }) {
   const bg = tone === "warm" ? "bg-warm" : "bg-cool";
 
@@ -50,6 +58,16 @@ export function BrandHeader({
             <Link href="/contacts" className="btn-primary px-[24px] py-[14px]">
               {bookLabel}
             </Link>
+            {anchor && (
+              // Обычный <a>: это переход по якорю внутри страницы, basePath
+              // ему не нужен. Плавность даёт scroll-behavior в globals.css.
+              <a
+                href={anchor.href}
+                className="inline-flex min-h-[44px] items-center rounded-[3px] border border-line2 px-[24px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
+              >
+                {anchor.label}
+              </a>
+            )}
             <Link
               href={base}
               className="inline-flex min-h-[44px] items-center rounded-[3px] border border-line2 px-[24px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"

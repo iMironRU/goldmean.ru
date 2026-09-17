@@ -107,9 +107,10 @@ export function modelByRef(ref: string): WatchModel | undefined {
 
 // Характеристики карточки часов (§7 хендоффа).
 //
-// Строка «Гарантия» ведёт на /info/garantia: человек читает характеристики —
-// именно там у него возникает вопрос про гарантию.
-export function watchSpecs(m: WatchModel): { k: string; v: string; href?: string }[] {
+// Ссылки в справочник вешает не таблица, а подсказка «?» рядом с названием
+// характеристики (content/spec-hints.json): две ссылки в одной строке —
+// на значении и в подсказке — спорили бы друг с другом.
+export function watchSpecs(m: WatchModel): { k: string; v: string }[] {
   return [
     { k: "Механизм", v: MECH_NAMES[m.mechanism] ?? m.mechanism },
     { k: "Калибр", v: m.caliber },
@@ -118,7 +119,7 @@ export function watchSpecs(m: WatchModel): { k: string; v: string; href?: string
     { k: "Ремешок / браслет", v: m.strap },
     { k: "Водозащита", v: m.waterResistance },
     { k: "Стекло", v: m.glass },
-    { k: "Гарантия", v: watches.detail.warranty, href: "/info/garantia" },
+    { k: "Гарантия", v: watches.detail.warranty },
   ];
 }
 

@@ -10,6 +10,11 @@ import { ImageSlot } from "@/components/ImageSlot";
 // видно: на широком экране квадратный кадр занимает почти весь первый экран,
 // и ряд превью оказывался за его нижней границей.
 //
+// На десктопе они стоят колонкой и крупные (88 px): в колонке по ним проще
+// попасть, промахнуться мимо соседней сложнее. На мобильном колонка из пяти
+// таких превью съела бы почти всю высоту снимка, поэтому там строка — но
+// тоже увеличенная, 64 px против минимальных 44 по §6.
+//
 // У миниатюр есть рамка и светлая подложка: товарные снимки почти всегда на
 // белом фоне, и без рамки превью на нём растворяются.
 export function ProductGallery({
@@ -28,7 +33,7 @@ export function ProductGallery({
       <ImageSlot photo={alt} src={photos[active]} tone={tone} />
 
       {photos.length > 1 && (
-        <div className="absolute bottom-[8px] left-[8px] flex flex-wrap gap-[6px]">
+        <div className="absolute bottom-[8px] left-[8px] flex flex-row flex-wrap gap-[8px] desktop:flex-col desktop:flex-nowrap">
           {photos.slice(0, 5).map((src, i) => (
             <button
               key={src}
@@ -36,8 +41,11 @@ export function ProductGallery({
               onClick={() => setActive(i)}
               aria-label={`Ракурс ${i + 1}`}
               aria-pressed={i === active}
-              className="h-[56px] w-[56px] overflow-hidden rounded-[3px] border bg-bg p-0 transition-colors desktop:h-[64px] desktop:w-[64px]"
+              className="h-[64px] w-[64px] overflow-hidden rounded-[3px] border bg-bg p-0 transition-colors desktop:h-[88px] desktop:w-[88px]"
               style={{
+                // Активная обведена заметно толще: на белых снимках разница
+                // в один пиксель между рамками почти не читается.
+                borderWidth: i === active ? "2px" : "1px",
                 borderColor: i === active ? "var(--ink)" : "var(--line2)",
                 boxShadow: "0 6px 16px -8px rgba(28,27,25,.45)",
               }}

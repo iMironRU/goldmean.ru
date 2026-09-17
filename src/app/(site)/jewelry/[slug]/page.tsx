@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { BrandArticle } from "@/components/catalog/BrandArticle";
 import { BrandHeader } from "@/components/catalog/BrandHeader";
 import { Breadcrumbs } from "@/components/catalog/Breadcrumbs";
 import { GuaranteeBlock } from "@/components/catalog/GuaranteeBlock";
@@ -10,6 +11,7 @@ import { RelatedGrid } from "@/components/catalog/RelatedGrid";
 import { SpecTable } from "@/components/catalog/SpecTable";
 import { TelegramFeed } from "@/components/catalog/TelegramFeed";
 import { ImageSlot } from "@/components/ImageSlot";
+import { getBrandArticle } from "@/lib/content/brand-article";
 import {
   brandByName,
   brandBySlug,
@@ -38,7 +40,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const b = brandBySlug(jewelry.brands, slug);
-  if (b) return { title: `${b.name} — украшения с бриллиантами`, description: b.text };
+  if (b) {
+    // seo_title из контент-пакета уже содержит «| Золотая середина», поэтому
+    // absolute — иначе шаблон корневого layout добавит название второй раз.
+    const article = getBrandArticle("jewelry", b.slug);
+    if (article?.seoTitle) {
+      return {
+        title: { absolute: article.seoTitle },
+        description: article.seoDescription || b.text,
+      };
+    }
+    return { title: `${b.name} — украшения с бриллиантами`, description: b.text };
+  }
 
   const j = jewelry.items.find((x) => x.id === slug);
   if (j) {
@@ -56,6 +69,7 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
   const brand = brandBySlug(jewelry.brands, slug);
   if (brand) {
     const items = jewelry.items.filter((j) => j.brand === brand.name);
+    const article = getBrandArticle("jewelry", brand.slug);
     return (
       <>
         <BrandHeader
@@ -69,6 +83,8 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
         <Suspense fallback={<div className="pad-x py-[40px] text-[13px] text-muted">Загружаем изделия…</div>}>
           <JewelCatalog items={items} brandName={brand.name} />
         </Suspense>
+        {article ? <BrandArticle article={article} brandName={brand.name} /> : null}
+
         <TelegramFeed />
       </>
     );

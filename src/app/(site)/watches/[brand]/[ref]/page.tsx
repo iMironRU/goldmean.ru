@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/catalog/Breadcrumbs";
 import { GuaranteeBlock } from "@/components/catalog/GuaranteeBlock";
 import { RelatedGrid } from "@/components/catalog/RelatedGrid";
 import { SpecTable } from "@/components/catalog/SpecTable";
+import { ProductGallery } from "@/components/catalog/ProductGallery";
 import { ImageSlot } from "@/components/ImageSlot";
 import { photosFor } from "@/lib/content/photos";
 import {
@@ -65,23 +66,14 @@ export default async function WatchPage({ params }: { params: Promise<Params> })
 
       <div className="pad-x grid-auto gap-[40px] pt-[24px] pb-[64px]">
         <div>
-          <div className="aspect-square bg-cool">
-            <ImageSlot
-              photo={`Основной ракурс: ${m.brand} ${m.name}`}
-              src={photos[0]}
-              tone="cool"
-            />
-          </div>
-
-          {/* Остальные ракурсы. В прототипе слот один — ряд превью появляется
-              только когда снимков действительно несколько. */}
-          {photos.length > 1 && (
-            <div className="mt-[8px] grid grid-cols-4 gap-[8px]">
-              {photos.slice(1, 5).map((src) => (
-                <div key={src} className="aspect-square bg-cool">
-                  <ImageSlot photo={`${m.brand} ${m.name}`} src={src} tone="cool" />
-                </div>
-              ))}
+          {/* Снимков нет — остаётся плейсхолдер с описанием нужного кадра, и
+              страница целиком статическая. Галерея (клиентская, с
+              переключением ракурсов) появляется только вместе с фотографиями. */}
+          {photos.length > 0 ? (
+            <ProductGallery photos={photos} alt={`${m.brand} ${m.name}`} tone="cool" />
+          ) : (
+            <div className="aspect-square bg-cool">
+              <ImageSlot photo={`Основной ракурс: ${m.brand} ${m.name}`} tone="cool" />
             </div>
           )}
 

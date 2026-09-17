@@ -1,30 +1,29 @@
 import { ImageSlot } from "@/components/ImageSlot";
 import { jewelry } from "@/lib/content/catalog";
+import { postMeta, telegramPosts } from "@/lib/content/telegram";
 import { site } from "@/lib/content/site";
 
 // Лента Telegram внизу каталога украшений (§7 хендоффа).
 //
-// Это имитация ленты по данным из content/jewelry.json, а не встроенный
-// виджет Telegram: в MVP канал подключается на этапе интеграции, а до тех пор
-// заказчику надо видеть, как блок выглядит и сколько места занимает.
+// Посты настоящие: их забирает scripts/fetch-telegram.mjs, а GitHub Actions
+// запускает его по расписанию. Вёрстка своя, а не виджет Telegram: виджет
+// принёс бы на страницу чужие шрифты и цвета и внешний скрипт на каждой
+// загрузке.
+//
+// Живая лента сделана именно на Telegram, а не на Instagram: Meta признана
+// экстремистской и запрещена в РФ (§12 п.4), и у посетителя без VPN на месте
+// ленты была бы пустота.
 export function TelegramFeed() {
   const t = jewelry.telegram;
 
   return (
-    // Якорь для кнопки в шапке производителя. scroll-mt — чтобы заголовок
-    // блока не уезжал под липкую шапку сайта.
     <div id="vitrina" className="pad-x pad-y scroll-mt-[76px] border-t border-line bg-warm">
       <div className="mb-[24px] flex flex-wrap items-end justify-between gap-[16px]">
         <div>
           <div className="eyebrow mb-[10px] text-muted">{t.eyebrow}</div>
           <div className="h2-sec">{t.title}</div>
         </div>
-        <a
-          href={site.social.telegram}
-          target="_blank"
-          rel="noreferrer"
-          className="link-action"
-        >
+        <a href={site.social.telegram} target="_blank" rel="noreferrer" className="link-action">
           {t.action}
         </a>
       </div>
@@ -40,17 +39,31 @@ export function TelegramFeed() {
           </div>
         </div>
 
-        {/* auto-FIT, а не fill: постов три, и пустая четвёртая колонка
-            показывала бы серый прямоугольник справа. */}
+        {/* auto-FIT, а не fill: постов ровно три, и auto-fill рисовал бы
+            пустую серую колонку справа. */}
         <div className="grid-auto gap-px bg-line [--col-min:220px]">
-          {t.posts.map((p) => (
-            <div key={p.id} className="bg-bg p-[14px]">
+          {telegramPosts.map((p) => (
+            <a
+              key={p.id}
+              href={p.url}
+              target="_blank"
+              rel="noreferrer"
+              className="block bg-bg p-[14px] text-ink"
+            >
               <div className="aspect-square bg-warm2">
-                <ImageSlot photo="Фото из поста в Telegram" tone="warm" />
+                {/* Картинка есть не у каждого поста: бывают текстовые и
+                    видео. Тогда остаётся плейсхолдер, а не дыра. */}
+                <ImageSlot
+                  photo="Пост без фотографии"
+                  src={p.image ?? undefined}
+                  tone="warm"
+                />
               </div>
-              <div className="mt-[12px] text-[13px] leading-[1.55]">{p.text}</div>
-              <div className="mt-[8px] text-[11px] text-muted">{p.meta}</div>
-            </div>
+              <div className="mt-[12px] line-clamp-4 text-[13px] leading-[1.55] whitespace-pre-line">
+                {p.text}
+              </div>
+              <div className="mt-[8px] text-[11px] text-muted">{postMeta(p)}</div>
+            </a>
           ))}
         </div>
       </div>

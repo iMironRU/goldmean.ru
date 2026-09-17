@@ -9,16 +9,40 @@
   "phoneHref": "tel:+73532776330",
   "social": {
     "telegram": "https://t.me/zolotayaseredina_orenburg",
-    "instagram": "https://instagram.com/zolotayaseredina_orenburg"
+    "instagram": "https://instagram.com/zolotaya_seredina_"
   },
   "nav": [
-    { "href": "/watches", "label": "Часы" },
-    { "href": "/jewelry", "label": "Украшения" },
-    { "href": "/services", "label": "Услуги" },
-    { "href": "/why-offline", "label": "Почему офлайн" },
-    { "href": "/about", "label": "О магазине" },
-    { "href": "/contacts", "label": "Контакты" }
+    {
+      "href": "/watches",
+      "label": "Часы"
+    },
+    {
+      "href": "/jewelry",
+      "label": "Украшения"
+    },
+    {
+      "href": "/services",
+      "label": "Услуги"
+    },
+    {
+      "href": "/why-offline",
+      "label": "Почему офлайн"
+    },
+    {
+      "href": "/about",
+      "label": "О магазине"
+    },
+    {
+      "href": "/contacts",
+      "label": "Контакты"
+    }
   ],
-  "cta": { "href": "/contacts", "label": "Записаться на консультацию" },
-  "gift": { "href": "/gift", "label": "Подарочный сертификат" }
+  "cta": {
+    "href": "/contacts",
+    "label": "Записаться на консультацию"
+  },
+  "gift": {
+    "href": "/gift",
+    "label": "Подарочный сертификат"
+  }
 }

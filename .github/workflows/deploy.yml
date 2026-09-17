@@ -4,9 +4,15 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Витрина «Что сейчас в витрине» берётся из канала Telegram. Раз в час
+  # забираем свежие посты, коммитим и пересобираем — лента живёт сама, без
+  # участия человека.
+  schedule:
+    - cron: "20 * * * *"
 
 permissions:
-  contents: read
+  # contents: write — шаг обновления ленты коммитит свежие посты обратно.
+  contents: write
   pages: write
   id-token: write
 
@@ -27,6 +33,28 @@ jobs:
           cache: "npm"
 
       - run: npm ci
+
+      # Свежие посты канала. Падение Telegram не должно ронять деплой:
+      # скрипт при неудаче ничего не трогает, и сборка идёт с теми постами,
+      # что лежат в репозитории.
+      - name: Обновить ленту Telegram
+        continue-on-error: true
+        run: node scripts/fetch-telegram.mjs
+
+      # Результат коммитим: так лента видна в ревью, а следующая сборка
+      # переживёт недоступность Telegram.
+      - name: Закоммитить ленту, если изменилась
+        continue-on-error: true
+        run: |
+          if [ -n "$(git status --porcelain content/telegram-feed.json public/telegram)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add content/telegram-feed.json public/telegram
+            git commit -m "Лента Telegram: свежие посты канала"
+            git push
+          else
+            echo "лента не менялась"
+          fi
 
       # Сайт живёт в подкаталоге /goldmean.ru — без basePath все внутренние
       # ссылки и статика дадут 404.

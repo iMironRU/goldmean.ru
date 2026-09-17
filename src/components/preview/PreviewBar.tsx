@@ -2,36 +2,56 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useEffect, useSyncExternalStore } from "react";
 import { HOME_VARIANTS, preview, type HomeVariant } from "@/lib/content/site";
+import {
+  getPreviewServerSnapshot,
+  getPreviewSnapshot,
+  setPreviewVariant,
+  subscribePreview,
+} from "@/lib/preview-mode";
 
 // Плавающая панель показа: переключение вариантов главной и возврат к выбору.
 //
-// Появляется только когда в адресе есть ?home= — то есть когда страницу
-// открыли со страницы выбора /preview. Обычный посетитель сайта её не увидит,
-// и убирать её перед релизом отдельно не придётся: уйдёт вместе с /preview.
+// Режим включается переходом со страницы /preview — она ставит ?home=. Дальше
+// вариант живёт в sessionStorage, поэтому панель остаётся видна и в каталоге,
+// и на любой другой странице: иначе, нажав «Смотреть каталог», заказчик терял
+// бы путь назад к выбору.
 //
-// Внутри iframe панель не рисуется: миниатюры на /preview показывают сам
+// Обычный посетитель панель не увидит: включить режим можно только со
+// страницы показа, а она удаляется перед релизом вместе с этой панелью.
+// Крестик выключает режим и очищает хранилище.
+//
+// Внутри iframe панель не рисуется — миниатюры на /preview показывают сам
 // макет, а не инструмент показа поверх него.
-//
-// useSearchParams, а не чтение location в эффекте: переход между ?home=a и
-// ?home=b не меняет pathname, и панель не узнала бы о смене варианта —
-// подсветка активной кнопки залипла бы на первом открытом. Обёртка в Suspense
-// обязательна и стоит в layout: при статическом экспорте сервер query не
-// знает и на этапе сборки рисует fallback.
 export function PreviewBar() {
-  const params = useSearchParams();
-  const q = params.get("home");
-
-  const variant: HomeVariant | null = (
-    HOME_VARIANTS as readonly string[]
-  ).includes(q ?? "")
+  const q = useSearchParams().get("home");
+  const fromUrl: HomeVariant | null = (HOME_VARIANTS as readonly string[]).includes(
+    q ?? "",
+  )
     ? (q as HomeVariant)
     : null;
 
-  // Рендер здесь всегда клиентский (см. Suspense выше), поэтому window есть.
+  const stored = useSyncExternalStore(
+    subscribePreview,
+    getPreviewSnapshot,
+    getPreviewServerSnapshot,
+  );
+
+  // Адрес главнее хранилища: открыли ?home=c — значит показываем C и
+  // запоминаем его на остальные страницы.
+  useEffect(() => {
+    if (fromUrl && fromUrl !== stored) setPreviewVariant(fromUrl);
+  }, [fromUrl, stored]);
+
+  const variant = fromUrl ?? (stored as HomeVariant | null);
+
+  // Рендер здесь всегда клиентский (layout оборачивает в Suspense), window есть.
   const inIframe = typeof window !== "undefined" && window.self !== window.top;
 
-  if (!variant || inIframe) return null;
+  if (!variant || !(HOME_VARIANTS as readonly string[]).includes(variant) || inIframe) {
+    return null;
+  }
 
   const current = preview.variants.find((v) => v.key === variant);
 
@@ -42,7 +62,7 @@ export function PreviewBar() {
     >
       <Link
         href="/preview"
-        className="flex min-h-[36px] items-center gap-[8px] text-[12px] font-medium uppercase tracking-[.1em] text-muted transition-colors hover:text-ink"
+        className="flex min-h-[36px] items-center text-[12px] font-medium uppercase tracking-[.1em] text-muted transition-colors hover:text-ink"
       >
         ← К выбору
       </Link>
@@ -51,7 +71,7 @@ export function PreviewBar() {
 
       <span className="text-[12px] text-muted">Главная:</span>
 
-      <div className="flex gap-[6px]">
+      <div className="flex flex-wrap gap-[6px]">
         {preview.variants.map((v) => {
           const active = v.key === variant;
           return (
@@ -60,12 +80,7 @@ export function PreviewBar() {
               href={`/?home=${v.key}`}
               title={v.text}
               aria-current={active ? "true" : undefined}
-              className="flex min-h-[36px] items-center rounded-[3px] border px-[12px] text-[12px] transition-colors"
-              style={{
-                borderColor: active ? "var(--ink)" : "var(--line2)",
-                background: active ? "var(--ink)" : "transparent",
-                color: active ? "var(--bg)" : "var(--ink)",
-              }}
+              className="chip"
             >
               {v.key.toUpperCase()} · {v.name}
             </Link>
@@ -78,6 +93,16 @@ export function PreviewBar() {
           {current.text}
         </span>
       ) : null}
+
+      <button
+        type="button"
+        onClick={() => setPreviewVariant(null)}
+        aria-label="Выйти из режима показа"
+        title="Выйти из режима показа"
+        className="ml-auto flex h-[28px] w-[28px] flex-none items-center justify-center rounded-[3px] border border-line2 bg-transparent text-[14px] text-muted transition-colors hover:border-ink hover:text-ink"
+      >
+        ×
+      </button>
     </div>
   );
 }

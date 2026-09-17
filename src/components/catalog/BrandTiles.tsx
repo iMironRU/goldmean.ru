@@ -2,8 +2,8 @@ import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
 import { countLabel, type Brand } from "@/lib/content/catalog";
 
-// Плитка марок. Логотипов ещё нет (§12 п.1), поэтому в верхней части плитки
-// стоит слот с подписью, какой логотип нужен.
+// Плитка марок. Логотип берётся из brand.logo; у марок, чьих логотипов ещё
+// нет (§12 п.1), на его месте остаётся слот с подписью, какой файл нужен.
 export function BrandTiles({
   brands,
   counts,
@@ -34,7 +34,7 @@ export function BrandTiles({
             style={{ borderColor: active ? "var(--ink)" : "var(--line2)" }}
           >
             <div className="mx-[14px] mt-[10px] h-[56px]">
-              <ImageSlot photo={`Логотип ${b.name}`} />
+              <ImageSlot photo={`Логотип ${b.name}`} src={b.logo} fit="contain" />
             </div>
             <Link
               href={`${base}/${b.slug}`}

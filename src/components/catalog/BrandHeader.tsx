@@ -35,7 +35,7 @@ export function BrandHeader({
       <div className="pad-x grid-auto items-center gap-[40px] border-b border-line pt-[32px] pb-[40px] desktop:pb-[72px] [--col-min:300px]">
         <div>
           <div className="h-[72px] w-[220px] max-w-full">
-            <ImageSlot photo={`Логотип ${brand.name}`} tone={tone} />
+            <ImageSlot photo={`Логотип ${brand.name}`} src={brand.logo} tone={tone} fit="contain" />
           </div>
           <h1 className="h1-hero mt-[20px]" style={{ lineHeight: 1 }}>
             {brand.name}

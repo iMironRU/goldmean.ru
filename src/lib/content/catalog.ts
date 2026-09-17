@@ -10,6 +10,8 @@ export type Brand = {
    *  Есть у ювелирных производителей: их названия склоняются, в отличие от
    *  латинских часовых марок. */
   genitive?: string;
+  /** Путь к логотипу в public/. Нет файла — слот остаётся плейсхолдером. */
+  logo?: string;
 };
 
 export type WatchModel = (typeof watchesJson.models)[number];

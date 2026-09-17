@@ -1,33 +1,50 @@
+import { asset } from "@/lib/asset";
+
 // Плейсхолдер под фотографию. Замена прототипному <image-slot> (design-ref).
 //
 // Съёмки ещё нет (§12 п.5 хендоффа), а подпись к каждому слоту — это ТЗ на
 // кадр: что снять, в каком свете и ракурсе. Поэтому подпись выводится прямо
 // в плейсхолдере: заказчик на показе видит, какие фотографии от него нужны.
 //
-// Когда фотографии появятся, слот принимает src и рисует картинку — вызовы
-// в страницах менять не придётся.
+// Как только у слота появляется src, он рисует картинку — вызовы в страницах
+// менять не приходится. Так уже подставлены логотипы марок.
 
 type Props = {
-  /** Описание нужного кадра. Показывается, пока фотографии нет. */
+  /** Описание нужного кадра. Показывается, пока картинки нет. */
   photo: string;
-  /** Путь к фотографии в public/. Появится после съёмки. */
+  /** Путь к файлу в public/. */
   src?: string;
   /** Подложка слота: холодная (часы) или тёплая (украшения). */
   tone?: "cool" | "warm";
+  /**
+   * contain — для логотипов: вписать целиком, не обрезая и не подкрашивая
+   * подложку. cover — для фотографий: заполнить слот.
+   */
+  fit?: "cover" | "contain";
   className?: string;
 };
 
-export function ImageSlot({ photo, src, tone = "cool", className = "" }: Props) {
+export function ImageSlot({
+  photo,
+  src,
+  tone = "cool",
+  fit = "cover",
+  className = "",
+}: Props) {
   const bg = tone === "warm" ? "var(--warm2)" : "var(--cool2)";
 
   if (src) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={src}
+        // basePath в обычный <img src> Next не подставляет — только в
+        // next/image. Без asset() логотипы отдали бы 404 на Pages.
+        src={src.startsWith("/") ? asset(src) : src}
         alt={photo}
-        className={`h-full w-full object-cover ${className}`}
-        style={{ background: bg }}
+        loading="lazy"
+        className={`h-full w-full ${fit === "contain" ? "object-contain" : "object-cover"} ${className}`}
+        // Логотип лежит на собственном фоне плитки, подкрашивать его не надо.
+        style={fit === "contain" ? undefined : { background: bg }}
       />
     );
   }

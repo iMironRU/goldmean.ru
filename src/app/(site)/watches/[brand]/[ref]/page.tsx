@@ -91,6 +91,10 @@ export default async function WatchPage({ params }: { params: Promise<Params> })
 
           <SpecTable specs={watchSpecs(m)} />
 
+          <Link href="/info/harakteristiki" className="link-action mt-[16px]">
+            Что означают характеристики
+          </Link>
+
           <div className="mt-[24px]">
             <GuaranteeBlock {...watches.guarantee} />
           </div>

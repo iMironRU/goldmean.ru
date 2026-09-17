@@ -11,7 +11,7 @@ import { RelatedGrid } from "@/components/catalog/RelatedGrid";
 import { SpecTable } from "@/components/catalog/SpecTable";
 import { TelegramFeed } from "@/components/catalog/TelegramFeed";
 import { ImageSlot } from "@/components/ImageSlot";
-import { getBrandArticle } from "@/lib/content/brand-article";
+import { getBrandArticle } from "@/lib/content/markdown-page";
 import {
   brandByName,
   brandBySlug,

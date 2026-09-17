@@ -294,22 +294,22 @@
     color: var(--bg);
   }
 
-  /* ─── Статья о марке (content/brands/*.md) ───────────────────────────
+  /* ─── Текст из Markdown (content/brands/**, content/info/**) ──────────
      Markdown приходит готовым HTML, классов на тегах нет — поэтому стили
      навешиваются на потомков. Шкала та же, что у остальных страниц (§5). */
 
-  .prose-brand {
+  .prose-doc {
     font-size: 15px;
     line-height: 1.7;
     color: var(--ink);
     max-width: 680px;
   }
 
-  .prose-brand > * + * {
+  .prose-doc > * + * {
     margin-top: 18px;
   }
 
-  .prose-brand h2 {
+  .prose-doc h2 {
     font-family: var(--font-display);
     font-weight: 400;
     font-size: 28px;
@@ -319,7 +319,7 @@
     scroll-margin-top: 80px;
   }
 
-  .prose-brand h3 {
+  .prose-doc h3 {
     font-family: var(--font-display);
     font-weight: 400;
     font-size: 22px;
@@ -327,39 +327,39 @@
     margin-top: 28px;
   }
 
-  .prose-brand strong {
+  .prose-doc strong {
     font-weight: 600;
   }
 
-  .prose-brand a {
+  .prose-doc a {
     color: var(--accent);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
-  .prose-brand ul,
-  .prose-brand ol {
+  .prose-doc ul,
+  .prose-doc ol {
     padding-left: 22px;
     list-style: disc;
   }
 
-  .prose-brand ol {
+  .prose-doc ol {
     list-style: decimal;
   }
 
-  .prose-brand li + li {
+  .prose-doc li + li {
     margin-top: 6px;
   }
 
   /* Таблица «Коротко о бренде»: без вертикальных линий, как в остальном
      макете — плоскости разделяются линиями --line, а не рамками. */
-  .prose-brand table {
+  .prose-doc table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
   }
 
-  .prose-brand th {
+  .prose-doc th {
     text-align: left;
     font-size: 11px;
     font-weight: 500;
@@ -370,21 +370,33 @@
     padding: 0 16px 10px 0;
   }
 
-  .prose-brand td {
+  .prose-doc td {
     border-bottom: 1px solid var(--line);
     padding: 10px 16px 10px 0;
     vertical-align: top;
   }
 
-  .prose-brand td:first-child {
+  .prose-doc td:first-child {
     color: var(--muted);
     width: 40%;
   }
 
   @media (min-width: 1024px) {
-    .prose-brand h2 {
+    .prose-doc h2 {
       font-size: 34px;
     }
+  }
+
+  /* [ПРОВЕРИТЬ …] — вопросы автора текста к салону, оставленные прямо в
+     тексте. Подсвечиваем, чтобы на показе было видно: это не готовая
+     формулировка. Закроются вопросы — скобки уйдут из md, и подсветка
+     пропадёт сама. */
+  .prose-doc mark.todo {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent);
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    padding: 1px 4px;
+    border-radius: var(--radius);
   }
 
   .fade-up {

@@ -5,7 +5,7 @@ import { BrandArticle } from "@/components/catalog/BrandArticle";
 import { BrandHeader } from "@/components/catalog/BrandHeader";
 import { MasterTeaser } from "@/components/catalog/MasterTeaser";
 import { WatchCatalog } from "@/components/catalog/WatchCatalog";
-import { getBrandArticle } from "@/lib/content/brand-article";
+import { getBrandArticle } from "@/lib/content/markdown-page";
 import { brandBySlug, watches } from "@/lib/content/catalog";
 
 type Params = { brand: string };

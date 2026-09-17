@@ -4,7 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { specHint } from "@/lib/content/spec-hints";
 
-export type Spec = { k: string; v: string };
+export type Spec = {
+  k: string;
+  v: string;
+  /** Значение становится ссылкой — например, «Производитель» на страницу марки. */
+  href?: string;
+};
 
 // Таблица характеристик в карточке товара (§7 хендоффа): две колонки,
 // 140 px под название, строки разделены линиями.
@@ -64,7 +69,18 @@ export function SpecTable({ specs }: { specs: Spec[] }) {
                   </button>
                 )}
               </dt>
-              <dd className="m-0">{s.v}</dd>
+              <dd className="m-0">
+                {s.href ? (
+                  <Link
+                    href={s.href}
+                    className="text-ink underline decoration-line2 underline-offset-4 transition-colors hover:decoration-ink"
+                  >
+                    {s.v}
+                  </Link>
+                ) : (
+                  s.v
+                )}
+              </dd>
             </div>
 
             {hint && (
@@ -76,13 +92,18 @@ export function SpecTable({ specs }: { specs: Spec[] }) {
                     inert={!isOpen}
                     className="pb-[14px] text-[13px] leading-[1.6] text-muted desktop:pl-[156px]"
                   >
-                    {hint.text}{" "}
-                    <Link
-                      href={hint.href}
-                      className="whitespace-nowrap text-accent underline underline-offset-4"
-                    >
-                      подробнее
-                    </Link>
+                    {hint.text}
+                    {hint.href && (
+                      <>
+                        {" "}
+                        <Link
+                          href={hint.href}
+                          className="whitespace-nowrap text-accent underline underline-offset-4"
+                        >
+                          подробнее
+                        </Link>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>

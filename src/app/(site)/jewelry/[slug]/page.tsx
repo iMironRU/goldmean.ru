@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { BrandArticle } from "@/components/catalog/BrandArticle";
 import { BrandHeader } from "@/components/catalog/BrandHeader";
+import { BrandLink } from "@/components/catalog/BrandLink";
 import { Breadcrumbs } from "@/components/catalog/Breadcrumbs";
 import { GuaranteeBlock } from "@/components/catalog/GuaranteeBlock";
 import { JewelCatalog } from "@/components/catalog/JewelCatalog";
@@ -15,6 +16,7 @@ import { getBrandArticle } from "@/lib/content/markdown-page";
 import {
   brandByName,
   brandBySlug,
+  jewelBrandHref,
   jewelSpecs,
   jewelry,
   relatedJewels,
@@ -117,7 +119,11 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
         </div>
 
         <div>
-          <div className="eyebrow text-muted">{j.brand}</div>
+          <BrandLink
+            name={j.brand}
+            href={itemBrand ? `/jewelry/${itemBrand.slug}` : undefined}
+            className="eyebrow block text-muted"
+          />
           <h1 className="h2-sec mt-[8px]">{j.name}</h1>
           <div className="mt-[8px] font-mono text-[12px] text-muted">Артикул {j.article}</div>
 
@@ -158,6 +164,7 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
           key: r.id,
           href: `/jewelry/${r.id}`,
           brand: r.brand,
+          brandHref: jewelBrandHref(r.brand),
           name: r.name,
           price: r.price,
           photo: r.name,

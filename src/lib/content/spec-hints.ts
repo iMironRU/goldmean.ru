@@ -9,8 +9,12 @@ import hintsJson from "../../../content/spec-hints.json";
 // у них стоит `draft: true`, и их должен вычитать автор текстов.
 export type SpecHint = {
   text: string;
-  /** Раздел справочника с подробностями. */
-  href: string;
+  /**
+   * Раздел справочника с подробностями. Необязателен: у характеристик
+   * украшений справочной страницы пока нет (/diamonds — заглушка), и там
+   * подсказка показывается без ссылки «подробнее».
+   */
+  href?: string;
   source?: string;
   draft?: boolean;
 };

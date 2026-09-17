@@ -124,12 +124,16 @@ export function watchSpecs(m: WatchModel): { k: string; v: string }[] {
 }
 
 // Характеристики карточки изделия (§7 хендоффа).
-export function jewelSpecs(j: JewelItem): { k: string; v: string }[] {
+//
+// «Производитель» ведёт на страницу производителя: название марки должно
+// быть ссылкой везде, где встречается.
+export function jewelSpecs(j: JewelItem): { k: string; v: string; href?: string }[] {
+  const brand = brandByName(jewelry.brands, j.brand);
   return [
     { k: "Камни", v: j.stone },
     { k: "Металл", v: j.metal },
     { k: "Вес изделия", v: j.weight },
-    { k: "Производитель", v: j.brand },
+    { k: "Производитель", v: j.brand, href: brand ? `/jewelry/${brand.slug}` : undefined },
     { k: "Артикул", v: j.article },
     { k: "Сертификат", v: jewelry.detail.certificate },
   ];
@@ -146,4 +150,21 @@ export function relatedJewels(j: JewelItem, limit = 3): JewelItem[] {
   const same = jewelry.items.filter((x) => x.brand === j.brand && x.id !== j.id);
   const rest = jewelry.items.filter((x) => x.brand !== j.brand);
   return [...same, ...rest].slice(0, limit);
+}
+
+// ─── Адреса страниц марок ────────────────────────────────────────────────
+//
+// Название марки должно быть ссылкой везде, где встречается: в шапке
+// карточки товара, в подписи под фото в каталоге, в строке «Производитель».
+// Эти две функции — единственный способ получить адрес, чтобы он не
+// собирался руками в каждом месте по-своему.
+
+export function watchBrandHref(name: string): string | undefined {
+  const b = brandByName(watches.brands, name);
+  return b ? `/watches/${b.slug}` : undefined;
+}
+
+export function jewelBrandHref(name: string): string | undefined {
+  const b = brandByName(jewelry.brands, name);
+  return b ? `/jewelry/${b.slug}` : undefined;
 }

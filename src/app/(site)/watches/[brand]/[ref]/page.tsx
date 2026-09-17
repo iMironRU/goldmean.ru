@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BrandLink } from "@/components/catalog/BrandLink";
 import { Breadcrumbs } from "@/components/catalog/Breadcrumbs";
 import { GuaranteeBlock } from "@/components/catalog/GuaranteeBlock";
 import { RelatedGrid } from "@/components/catalog/RelatedGrid";
@@ -81,7 +82,11 @@ export default async function WatchPage({ params }: { params: Promise<Params> })
         </div>
 
         <div>
-          <div className="eyebrow text-muted">{m.brand}</div>
+          <BrandLink
+            name={m.brand}
+            href={`/watches/${b.slug}`}
+            className="eyebrow block text-muted"
+          />
           <h1 className="h2-sec mt-[8px]">{m.name}</h1>
           <div className="mt-[8px] font-mono text-[12px] text-muted">Референс {m.ref}</div>
 

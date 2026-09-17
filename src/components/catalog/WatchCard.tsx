@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLink } from "@/components/catalog/BrandLink";
 import { ImageSlot } from "@/components/ImageSlot";
 import {
   brandByName,
@@ -46,7 +47,11 @@ export function WatchCard({ model }: { model: WatchModel & { cover?: string } })
         </div>
       </Link>
 
-      <div className="mt-[14px] text-[11px] uppercase tracking-[.14em] text-muted">{model.brand}</div>
+      <BrandLink
+        name={model.brand}
+        href={brand ? `/watches/${brand.slug}` : undefined}
+        className="mt-[14px] block text-[11px] uppercase tracking-[.14em] text-muted"
+      />
       <Link href={href} className="h3-card mt-[4px] block text-ink transition-colors hover:text-accent">
         {model.name}
       </Link>

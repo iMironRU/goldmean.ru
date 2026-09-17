@@ -16,6 +16,11 @@ export type ChipGroup = {
 // Чипы — настоящие ссылки, а не кнопки: работает средний клик, «открыть в
 // новой вкладке» и копирование адреса. scroll={false} — чтобы страница не
 // прыгала в начало при смене фильтра.
+//
+// Ровно по строке на группу, чипы внутри прокручиваются вбок. Раньше они
+// переносились, и на телефоне панель разрасталась до четырёх рядов — 241 px,
+// почти треть экрана. Горизонтальная прокрутка включается только когда чипы
+// не помещаются: на десктопе они стоят в строку и ничего не прокручивается.
 export function FilterChips({ groups, result }: { groups: ChipGroup[]; result: string }) {
   const pathname = usePathname();
   const params = useSearchParams();
@@ -29,29 +34,40 @@ export function FilterChips({ groups, result }: { groups: ChipGroup[]; result: s
   };
 
   return (
-    <div className="filters-sticky pad-x flex flex-wrap items-center gap-[12px_32px] border-b border-line py-[20px]">
+    <div className="filters-sticky pad-x flex flex-col gap-[8px] border-b border-line py-[16px]">
       {groups.map((g) => {
         const current = params.get(g.param) ?? "all";
+
         return (
-          <div key={g.param} className="flex flex-wrap items-center gap-[6px]">
-            <span className="mr-[6px] text-[11px] uppercase tracking-[.1em] text-muted">
+          <div key={g.param} className="flex items-center gap-[10px]">
+            <span className="w-[76px] shrink-0 text-[11px] uppercase tracking-[.1em] text-muted">
               {g.label}
             </span>
-            {g.chips.map((c) => (
-              <Link
-                key={c.key}
-                href={hrefFor(g.param, c.key)}
-                scroll={false}
-                aria-current={c.key === current ? "true" : undefined}
-                className="chip"
-              >
-                {c.label}
-              </Link>
-            ))}
+
+            {/* min-w-0 обязателен: без него флекс-элемент не даёт себя сжать
+                по содержимому, и вместо прокрутки строка распирает панель. */}
+            <div className="chips-scroll flex min-w-0 flex-1 gap-[6px] overflow-x-auto">
+              {g.chips.map((c) => (
+                <Link
+                  key={c.key}
+                  href={hrefFor(g.param, c.key)}
+                  scroll={false}
+                  aria-current={c.key === current ? "true" : undefined}
+                  className="chip shrink-0"
+                >
+                  {c.label}
+                </Link>
+              ))}
+            </div>
+
           </div>
         );
       })}
-      <div className="ml-auto text-[12px] text-muted">{result}</div>
+
+      {/* Счётчик — итог обоих фильтров, поэтому отдельной строкой под ними.
+          В строке с чипами он отбирал бы у ленты 70 px из 197 на телефоне, и
+          обрезанный чип упирался бы в него вплотную, читаясь как наложение. */}
+      <div className="text-right text-[12px] text-muted">{result}</div>
     </div>
   );
 }

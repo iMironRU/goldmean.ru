@@ -397,6 +397,25 @@
     }
   }
 
+  /* Плавное раскрытие подсказки «?» в таблице характеристик. Анимируем
+     высоту строки грида 0fr → 1fr: так её не нужно измерять заранее, в
+     отличие от max-height с выдуманным потолком. */
+  .hint-reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.22s ease;
+  }
+
+  .hint-reveal[data-open="true"] {
+    grid-template-rows: 1fr;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hint-reveal {
+      transition: none;
+    }
+  }
+
   /* [ПРОВЕРИТЬ …] — вопросы автора текста к салону, оставленные прямо в
      тексте. Подсвечиваем, чтобы на показе было видно: это не готовая
      формулировка. Закроются вопросы — скобки уйдут из md, и подсветка

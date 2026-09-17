@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
-import { StickyCta } from "@/components/StickyCta";
 import { HomeVariantScript } from "@/components/home/HomeVariantScript";
 import { site } from "@/lib/content/site";
+
+// Корневой layout — только документ, шрифты и метаданные.
+//
+// Шапка, подвал и sticky-CTA живут в layout группы (site): страница выбора
+// вариантов /preview — инструмент показа, а не страница сайта, и обвязка
+// сайта ей не нужна.
 
 // Заголовки. Кириллица у Cormorant Garamond есть.
 const cormorant = Cormorant_Garamond({
@@ -52,12 +55,7 @@ export default function RootLayout({
       <head>
         <HomeVariantScript />
       </head>
-      <body className="flex min-h-screen flex-col">
-        <SiteHeader />
-        <main className="fade-up flex-1">{children}</main>
-        <SiteFooter />
-        <StickyCta />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

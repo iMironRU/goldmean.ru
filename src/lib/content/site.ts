@@ -1,13 +1,16 @@
 import siteJson from "../../../content/site.json";
 import homeJson from "../../../content/home.json";
+import previewJson from "../../../content/preview.json";
 
 export type NavItem = { href: string; label: string };
 
 export type Site = typeof siteJson;
 export type Home = typeof homeJson;
+export type Preview = typeof previewJson;
 
 export const site: Site = siteJson;
 export const home: Home = homeJson;
+export const preview: Preview = previewJson;
 
 export const HOME_VARIANTS = ["a", "b", "c"] as const;
 export type HomeVariant = (typeof HOME_VARIANTS)[number];

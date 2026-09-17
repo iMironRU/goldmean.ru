@@ -1,0 +1,255 @@
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* Шрифты подключает next/font (src/app/layout.tsx) — он сам хостит файлы и
+   не ходит на fonts.googleapis.com на каждой загрузке. Имена семейств он
+   генерирует, поэтому подменяем ими значения из tokens.css; порядок фолбэков
+   сохранён ровно тот, что в токенах.
+
+   ВНИМАНИЕ. У Figtree в Google Fonts НЕТ кириллицы (только latin/latin-ext).
+   Весь русский текст сайта поэтому рисуется системным шрифтом из фолбэка —
+   ровно так же, как в прототипе. Вопрос открыт, см. AGENTS.md. */
+:root {
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-text: var(--font-figtree), system-ui, sans-serif;
+}
+
+/* Токены «Золотой середины» -> утилиты Tailwind (bg-accent, font-display, ...).
+   Источник значений — design-ref/tokens.css, его не правим руками. */
+@theme inline {
+  --color-ink: var(--ink);
+  --color-bg: var(--bg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line2: var(--line2);
+  --color-warm: var(--warm);
+  --color-warm2: var(--warm2);
+  --color-cool: var(--cool);
+  --color-cool2: var(--cool2);
+  --color-accent: var(--accent);
+  --color-cta: var(--cta);
+
+  --font-display: var(--font-display);
+  --font-text: var(--font-text);
+  --font-mono: var(--font-mono);
+
+  /* Макет спроектирован под 1280 px и 390 px (§11 хендоффа). Переключение
+     «мобильный / десктоп» — на 1024 px: выше него помещается меню из шести
+     пунктов и кнопка записи, ниже — бургер. */
+  --breakpoint-mobile: 390px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+  --breakpoint-wide: 1280px;
+}
+
+/* Всё своё — строго в слоях base и components.
+   Незалоенное правило перебивает ЛЮБУЮ утилиту Tailwind независимо от
+   специфичности: так «hidden desktop:inline-flex» на кнопке шапки проиграл
+   display из .btn-primary, и кнопка висела поверх бургера на мобильном. */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-text);
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Радиус 3 px по всему проекту — единое минимальное скругление (§5). */
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    border-radius: var(--radius);
+  }
+}
+
+@layer components {
+  /* ─── Отступы секций (§5): десктоп 72/56, мобильный 40/20 ────────────── */
+
+  .pad-x {
+    padding-inline: var(--pad-mobile);
+  }
+
+  .pad-y {
+    padding-block: var(--section-top-mobile);
+  }
+
+  .pad-t {
+    padding-top: var(--section-top-mobile);
+  }
+
+  @media (min-width: 1024px) {
+    .pad-x {
+      padding-inline: var(--pad-desktop);
+    }
+    .pad-y {
+      padding-block: var(--section-top-desktop);
+    }
+    .pad-t {
+      padding-top: var(--section-top-desktop);
+    }
+  }
+
+  /* ─── Типографическая шкала (§5) ─────────────────────────────────────── */
+
+  .h1-hero {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.02;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .h2-sec {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.05;
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .h3-card {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .fact-num {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 34px;
+    line-height: 1;
+  }
+
+  @media (min-width: 1024px) {
+    .h1-hero {
+      font-size: 72px;
+    }
+    .h2-sec {
+      font-size: 40px;
+      line-height: 1.1;
+    }
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* ─── Кнопки (§6) ────────────────────────────────────────────────────── */
+
+  .btn-primary {
+    background: var(--cta);
+    color: var(--bg);
+    border: 0;
+    padding: 16px 28px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: var(--radius);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: opacity 0.18s ease;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.88;
+  }
+
+  /* Первичная на тёмном фоне (вариант C) — инверсия. */
+  .btn-primary-inv {
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  /* В шапке кнопка компактнее. */
+  .btn-primary-nav {
+    padding: 12px 22px;
+    min-height: 40px;
+  }
+
+  /* Вторичная / ссылка-действие. */
+  .link-action {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px;
+    background: none;
+    cursor: pointer;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+
+  .link-action:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ─── Базовая сетка (§5) ─────────────────────────────────────────────── */
+
+  .grid-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--col-min), 1fr));
+  }
+
+  .grid-auto-dense {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .fade-up {
+    animation: fadeUp 0.45s ease;
+  }
+}
+
+/* ─── Переключение вариантов главной (§3.1) ──────────────────────────────
+   Вариант выбирает не React, а CSS: в HTML лежат все три, а атрибут
+   data-home на <html> ставится инлайн-скриптом ДО первой отрисовки
+   (см. src/components/home/HomeVariantScript.tsx). Так ?home=b открывается
+   сразу вариантом B, без вспышки варианта по умолчанию — а это именно тот
+   сценарий, ради которого параметр и заведён: показ заказчику.
+
+   Намеренно вне слоёв: переключение должно перебивать любые утилиты. */
+[data-home-variant] {
+  display: none;
+}
+
+html[data-home="a"] [data-home-variant="a"],
+html[data-home="b"] [data-home-variant="b"],
+html[data-home="c"] [data-home-variant="c"] {
+  display: block;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Золотая середина",
+  "tagline": "Швейцарские часы и украшения с бриллиантами",
+  "city": "Оренбург",
+  "address": "Оренбург, ул. Советская, 31",
+  "addressShort": "Оренбург, Советская, 31",
+  "hours": "Вт–Сб 10:30–19:00",
+  "phone": "+7 (3532) 77-63-30",
+  "phoneHref": "tel:+73532776330",
+  "social": {
+    "telegram": "https://t.me/zolotayaseredina_orenburg",
+    "instagram": "https://instagram.com/zolotayaseredina_orenburg"
+  },
+  "nav": [
+    { "href": "/watches", "label": "Часы" },
+    { "href": "/jewelry", "label": "Украшения" },
+    { "href": "/services", "label": "Услуги" },
+    { "href": "/why-offline", "label": "Почему офлайн" },
+    { "href": "/about", "label": "О магазине" },
+    { "href": "/contacts", "label": "Контакты" }
+  ],
+  "cta": { "href": "/contacts", "label": "Записаться на консультацию" },
+  "gift": { "href": "/gift", "label": "Подарочный сертификат" }
+}

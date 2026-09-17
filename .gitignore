@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+.env*.local
+
+# Распакованный вход — в репозитории лежат исходные архивы в InBox/
+InBox/_unpack/
+InBox/_doc/

@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html,body{margin:0;padding:0;background:#e9e6e0;color:var(--ink);font-family:Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{color:var(--ink)}
+button{font-family:inherit;border-radius:3px}input,select,textarea{font-family:inherit;border-radius:3px}
+[style*="aspect-ratio"]{border-radius:3px;overflow:hidden}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+[data-frame]::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+<div style="padding:24px 28px 40px;min-height:100vh;box-sizing:border-box;--ink:#1c1b19;--muted:#6b675f;--bg:#faf9f7">
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px;margin-bottom:22px">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px">Золотая середина <span style="font-family:Figtree;font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-left:10px">кликабельный прототип</span></div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <sc-for list="{{ pageTabs }}" as="t" hint-placeholder-count="9">
+        <button onClick="{{ t.go }}" style="border:1px solid {{ t.border }};background:{{ t.bg }};color:{{ t.color }};padding:6px 12px;font-size:12px;border-radius:3px;cursor:pointer">{{ t.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;margin-left:auto;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--muted);margin-right:6px">Главная:</span>
+      <sc-for list="{{ variants }}" as="v" hint-placeholder-count="3">
+        <button onClick="{{ v.go }}" style="border:1px solid {{ v.border }};background:{{ v.bg }};color:{{ v.color }};padding:6px 12px;font-size:12px;border-radius:3px;cursor:pointer">{{ v.label }}</button>
+      </sc-for>
+    </div>
+  </div>
+  <div ref="{{ wrapRef }}" style="width:100%;height:{{ scaledH }}px;overflow:hidden">
+  <div style="display:flex;gap:40px;align-items:flex-start;transform:scale({{ scale }});transform-origin:top left;width:1710px;--accent:{{ th.accent }};--ink:{{ th.ink }};--bg:{{ th.bg }};--muted:{{ th.muted }};--line:{{ th.line }};--line2:{{ th.line2 }};--warm:{{ th.warm }};--warm2:{{ th.warm2 }};--cool:{{ th.cool }};--cool2:{{ th.cool2 }};--cta:{{ th.cta }}">
+  <sc-for list="{{ frames }}" as="f" hint-placeholder-count="2">
+    <div style="width:{{ f.w }}px;flex:none">
+      <div style="font-size:11px;color:#6b675f;margin-bottom:10px;letter-spacing:.12em;text-transform:uppercase">{{ f.label }}</div>
+      <div data-frame="{{ f.key }}" style="width:{{ f.w }}px;height:{{ f.h }}px;overflow:auto;background:var(--bg);border:1px solid var(--line2);border-radius:{{ f.radius }}px;position:relative;color:var(--ink);box-shadow:0 30px 60px -30px rgba(28,27,25,.25);display:flex;flex-direction:column">
+
+        <!-- header -->
+        <div style="position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 {{ f.pad }};height:{{ f.navH }}px">
+            <a onClick="{{ goHome }}" style="font-family:'Cormorant Garamond',serif;font-size:{{ f.logo }}px;font-weight:500;letter-spacing:.02em;cursor:pointer;color:var(--ink);white-space:nowrap">Золотая середина</a>
+            <sc-if value="{{ f.desktop }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:28px">
+                <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+                  <a onClick="{{ n.go }}" style="font-size:13px;letter-spacing:.04em;cursor:pointer;color:{{ n.color }};padding:6px 0;border-bottom:1px solid {{ n.underline }}">{{ n.label }}</a>
+                </sc-for>
+              </div>
+              <button onClick="{{ goBook }}" style="background:var(--cta);color:var(--bg);border:0;padding:12px 22px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Записаться на консультацию</button>
+            </sc-if>
+            <sc-if value="{{ f.mobile }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ toggleMenu }}" aria-label="Меню" style="background:none;border:1px solid var(--line2);width:44px;height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;border-radius:3px">
+                <span style="display:block;width:16px;height:1px;background:var(--ink)"></span>
+                <span style="display:block;width:16px;height:1px;background:var(--ink)"></span>
+              </button>
+            </sc-if>
+          </div>
+        </div>
+        <sc-if value="{{ f.mobile }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:20;background:var(--bg);padding:24px 20px;display:flex;flex-direction:column;animation:fadeUp .25s ease">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px">
+                <span style="font-family:'Cormorant Garamond',serif;font-size:22px">Меню</span>
+                <button onClick="{{ toggleMenu }}" style="background:none;border:1px solid var(--line2);width:44px;height:44px;border-radius:3px;cursor:pointer;font-size:18px">×</button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+                  <a onClick="{{ n.go }}" style="font-family:'Cormorant Garamond',serif;font-size:34px;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer;color:var(--ink)">{{ n.label }}</a>
+                </sc-for>
+              </div>
+              <div style="margin-top:auto;font-size:13px;color:var(--muted);line-height:1.7">Оренбург, Советская, 31<br>Вт–Сб 10:30–19:00<br><a href="tel:+73532776330" style="color:var(--ink)">+7 (3532) 77-63-30</a><br><a href="https://t.me/zolotayaseredina_orenburg" target="_blank">Telegram</a> · <a href="https://instagram.com/zolotayaseredina_orenburg" target="_blank">Instagram</a></div>
+            </div>
+          </sc-if>
+        </sc-if>
+
+        <div style="flex:1;animation:fadeUp .45s ease">
+
+        <!-- ============ HOME ============ -->
+        <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ isVarA }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1px;background:var(--line)">
+              <a onClick="{{ goWatches }}" style="position:relative;height:{{ f.heroH }}px;display:block;cursor:pointer;background:var(--cool)">
+                <div style="position:absolute;inset:0"><image-slot id="home-watch" shape="rect" placeholder="Фото: часы на запястье, студийный свет, холодные тона"></image-slot></div>
+                <div style="position:absolute;left:0;right:0;bottom:0;padding:{{ f.pad }};pointer-events:none;background:linear-gradient(to top,rgba(20,22,24,.55),rgba(20,22,24,0) 70%)">
+                  <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#f2efe9;opacity:.85;margin-bottom:10px">13 швейцарских марок</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h1 }}px;line-height:1;color:#faf9f7">Часы</div>
+                  <div style="margin-top:16px;font-size:13px;letter-spacing:.06em;color:#faf9f7;border-bottom:1px solid rgba(250,249,247,.6);display:inline-block;padding-bottom:4px">Смотреть каталог →</div>
+                </div>
+              </a>
+              <a onClick="{{ goJewelry }}" style="position:relative;height:{{ f.heroH }}px;display:block;cursor:pointer;background:var(--warm2)">
+                <div style="position:absolute;inset:0"><image-slot id="home-jewel" shape="rect" placeholder="Фото: макро бриллианта в кольце, тёплый свет"></image-slot></div>
+                <div style="position:absolute;left:0;right:0;bottom:0;padding:{{ f.pad }};pointer-events:none;background:linear-gradient(to top,rgba(30,24,18,.55),rgba(30,24,18,0) 70%)">
+                  <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#f2efe9;opacity:.85;margin-bottom:10px">Сертифицированные камни · смотр в салоне</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h1 }}px;line-height:1;color:#faf9f7">Украшения<br><em style="font-weight:400">с бриллиантами</em></div>
+                  <div style="margin-top:16px;font-size:13px;letter-spacing:.06em;color:#faf9f7;border-bottom:1px solid rgba(250,249,247,.6);display:inline-block;padding-bottom:4px">Смотреть изделия →</div>
+                </div>
+              </a>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isVarB }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:{{ f.padTop }}px {{ f.pad }} 24px">
+              <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1.02;margin:0;max-width:900px;text-wrap:pretty">Швейцарские часы и украшения с бриллиантами. Примерка в салоне.</h1>
+              <div style="margin-top:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+                <button onClick="{{ goBook }}" style="background:var(--cta);color:var(--bg);border:0;padding:16px 28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Записаться на консультацию</button>
+                <span style="font-size:13px;color:var(--muted)">Вт–Сб 10:30–19:00 · +7 (3532) 77-63-30</span>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;padding:24px {{ f.pad }} 0">
+              <a onClick="{{ goWatches }}" style="cursor:pointer;display:block">
+                <div style="aspect-ratio:4/5;background:var(--cool)"><image-slot id="home-b-watch" shape="rect" placeholder="Фото: часы на подставке, студийный свет"></image-slot></div>
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;border-bottom:1px solid var(--ink);padding-bottom:12px">
+                  <span style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;color:var(--ink)">Часы</span><span style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)">Каталог →</span>
+                </div>
+              </a>
+              <a onClick="{{ goJewelry }}" style="cursor:pointer;display:block">
+                <div style="aspect-ratio:4/5;background:var(--warm2)"><image-slot id="home-b-jewel" shape="rect" placeholder="Фото: серьги с бриллиантами, макро"></image-slot></div>
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;border-bottom:1px solid var(--ink);padding-bottom:12px">
+                  <span style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;color:var(--ink)">Украшения с бриллиантами</span><span style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)">Изделия →</span>
+                </div>
+              </a>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isVarC }}" hint-placeholder-val="{{ false }}">
+            <div style="background:var(--ink);color:var(--bg);padding:{{ f.padTop }}px {{ f.pad }} {{ f.padTop }}px">
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.6;margin-bottom:20px">Оренбург · Советская, 31</div>
+              <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1.02;margin:0;max-width:820px;text-wrap:pretty">Вещи, которые выбирают руками, а не по фото.</h1>
+              <div style="margin-top:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+                <button onClick="{{ goBook }}" style="background:var(--bg);color:var(--ink);border:0;padding:16px 28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Записаться на консультацию</button>
+                <a onClick="{{ goWhy }}" style="font-size:13px;color:var(--bg);opacity:.75;cursor:pointer;border-bottom:1px solid rgba(250,249,247,.4)">Почему нельзя выбрать онлайн</a>
+              </div>
+            </div>
+            <a onClick="{{ goWatches }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));cursor:pointer;border-bottom:1px solid var(--line)">
+              <div style="aspect-ratio:3/2;background:var(--cool)"><image-slot id="home-c-watch" shape="rect" placeholder="Фото: циферблат крупно, макро"></image-slot></div>
+              <div style="padding:{{ f.pad }};display:flex;flex-direction:column;justify-content:center;gap:14px">
+                <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">01 — Часы</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05;color:var(--ink)">Longines, Rado, Hamilton, Tissot и ещё девять марок</div>
+                <div style="font-size:14px;line-height:1.6;color:var(--muted);max-width:420px">Полный каталог моделей с характеристиками. Примерка в салоне, подгонка браслета на месте.</div>
+                <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)">Каталог →</div>
+              </div>
+            </a>
+            <a onClick="{{ goJewelry }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));cursor:pointer;background:var(--warm)">
+              <div style="padding:{{ f.pad }};display:flex;flex-direction:column;justify-content:center;gap:14px;order:{{ f.cOrder }}">
+                <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">02 — Украшения с бриллиантами</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05;color:var(--ink)">Камень с сертификатом. Выбор — при живом свете</div>
+                <div style="font-size:14px;line-height:1.6;color:var(--muted);max-width:420px">Готовые изделия с бриллиантами. Смотрим камень вместе, при разном свете.</div>
+                <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)">Изделия →</div>
+              </div>
+              <div style="aspect-ratio:3/2;background:var(--warm2)"><image-slot id="home-c-jewel" shape="rect" placeholder="Фото: кольцо на руке, естественный свет"></image-slot></div>
+            </a>
+          </sc-if>
+
+          <!-- trust -->
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px 40px;border-bottom:1px solid var(--line)">
+            <div><div style="font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1">Официальный дилер</div><div style="font-size:14px;color:var(--muted);margin-top:8px;line-height:1.6">Часы и украшения — напрямую от производителей, с документами, гарантией и сервисом в Оренбурге.</div></div>
+            <div><div style="font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1">4,6 <span style="font-size:18px;color:var(--muted)">/ 5</span></div><div style="font-size:14px;color:var(--muted);margin-top:8px;line-height:1.6">Рейтинг на Яндекс Картах, 113 оценок и 41 отзыв.</div></div>
+            <div><div style="font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1">Мы в соцсетях</div><div style="font-size:14px;color:var(--muted);margin-top:8px;line-height:1.6">Живой ассортимент и новинки — каждый день.</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
+                <a href="https://t.me/zolotayaseredina_orenburg" target="_blank" style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:3px;padding:9px 14px;font-size:12px;color:var(--ink);min-height:40px"><span style="width:8px;height:8px;border-radius:50%;background:var(--ink)"></span>Telegram</a>
+                <a href="https://instagram.com/zolotayaseredina_orenburg" target="_blank" style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);border-radius:3px;padding:9px 14px;font-size:12px;color:var(--ink);min-height:40px"><span style="width:8px;height:8px;border-radius:50%;border:1px solid var(--ink)"></span>Instagram</a>
+              </div></div>
+          </div>
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:center">
+            <div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">Почему в салоне</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1;text-wrap:pretty">Часы садятся на запястье, а бриллиант играет светом — этого не видно на экране.</div>
+              <a onClick="{{ goWhy }}" style="display:inline-block;margin-top:20px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:4px;cursor:pointer">Подробнее</a>
+            </div>
+            <div style="aspect-ratio:4/3;background:var(--warm2)"><image-slot id="home-why" shape="rect" placeholder="Фото: консультация в салоне, репортажный стиль"></image-slot></div>
+          </div>
+        </sc-if>
+
+        <!-- ============ WATCHES ============ -->
+        <sc-if value="{{ isWatches }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ brandSel }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:20px {{ f.pad }} 0;font-size:12px;color:var(--muted);display:flex;gap:8px;background:var(--cool)"><a onClick="{{ clearBrand }}" style="cursor:pointer;color:var(--muted)">Часы</a><span>/</span><span style="color:var(--ink)">{{ bi.name }}</span></div>
+            <div style="padding:32px {{ f.pad }} {{ f.padTop }}px;border-bottom:1px solid var(--line);background:var(--cool);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center">
+              <div>
+                <div style="height:72px;width:220px;max-width:100%"><image-slot id="logo-{{ bi.id }}" shape="rect" fit="contain" placeholder="Логотип {{ bi.name }}"></image-slot></div>
+                <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:20px 0 0">{{ bi.name }}</h1>
+                <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px">{{ bi.meta }}</div>
+                <div style="font-size:15px;color:var(--muted);margin-top:16px;max-width:480px;line-height:1.65">{{ bi.text }}</div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px">
+                  <button onClick="{{ goBookWatches }}" style="background:var(--cta);color:var(--bg);border:0;padding:14px 24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Записаться на примерку</button>
+                  <button onClick="{{ clearBrand }}" style="background:none;color:var(--ink);border:1px solid var(--line2);padding:14px 24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Все марки</button>
+                </div>
+              </div>
+              <div style="aspect-ratio:4/3;background:var(--cool2)"><image-slot id="brand-img-{{ bi.id }}" shape="rect" placeholder="Имиджевое фото {{ bi.name }} от бренда"></image-slot></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noBrandSel }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:{{ f.padTop }}px {{ f.pad }} 32px;border-bottom:1px solid var(--line);background:var(--cool)">
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Швейцарские часы</div>
+            <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:0">Часы</h1>
+            <div style="font-size:14px;color:var(--muted);margin-top:16px;max-width:520px;line-height:1.6">Каталог моделей с характеристиками. Наличие и цена уточняются при записи — часть моделей под заказ.</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:32px">
+              <sc-for list="{{ brandItems }}" as="b" hint-placeholder-count="13">
+                <div style="border:1px solid {{ b.border }};background:var(--bg);display:flex;flex-direction:column;min-width:0;overflow:hidden">
+                  <div style="height:56px;margin:10px 14px 0"><image-slot id="logo-{{ b.id }}" shape="rect" fit="contain" placeholder="Логотип {{ b.name }}"></image-slot></div>
+                  <button onClick="{{ b.select }}" style="border:0;border-top:1px solid var(--line);background:{{ b.bg }};color:{{ b.color }};padding:8px 8px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0">
+                    <span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-align:center;line-height:1.2;max-width:100%">{{ b.name }}</span>
+                    <span style="font-size:10px;letter-spacing:.06em;opacity:.6">{{ b.countLabel }}</span>
+                  </button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+          <div style="padding:20px {{ f.pad }};display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:{{ f.navH }}px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);z-index:4">
+            <div style="display:flex;gap:6px;align-items:center"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:6px">Пол</span>
+              <sc-for list="{{ genderChips }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.go }}" style="border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};padding:7px 12px;font-size:12px;border-radius:3px;cursor:pointer">{{ c.label }}</button></sc-for>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:6px">Механизм</span>
+              <sc-for list="{{ mechChips }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.go }}" style="border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};padding:7px 12px;font-size:12px;border-radius:3px;cursor:pointer">{{ c.label }}</button></sc-for>
+            </div>
+            <div style="margin-left:auto;font-size:12px;color:var(--muted)">{{ resultLabel }}</div>
+          </div>
+          <sc-if value="{{ hasModels }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:32px {{ f.pad }} 56px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:32px 24px">
+              <sc-for list="{{ models }}" as="m" hint-placeholder-count="6">
+                <div style="display:flex;flex-direction:column">
+                  <a onClick="{{ m.open }}" style="cursor:pointer;display:block;position:relative;aspect-ratio:1;background:var(--cool)">
+                    <image-slot id="w-{{ m.id }}" shape="rect" placeholder="Фото от бренда: {{ m.brand }} {{ m.name }}"></image-slot>
+                    <div style="position:absolute;left:8px;right:8px;bottom:8px;display:flex;flex-wrap:wrap;gap:4px;pointer-events:none">
+                      <sc-for list="{{ m.tags }}" as="t" hint-placeholder-count="4">
+                        <span title="{{ t.title }}" style="display:inline-flex;align-items:center;gap:4px;background:{{ t.bg }};color:{{ t.color }};border-radius:2px;padding:3px 7px 3px 6px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;line-height:1.2">
+                          <svg viewBox="0 0 16 16" width="9" height="9" fill="currentColor" style="display:block;flex:0 0 auto;opacity:.9"><path d="{{ t.icon }}"></path></svg>{{ t.label }}
+                        </span>
+                      </sc-for>
+                    </div>
+                  </a>
+                  <div style="margin-top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">{{ m.brand }}</div>
+                  <a onClick="{{ m.open }}" style="cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.1;margin-top:4px;color:var(--ink)">{{ m.name }}</a>
+                  <div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:6px">{{ m.ref }} · {{ m.size }}</div>
+                  <div style="font-size:11px;color:var(--accent);margin-top:8px;letter-spacing:.04em">✓ Оригинал · официальный дилер</div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
+                    <span style="font-size:14px">{{ m.price }}</span>
+                    <button onClick="{{ m.book }}" style="background:none;border:0;padding:0;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);cursor:pointer">Записаться на примерку</button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noModels }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:64px {{ f.pad }} 96px;max-width:560px">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1">Каталог этой марки пополняется</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:14px">Модели {{ brandName }} представлены в салоне. Напишите, что ищете — подберём и покажем на примерке, либо привезём под заказ.</div>
+              <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+                <button onClick="{{ goBookWatches }}" style="background:var(--cta);color:var(--bg);border:0;padding:14px 24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Уточнить наличие</button>
+                <button onClick="{{ resetFilters }}" style="background:none;color:var(--ink);border:1px solid var(--line2);padding:14px 24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Все марки</button>
+              </div>
+            </div>
+          </sc-if>
+          <!-- watchmaker teaser -->
+          <a onClick="{{ goMaster }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;padding:{{ f.padTop }}px {{ f.pad }};align-items:center;cursor:pointer;color:var(--ink);background:var(--cool);border-top:1px solid var(--line)">
+            <div style="aspect-ratio:4/5;background:var(--cool2);max-width:420px"><image-slot id="master-teaser" shape="rect" placeholder="Часовой мастер за верстаком, лупа, естественный свет"></image-slot></div>
+            <div><div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">Часовой мастер</div><div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1">Сервис не заканчивается на кассе</div><div style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:14px;max-width:440px">Подгонка браслета при покупке, регулировка хода, замена батареек и стёкол, сервис механизма — в салоне, у своего мастера.</div><div style="margin-top:20px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--ink);display:inline-block;padding-bottom:4px">О мастере</div></div>
+          </a>
+        </sc-if>
+
+        <!-- ============ WATCH DETAIL ============ -->
+        <sc-if value="{{ isWatch }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px {{ f.pad }} 0;font-size:12px;color:var(--muted);display:flex;gap:8px"><a onClick="{{ goWatches }}" style="cursor:pointer;color:var(--muted)">Часы</a><span>/</span><a onClick="{{ w.selectBrand }}" style="cursor:pointer;color:var(--muted)">{{ w.brand }}</a><span>/</span><span style="color:var(--ink)">{{ w.name }}</span></div>
+          <div style="padding:24px {{ f.pad }} 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px">
+            <div>
+              <div style="aspect-ratio:1;background:var(--cool)"><image-slot id="wd-{{ w.id }}" shape="rect" placeholder="Основной ракурс: {{ w.brand }} {{ w.name }}"></image-slot></div>
+              <div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5">Фото производителя. Остальные ракурсы и посадку на руке покажем в салоне.</div>
+            </div>
+            <div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">{{ w.brand }}</div>
+              <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h2 }}px;line-height:1.05;margin:8px 0 0">{{ w.name }}</h1>
+              <div style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);margin-top:8px">Референс {{ w.ref }}</div>
+              <div style="font-size:22px;margin-top:24px">{{ w.price }}</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px">Наличие уточняется при записи. Возможен заказ.</div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:24px">
+                <button onClick="{{ w.book }}" style="background:var(--cta);color:var(--bg);border:0;padding:16px 28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;flex:1 1 auto">Записаться на примерку</button>
+                <button onClick="{{ w.book }}" style="background:none;color:var(--ink);border:1px solid var(--ink);padding:16px 22px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Уточнить наличие</button>
+              </div>
+              <div style="margin-top:36px;border-top:1px solid var(--ink)">
+                <sc-for list="{{ w.specs }}" as="s" hint-placeholder-count="7">
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px"><span style="color:var(--muted)">{{ s.k }}</span><span>{{ s.v }}</span></div>
+                </sc-for>
+              </div>
+              <div style="margin-top:24px;padding:18px 20px;border:1px solid var(--accent);display:flex;gap:14px;align-items:flex-start">
+                <span style="flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);font-size:12px;display:flex;align-items:center;justify-content:center">✓</span>
+                <div><div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)">Гарантия подлинности</div><div style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px">Часы поставлены официальным дистрибьютором марки. Международная гарантия производителя, фирменная упаковка и документы с серийным номером — проверяются при покупке в салоне.</div></div>
+              </div>
+              <div style="margin-top:24px;font-size:14px;line-height:1.7;color:var(--muted)">{{ w.about }}</div>
+            </div>
+          </div>
+          <div style="padding:0 {{ f.pad }} 56px">
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Ещё у {{ w.brand }}</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px">
+              <sc-for list="{{ related }}" as="m" hint-placeholder-count="3">
+                <a onClick="{{ m.open }}" style="cursor:pointer;display:block;color:var(--ink)"><div style="aspect-ratio:1;background:var(--cool)"><image-slot id="w-{{ m.id }}" shape="rect" placeholder="{{ m.name }}"></image-slot></div><div style="font-family:'Cormorant Garamond',serif;font-size:20px;margin-top:10px">{{ m.name }}</div><div style="font-size:12px;color:var(--muted)">{{ m.price }}</div></a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ JEWELRY ============ -->
+        <sc-if value="{{ isJewelry }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ jbrandSel }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:20px {{ f.pad }} 0;font-size:12px;color:var(--muted);display:flex;gap:8px;background:var(--warm)"><a onClick="{{ clearJbrand }}" style="cursor:pointer;color:var(--muted)">Украшения</a><span>/</span><span style="color:var(--ink)">{{ jbi.name }}</span></div>
+            <div style="padding:32px {{ f.pad }} {{ f.padTop }}px;border-bottom:1px solid var(--line);background:var(--warm);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center">
+              <div>
+                <div style="height:72px;width:220px;max-width:100%"><image-slot id="logo-{{ jbi.id }}" shape="rect" fit="contain" placeholder="Логотип {{ jbi.name }}"></image-slot></div>
+                <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:20px 0 0">{{ jbi.name }}</h1>
+                <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px">{{ jbi.meta }}</div>
+                <div style="font-size:15px;color:var(--muted);margin-top:16px;max-width:480px;line-height:1.65">{{ jbi.text }}</div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px">
+                  <button onClick="{{ goBookJewelry }}" style="background:var(--cta);color:var(--bg);border:0;padding:14px 24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Записаться на просмотр</button>
+                  <button onClick="{{ clearJbrand }}" style="background:none;color:var(--ink);border:1px solid var(--line2);padding:14px 24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Все производители</button>
+                </div>
+              </div>
+              <div style="aspect-ratio:4/3;background:var(--warm2)"><image-slot id="brand-img-{{ jbi.id }}" shape="rect" placeholder="Имиджевое фото {{ jbi.name }} от производителя"></image-slot></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noJbrandSel }}" hint-placeholder-val="{{ true }}">
+          <div style="background:var(--warm);padding:{{ f.padTop }}px {{ f.pad }} 40px;border-bottom:1px solid var(--line)">
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Украшения</div>
+            <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:0;max-width:820px">Украшения <em>с бриллиантами</em></h1>
+            <div style="font-size:15px;color:var(--muted);margin-top:18px;max-width:520px;line-height:1.65">Готовые изделия с сертифицированными камнями GIA и IGI. Поможем разобраться в характеристиках и подобрать под повод.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:28px">
+              <a onClick="{{ goDiamonds }}" style="cursor:pointer;border:1px solid var(--ink);color:var(--ink);padding:10px 16px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-radius:3px">О бриллиантах</a>
+              <a href="https://t.me/zolotayaseredina_orenburg" target="_blank" style="border:1px solid var(--line2);color:var(--ink);padding:10px 16px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-radius:3px">Живой ассортимент в Telegram</a>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-top:32px">
+              <sc-for list="{{ jbrandItems }}" as="b" hint-placeholder-count="6">
+                <div style="border:1px solid {{ b.border }};background:var(--bg);display:flex;flex-direction:column;min-width:0;overflow:hidden">
+                  <div style="height:56px;margin:10px 14px 0"><image-slot id="logo-{{ b.id }}" shape="rect" fit="contain" placeholder="Логотип {{ b.name }}"></image-slot></div>
+                  <button onClick="{{ b.select }}" style="border:0;border-top:1px solid var(--line);background:{{ b.bg }};color:{{ b.color }};padding:8px 8px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0">
+                    <span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-align:center;line-height:1.2;max-width:100%">{{ b.name }}</span>
+                    <span style="font-size:10px;letter-spacing:.06em;opacity:.6">{{ b.countLabel }}</span>
+                  </button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+          <div style="padding:20px {{ f.pad }};display:flex;flex-wrap:wrap;gap:12px 32px;align-items:center;border-bottom:1px solid var(--line);position:sticky;top:{{ f.navH }}px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);z-index:4">
+            <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:6px">Тип</span>
+              <sc-for list="{{ jtypeChips }}" as="c" hint-placeholder-count="5"><button onClick="{{ c.go }}" style="border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};padding:7px 12px;font-size:12px;border-radius:3px;cursor:pointer">{{ c.label }}</button></sc-for>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-right:6px">Повод</span>
+              <sc-for list="{{ occasionChips }}" as="c" hint-placeholder-count="5"><button onClick="{{ c.go }}" style="border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};padding:7px 12px;font-size:12px;border-radius:3px;cursor:pointer">{{ c.label }}</button></sc-for>
+            </div>
+            <div style="margin-left:auto;font-size:12px;color:var(--muted)">{{ jresultLabel }}</div>
+          </div>
+          <sc-if value="{{ hasJewels }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:32px {{ f.pad }} 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:40px 24px">
+              <sc-for list="{{ jewels }}" as="j" hint-placeholder-count="6">
+                <div>
+                  <a onClick="{{ j.open }}" style="display:block;cursor:pointer;aspect-ratio:4/5;background:var(--warm2)"><image-slot id="j-{{ j.id }}" shape="rect" placeholder="Макро: {{ j.name }}, игра света в камне"></image-slot></a>
+                  <div style="margin-top:14px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">{{ j.brand }}</div>
+                  <div style="display:flex;justify-content:space-between;gap:12px;margin-top:4px;align-items:baseline">
+                    <a onClick="{{ j.open }}" style="cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.1;color:var(--ink)">{{ j.name }}</a>
+                    <div style="font-size:12px;color:var(--muted);white-space:nowrap">{{ j.price }}</div>
+                  </div>
+                  <div style="font-size:13px;color:var(--muted);margin-top:6px;line-height:1.6">{{ j.stone }}</div>
+                  <div style="font-size:11px;color:var(--accent);margin-top:8px;letter-spacing:.04em">✓ Оригинал · сертификат на камень</div>
+                  <button onClick="{{ j.book }}" style="margin-top:12px;background:none;border:0;padding:0 0 3px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);cursor:pointer">Записаться на просмотр</button>
+                </div>
+              </sc-for>
+            </div>
+            <div style="padding:0 {{ f.pad }} 40px;font-size:13px;color:var(--muted);max-width:560px;line-height:1.6">Цены — по запросу или «от»: зависят от камня и металла. Изделие может быть уже продано — покажем аналоги или привезём с завода под заказ.</div>
+          </sc-if>
+          <sc-if value="{{ noJewels }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:64px {{ f.pad }} 96px;max-width:560px">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1">Портфолио пополняется</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.6;margin-top:14px">Изделия {{ jbrandName }} представлены в салоне. Напишите, что ищете — подберём и покажем, либо привезём под заказ.</div>
+              <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+                <button onClick="{{ goBookJewelry }}" style="background:var(--cta);color:var(--bg);border:0;padding:14px 24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Уточнить наличие</button>
+                <button onClick="{{ resetJFilters }}" style="background:none;color:var(--ink);border:1px solid var(--line2);padding:14px 24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Все производители</button>
+              </div>
+            </div>
+          </sc-if>
+          <!-- telegram embed -->
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};background:var(--warm);border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px">
+              <div><div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Живой ассортимент</div><div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">Что сейчас в витрине</div></div>
+              <a href="https://t.me/zolotayaseredina_orenburg" target="_blank" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:4px">Открыть канал</a>
+            </div>
+            <div style="border:1px solid var(--line);background:var(--bg)">
+              <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)">
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px">З</div>
+                <div><div style="font-size:14px;font-weight:500">Золотая середина · Оренбург</div><div style="font-size:12px;color:var(--muted)">t.me/zolotayaseredina_orenburg</div></div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--line)">
+                <sc-for list="{{ tgPosts }}" as="p" hint-placeholder-count="3">
+                  <div style="background:var(--bg);padding:14px">
+                    <div style="aspect-ratio:1;background:var(--warm2)"><image-slot id="tg-{{ p.id }}" shape="rect" placeholder="Фото из поста в Telegram"></image-slot></div>
+                    <div style="font-size:13px;line-height:1.55;margin-top:12px">{{ p.text }}</div>
+                    <div style="font-size:11px;color:var(--muted);margin-top:8px">{{ p.meta }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ JEWEL DETAIL ============ -->
+        <sc-if value="{{ isJewel }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:20px {{ f.pad }} 0;font-size:12px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap"><a onClick="{{ goJewelry }}" style="cursor:pointer;color:var(--muted)">Украшения</a><span>/</span><a onClick="{{ jw.selectBrand }}" style="cursor:pointer;color:var(--muted)">{{ jw.brand }}</a><span>/</span><span style="color:var(--ink)">{{ jw.name }}</span></div>
+          <div style="padding:24px {{ f.pad }} 64px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;background:var(--bg)">
+            <div>
+              <div style="aspect-ratio:4/5;background:var(--warm2)"><image-slot id="jd-{{ jw.id }}" shape="rect" placeholder="Макро: {{ jw.brand }} {{ jw.name }}, игра света в камне"></image-slot></div>
+              <div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5">Фото производителя. Камень при разном свете и посадку на руке покажем в салоне.</div>
+            </div>
+            <div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">{{ jw.brand }}</div>
+              <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h2 }}px;line-height:1.05;margin:8px 0 0">{{ jw.name }}</h1>
+              <div style="font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);margin-top:8px">Артикул {{ jw.article }}</div>
+              <div style="font-size:22px;margin-top:24px">{{ jw.price }}</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px">Точная цена — при просмотре: зависит от камня и размера.</div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:24px">
+                <button onClick="{{ jw.book }}" style="background:var(--cta);color:var(--bg);border:0;padding:16px 28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;flex:1 1 auto">Записаться на просмотр</button>
+                <button onClick="{{ jw.book }}" style="background:none;color:var(--ink);border:1px solid var(--ink);padding:16px 22px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Уточнить наличие</button>
+              </div>
+              <div style="margin-top:36px;border-top:1px solid var(--ink)">
+                <sc-for list="{{ jw.specs }}" as="s" hint-placeholder-count="6">
+                  <div style="display:grid;grid-template-columns:140px 1fr;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px"><span style="color:var(--muted)">{{ s.k }}</span><span>{{ s.v }}</span></div>
+                </sc-for>
+              </div>
+              <div style="margin-top:24px;padding:18px 20px;border:1px solid var(--accent);display:flex;gap:14px;align-items:flex-start">
+                <span style="flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);font-size:12px;display:flex;align-items:center;justify-content:center">✓</span>
+                <div><div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)">Гарантия подлинности</div><div style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px">Изделие получено напрямую с завода-изготовителя: паспорт изделия, бирка с пробой и клеймом, сертификат на бриллиант. Всё показываем до покупки.</div></div>
+              </div>
+              <a onClick="{{ goDiamonds }}" style="display:inline-block;margin-top:24px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:4px;cursor:pointer">Как читать характеристики камня</a>
+            </div>
+          </div>
+          <div style="padding:0 {{ f.pad }} 56px">
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Ещё у {{ jw.brand }} и других</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px">
+              <sc-for list="{{ jrelated }}" as="j" hint-placeholder-count="3">
+                <a onClick="{{ j.open }}" style="cursor:pointer;display:block;color:var(--ink)"><div style="aspect-ratio:1;background:var(--warm2)"><image-slot id="j-{{ j.id }}" shape="rect" placeholder="{{ j.name }}"></image-slot></div><div style="font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:10px">{{ j.brand }}</div><div style="font-family:'Cormorant Garamond',serif;font-size:20px;margin-top:2px">{{ j.name }}</div><div style="font-size:12px;color:var(--muted)">{{ j.price }}</div></a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ DIAMONDS 4C ============ -->
+        <sc-if value="{{ isDiamonds }}" hint-placeholder-val="{{ false }}">
+          <div style="background:var(--warm);padding:{{ f.padTop }}px {{ f.pad }} 40px;border-bottom:1px solid var(--line)">
+            <div style="font-size:12px;color:var(--muted);display:flex;gap:8px;margin-bottom:20px"><a onClick="{{ goJewelry }}" style="cursor:pointer;color:var(--muted)">Украшения</a><span>/</span><span style="color:var(--ink)">О бриллиантах</span></div>
+            <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:0;max-width:820px">Как читать бриллиант</h1>
+            <div style="font-size:15px;color:var(--muted);margin-top:18px;max-width:560px;line-height:1.65">Четыре характеристики — 4C — описывают любой камень. Два одинаковых по размеру бриллианта могут отличаться в цене в несколько раз. Ниже — что это значит и на что смотреть в сертификате.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)">
+            <div style="background:var(--bg);padding:{{ f.pad }}">
+              <div style="height:96px;display:flex;align-items:center;justify-content:center"><div style="width:52px;height:52px;border:1px solid var(--ink);transform:rotate(45deg);position:relative"><div style="position:absolute;inset:12px;border:1px solid var(--ink)"></div></div></div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:16px">Cut · Огранка</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1.1;margin-top:6px">Отвечает за блеск</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.65;margin-top:10px">Пропорции и симметрия граней определяют, сколько света камень вернёт в глаз. Шкала GIA: Excellent, Very Good, Good, Fair, Poor. Единственный параметр, который зависит от человека, а не от природы.</div>
+            </div>
+            <div style="background:var(--bg);padding:{{ f.pad }}">
+              <div style="height:96px;display:flex;align-items:center"><div style="width:100%;height:14px;background:linear-gradient(90deg,#fbfaf7,#f6f1e4 55%,#e9d7a8);border:1px solid var(--line)"></div></div>
+              <div style="display:flex;justify-content:space-between;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:-30px;margin-bottom:24px"><span>D</span><span>G</span><span>K</span><span>Z</span></div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:16px">Color · Цвет</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1.1;margin-top:6px">От бесцветного к тёплому</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.65;margin-top:10px">Шкала от D (абсолютно бесцветный) до Z (заметный жёлтый оттенок). Разница между соседними буквами невооружённым глазом почти не видна — но видна в цене. Оптимум для белого золота: D–G; для жёлтого и розового — до J.</div>
+            </div>
+            <div style="background:var(--bg);padding:{{ f.pad }}">
+              <div style="height:96px;display:flex;align-items:center;gap:14px;justify-content:center">
+                <div style="width:40px;height:40px;border-radius:50%;border:1px solid var(--ink)"></div>
+                <div style="width:40px;height:40px;border-radius:50%;border:1px solid var(--ink);position:relative"><div style="position:absolute;left:24px;top:12px;width:3px;height:3px;border-radius:50%;background:var(--ink)"></div></div>
+                <div style="width:40px;height:40px;border-radius:50%;border:1px solid var(--ink);position:relative"><div style="position:absolute;left:10px;top:20px;width:4px;height:4px;border-radius:50%;background:var(--ink)"></div><div style="position:absolute;left:26px;top:10px;width:3px;height:3px;border-radius:50%;background:var(--ink)"></div><div style="position:absolute;left:22px;top:27px;width:5px;height:2px;background:var(--ink)"></div></div>
+              </div>
+              <div style="display:flex;justify-content:center;gap:28px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:-18px;margin-bottom:24px"><span>FL–IF</span><span>VS1–VS2</span><span>SI–I</span></div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:16px">Clarity · Чистота</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1.1;margin-top:6px">Включения внутри камня</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.65;margin-top:10px">От FL (безупречный) до I3 (включения видны глазом). С VS2 и выше включения различимы только под 10-кратной лупой. Разумный баланс для украшения — VS1–VS2: чисто для глаза, без переплаты за лабораторную чистоту.</div>
+            </div>
+            <div style="background:var(--bg);padding:{{ f.pad }}">
+              <div style="height:96px;display:flex;align-items:flex-end;gap:14px;justify-content:center;padding-bottom:14px">
+                <div style="width:14px;height:14px;border-radius:50%;border:1px solid var(--ink)"></div>
+                <div style="width:22px;height:22px;border-radius:50%;border:1px solid var(--ink)"></div>
+                <div style="width:32px;height:32px;border-radius:50%;border:1px solid var(--ink)"></div>
+                <div style="width:44px;height:44px;border-radius:50%;border:1px solid var(--ink)"></div>
+              </div>
+              <div style="display:flex;justify-content:center;gap:14px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:-10px;margin-bottom:24px"><span>0.3</span><span>0.5</span><span>1.0</span><span>2.0 ct</span></div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:16px">Carat · Вес</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1.1;margin-top:6px">Вес, а не размер</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.65;margin-top:10px">1 карат = 0,2 грамма. Диаметр растёт медленнее веса: камень 1 ct — около 6,5 мм, 2 ct — около 8,1 мм. Цена за карат скачет на «круглых» отметках: 0,9 ct заметно дешевле 1,0 ct при почти одинаковом виде.</div>
+            </div>
+          </div>
+          <!-- certificate -->
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:start;background:var(--warm)">
+            <div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">Сертификат</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1">Как читать отчёт GIA или IGI</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.65;margin-top:14px;max-width:440px">Сертификат — паспорт камня от независимой лаборатории. Номер отчёта нанесён лазером на рундист и проверяется на сайте лаборатории. Мы показываем сертификат к каждому камню до покупки.</div>
+              <div style="margin-top:24px;display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.5">
+                <div style="display:flex;gap:12px"><span style="flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--ink);font-size:11px;display:flex;align-items:center;justify-content:center">1</span><span><b style="font-weight:500">Report number</b> — сверьте с гравировкой на камне и с базой лаборатории.</span></div>
+                <div style="display:flex;gap:12px"><span style="flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--ink);font-size:11px;display:flex;align-items:center;justify-content:center">2</span><span><b style="font-weight:500">Grading results</b> — те самые 4C: вес, цвет, чистота, огранка.</span></div>
+                <div style="display:flex;gap:12px"><span style="flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--ink);font-size:11px;display:flex;align-items:center;justify-content:center">3</span><span><b style="font-weight:500">Polish, Symmetry, Fluorescence</b> — вторичные признаки; флуоресценция None–Faint предпочтительна.</span></div>
+                <div style="display:flex;gap:12px"><span style="flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--ink);font-size:11px;display:flex;align-items:center;justify-content:center">4</span><span><b style="font-weight:500">Plotting diagram</b> — карта включений; помогает узнать именно свой камень.</span></div>
+              </div>
+            </div>
+            <div style="--ink:#1c1b19;--muted:#6b675f;--line:#e6e2da;--line2:#d9d4cb;background:#fdfcfa;border:1px solid var(--line);padding:28px;box-shadow:0 40px 60px -40px rgba(28,27,25,.35);position:relative;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--ink)">
+              <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.9),rgba(255,255,255,0) 60%);pointer-events:none"></div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px"><span style="font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:.08em">DIAMOND GRADING REPORT</span><span style="color:var(--muted)">образец</span></div>
+              <div style="display:grid;grid-template-columns:1fr auto;gap:8px 16px;margin-top:16px;line-height:1.5">
+                <span style="color:var(--muted)">① Report number</span><span>2 2 4 7 · · · · · ·</span>
+                <span style="color:var(--muted)">Shape and cutting style</span><span>Round Brilliant</span>
+                <span style="color:var(--muted)">Measurements</span><span>6.48 – 6.52 × 4.01 mm</span>
+              </div>
+              <div style="margin-top:14px;padding-top:10px;border-top:1px dashed var(--line2);color:var(--muted)">② Grading results</div>
+              <div style="display:grid;grid-template-columns:1fr auto;gap:8px 16px;margin-top:8px;line-height:1.5">
+                <span style="color:var(--muted)">Carat weight</span><span>1.01 carat</span>
+                <span style="color:var(--muted)">Color grade</span><span>F</span>
+                <span style="color:var(--muted)">Clarity grade</span><span>VS1</span>
+                <span style="color:var(--muted)">Cut grade</span><span>Excellent</span>
+              </div>
+              <div style="margin-top:14px;padding-top:10px;border-top:1px dashed var(--line2);color:var(--muted)">③ Additional grading information</div>
+              <div style="display:grid;grid-template-columns:1fr auto;gap:8px 16px;margin-top:8px;line-height:1.5">
+                <span style="color:var(--muted)">Polish</span><span>Excellent</span>
+                <span style="color:var(--muted)">Symmetry</span><span>Excellent</span>
+                <span style="color:var(--muted)">Fluorescence</span><span>None</span>
+                <span style="color:var(--muted)">Inscription</span><span>GIA 2247······</span>
+              </div>
+              <div style="margin-top:14px;padding-top:10px;border-top:1px dashed var(--line2);color:var(--muted)">④ Plotting diagram</div>
+              <div style="height:120px;margin-top:10px;background:#f4f1eb"><image-slot id="cert-plot" shape="rect" placeholder="Скан реального сертификата (GIA/IGI) от клиента"></image-slot></div>
+            </div>
+          </div>
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1;max-width:560px">Сравнить два камня рядом можно только вживую. Приходите — покажем при дневном и тёплом свете.</div>
+            <button onClick="{{ goBookJewelry }}" style="background:var(--cta);color:var(--bg);border:0;padding:16px 28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Записаться на консультацию</button>
+          </div>
+        </sc-if>
+
+        <!-- ============ MASTER ============ -->
+        <sc-if value="{{ isMaster }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;padding:{{ f.padTop }}px {{ f.pad }};background:var(--cool);border-bottom:1px solid var(--line);align-items:center">
+            <div style="aspect-ratio:4/5;background:var(--cool2)"><image-slot id="master-portrait" shape="rect" placeholder="Портрет часового мастера, репортажный стиль, естественный свет"></image-slot></div>
+            <div>
+              <div style="font-size:12px;color:var(--muted);display:flex;gap:8px;margin-bottom:20px"><a onClick="{{ goWatches }}" style="cursor:pointer;color:var(--muted)">Часы</a><span>/</span><span style="color:var(--ink)">Часовой мастер</span></div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Часовой мастер</div>
+              <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:10px 0 0">Имя Фамилия</h1>
+              <div style="display:flex;gap:32px;margin-top:24px;flex-wrap:wrap">
+                <div><div style="font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1">— лет</div><div style="font-size:12px;color:var(--muted);margin-top:4px">за верстаком</div></div>
+                <div><div style="font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1">Швейцарские калибры</div><div style="font-size:12px;color:var(--muted);margin-top:4px">специализация</div></div>
+              </div>
+              <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;line-height:1.35;margin-top:28px;max-width:460px;text-wrap:pretty">«Хорошие часы переживают владельца. Моя работа — чтобы они шли так же, как в день покупки».</div>
+              <div style="font-size:14px;color:var(--muted);line-height:1.7;margin-top:18px;max-width:460px">Текст о мастере — предоставляет клиент. Здесь уместно 2–3 коротких абзаца: где учился, с какими механизмами работает, что делает на месте, а что отправляет в сервисный центр бренда.</div>
+            </div>
+          </div>
+          <div style="padding:{{ f.padTop }}px {{ f.pad }}">
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:28px">
+              <div><div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Работы мастера</div><div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">Что делаем в салоне</div></div>
+              <div style="font-size:13px;color:var(--muted);max-width:360px;line-height:1.6">Примеры выполненных работ. Сроки и стоимость называем после бесплатной диагностики.</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px">
+              <sc-for list="{{ masterWorks }}" as="k" hint-placeholder-count="6">
+                <div><div style="aspect-ratio:1;background:var(--warm2)"><image-slot id="mw-{{ k.id }}" shape="rect" placeholder="Фото работы: {{ k.name }}"></image-slot></div><div style="font-size:13px;margin-top:10px">{{ k.name }}</div><div style="font-size:12px;color:var(--muted)">{{ k.note }}</div></div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="padding:0 {{ f.pad }} {{ f.padTop }}px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:40px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1;max-width:520px">Принести часы на диагностику — бесплатно, 15 минут в салоне.</div>
+            <button onClick="{{ goBookServices }}" style="background:var(--cta);color:var(--bg);border:0;padding:16px 28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Записаться к мастеру</button>
+          </div>
+        </sc-if>
+
+        <!-- ============ SERVICES ============ -->
+        <sc-if value="{{ isServices }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:{{ f.padTop }}px {{ f.pad }} 40px;border-bottom:1px solid var(--line)">
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Сервис при салоне</div>
+            <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:0">Услуги</h1>
+            <div style="font-size:15px;color:var(--muted);margin-top:18px;max-width:520px;line-height:1.65">Часовой мастер работает в салоне. Диагностика — бесплатно, сроки и стоимость называем до начала работ.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--line);border-bottom:1px solid var(--line)">
+            <sc-for list="{{ services }}" as="s" hint-placeholder-count="5">
+              <div style="background:var(--bg);padding:{{ f.pad }};display:flex;flex-direction:column;gap:14px">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.2em;color:var(--muted)">{{ s.num }}</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1.1">{{ s.name }}</div>
+                <div style="font-size:14px;color:var(--muted);line-height:1.65;flex:1">{{ s.text }}</div>
+                <div style="font-size:12px;color:var(--muted)">{{ s.term }}</div>
+                <button onClick="{{ s.book }}" style="align-self:flex-start;background:none;border:0;padding:0 0 3px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);cursor:pointer">Записаться</button>
+              </div>
+            </sc-for>
+            <div style="background:var(--cool);padding:{{ f.pad }};display:flex;flex-direction:column;justify-content:flex-end;gap:14px">
+              <div style="font-size:14px;color:var(--muted);line-height:1.65">Не нашли нужное? Опишите задачу при записи — подскажем, возьмёмся ли и сколько займёт.</div>
+              <a href="tel:+73532776330" style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--ink)">+7 (3532) 77-63-30</a>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ WHY OFFLINE ============ -->
+        <sc-if value="{{ isWhy }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:{{ f.padTop }}px {{ f.pad }} 48px;border-bottom:1px solid var(--line)">
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Честно о покупке</div>
+            <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:0;max-width:900px;text-wrap:pretty">Почему часы и бриллианты нельзя выбрать онлайн</h1>
+            <div style="font-size:15px;color:var(--muted);margin-top:18px;max-width:560px;line-height:1.65">Мы не продаём через сайт не потому, что не умеем. Фотография передаёт форму — но не посадку, вес и свет. Ниже одни и те же вещи, снятые в разных условиях.</div>
+          </div>
+          <div style="padding:{{ f.padTop }}px {{ f.pad }} 24px;background:var(--cool)">
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Часы</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1;margin-top:10px;max-width:640px">Одни и те же 40 мм на разных запястьях</div>
+            <sc-for list="{{ whyWatch }}" as="p" hint-placeholder-count="2">
+              <div style="margin-top:32px">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px">
+                  <div><div style="aspect-ratio:4/3;background:var(--cool2)"><image-slot id="why-{{ p.id }}-a" shape="rect" placeholder="{{ p.a }}"></image-slot></div><div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:8px">{{ p.a }}</div></div>
+                  <div><div style="aspect-ratio:4/3;background:var(--cool2)"><image-slot id="why-{{ p.id }}-b" shape="rect" placeholder="{{ p.b }}"></image-slot></div><div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:8px">{{ p.b }}</div></div>
+                </div>
+                <div style="font-size:14px;line-height:1.65;margin-top:14px;max-width:560px">{{ p.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};background:var(--warm)">
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Бриллианты</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1;margin-top:10px;max-width:640px">Одно кольцо. Разный свет</div>
+            <sc-for list="{{ whyJewel }}" as="p" hint-placeholder-count="2">
+              <div style="margin-top:32px">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px">
+                  <div><div style="aspect-ratio:4/3;background:var(--warm2)"><image-slot id="why-{{ p.id }}-a" shape="rect" placeholder="{{ p.a }}"></image-slot></div><div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:8px">{{ p.a }}</div></div>
+                  <div><div style="aspect-ratio:4/3;background:var(--warm2)"><image-slot id="why-{{ p.id }}-b" shape="rect" placeholder="{{ p.b }}"></image-slot></div><div style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);margin-top:8px">{{ p.b }}</div></div>
+                </div>
+                <div style="font-size:14px;line-height:1.65;margin-top:14px;max-width:560px">{{ p.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.1;max-width:560px">Полчаса в салоне заменяют неделю сравнения фотографий.</div>
+            <button onClick="{{ goBook }}" style="background:var(--cta);color:var(--bg);border:0;padding:16px 28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">Записаться на консультацию</button>
+          </div>
+        </sc-if>
+
+        <!-- ============ ABOUT ============ -->
+        <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;padding:{{ f.padTop }}px {{ f.pad }};align-items:center;border-bottom:1px solid var(--line)">
+            <div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">О магазине</div>
+              <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:0">Салон на Советской, 31</h1>
+              <div style="font-size:15px;color:var(--muted);margin-top:18px;max-width:480px;line-height:1.65">Швейцарские часы и ювелирные изделия в центре Оренбурга. Официальный дилер представленных марок, собственная мастерская, сервис после покупки.</div>
+              <div style="display:flex;gap:32px;margin-top:28px;flex-wrap:wrap">
+                <div><div style="font-family:'Cormorant Garamond',serif;font-size:40px;line-height:1">13</div><div style="font-size:12px;color:var(--muted);margin-top:4px">швейцарских марок</div></div>
+                <div><div style="font-family:'Cormorant Garamond',serif;font-size:40px;line-height:1">— лет</div><div style="font-size:12px;color:var(--muted);margin-top:4px">на рынке (уточнить)</div></div>
+                <div><div style="font-family:'Cormorant Garamond',serif;font-size:40px;line-height:1">4,6</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Яндекс Карты · 113 оценок</div></div>
+              </div>
+            </div>
+            <div style="aspect-ratio:4/3;background:var(--warm2)"><image-slot id="about-interior" shape="rect" placeholder="Интерьер салона: длинная витрина у стены"></image-slot></div>
+          </div>
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};border-bottom:1px solid var(--line)">
+            <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:24px">Отзывы</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px">
+              <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
+                <div style="border-top:1px solid var(--ink);padding-top:18px"><div style="font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.35;text-wrap:pretty">{{ r.text }}</div><div style="font-size:12px;color:var(--muted);margin-top:14px">{{ r.who }}</div></div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};background:var(--cool)">
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:28px">
+              <div><div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Документы</div><div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">Сертификаты и дилерские соглашения</div></div>
+              <div style="font-size:13px;color:var(--muted);max-width:360px;line-height:1.6">Оригиналы — в салоне. Любой документ покажем по просьбе.</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
+              <sc-for list="{{ certs }}" as="c" hint-placeholder-count="3">
+                <div><div style="aspect-ratio:3/4;background:#fdfcfa;border:1px solid var(--line2);box-shadow:0 20px 40px -30px rgba(28,27,25,.4)"><image-slot id="cert-{{ c.id }}" shape="rect" fit="contain" placeholder="{{ c.name }}"></image-slot></div><div style="font-size:13px;margin-top:10px">{{ c.name }}</div></div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ CONTACTS ============ -->
+        <sc-if value="{{ isContacts }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;padding:{{ f.padTop }}px {{ f.pad }}">
+            <div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Контакты</div>
+              <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1;margin:0">Приходите</h1>
+              <div style="margin-top:28px;display:grid;grid-template-columns:auto 1fr;gap:12px 24px;font-size:15px;line-height:1.5">
+                <span style="color:var(--muted)">Адрес</span><span>Оренбург, ул. Советская, 31</span>
+                <span style="color:var(--muted)">Часы работы</span><span>Вт–Сб 10:30–19:00<br><span style="color:var(--muted);font-size:13px">Вс, Пн — выходные</span></span>
+                <span style="color:var(--muted)">Телефон</span><a href="tel:+73532776330" style="color:var(--ink)">+7 (3532) 77-63-30</a>
+                <span style="color:var(--muted)">Соцсети</span><span><a href="https://t.me/zolotayaseredina_orenburg" target="_blank">Telegram</a> · <a href="https://instagram.com/zolotayaseredina_orenburg" target="_blank">Instagram</a></span>
+              </div>
+              <div style="aspect-ratio:4/3;background:var(--cool2);margin-top:32px;position:relative"><image-slot id="map" shape="rect" placeholder="Карта: встроенная Яндекс Карта, Советская 31"></image-slot><a href="https://yandex.ru/maps/-/CTxVyIYt" target="_blank" style="position:absolute;left:12px;bottom:12px;background:var(--bg);padding:8px 12px;font-size:12px;color:var(--ink);border:1px solid var(--line2)">Открыть в Яндекс Картах</a></div>
+            </div>
+            <div style="background:var(--warm);padding:{{ f.pad }};align-self:start">
+              <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+                <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">Записаться на консультацию</div>
+                <div style="font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6">Перезвоним в рабочее время, согласуем визит. Ничего не нужно оплачивать.</div>
+                <div style="display:flex;flex-direction:column;gap:18px;margin-top:28px">
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Имя<input value="{{ form.name }}" onChange="{{ setName }}" placeholder="Как к вам обращаться" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0"></label>
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Телефон<input value="{{ form.phone }}" onChange="{{ setPhone }}" placeholder="+7" inputMode="tel" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0"></label>
+                  <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Что интересует</span>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ interestChips }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.go }}" style="border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};padding:10px 16px;font-size:13px;border-radius:3px;cursor:pointer;min-height:44px">{{ c.label }}</button></sc-for></div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Удобное время</span>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{ timeChips }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.go }}" style="border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};padding:10px 16px;font-size:13px;border-radius:3px;cursor:pointer;min-height:44px">{{ c.label }}</button></sc-for></div>
+                  </div>
+                  <sc-if value="{{ hasNote }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:13px;color:var(--muted);border-left:1px solid var(--line2);padding-left:12px">Модель: {{ form.note }}</div>
+                  </sc-if>
+                  <button onClick="{{ submit }}" style="background:var(--cta);color:var(--bg);border:0;padding:18px 28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:6px;min-height:48px">Отправить заявку</button>
+                  <div style="font-size:11px;color:var(--muted);line-height:1.5">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .4s ease">
+                  <div style="width:44px;height:44px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px">✓</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05;margin-top:20px">Заявка отправлена</div>
+                  <div style="font-size:14px;color:var(--muted);margin-top:12px;line-height:1.65">{{ sentName }}перезвоним на {{ sentPhone }} в рабочее время — Вт–Сб с 10:30 до 19:00 — и согласуем визит.</div>
+                  <div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;line-height:1.8;color:var(--muted)">Интерес: <span style="color:var(--ink)">{{ sentInterest }}</span><br>Время: <span style="color:var(--ink)">{{ sentTime }}</span></div>
+                  <button onClick="{{ resetForm }}" style="margin-top:24px;background:none;border:0;padding:0 0 3px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);cursor:pointer">Отправить ещё одну</button>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ GIFT CERTIFICATE ============ -->
+        <sc-if value="{{ isGift }}" hint-placeholder-val="{{ false }}">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:40px;padding:{{ f.padTop }}px {{ f.pad }};align-items:center;background:var(--warm);border-bottom:1px solid var(--line)">
+            <div>
+              <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Подарочный сертификат</div>
+              <h1 style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:{{ f.h1 }}px;line-height:1.02;margin:0;max-width:640px;text-wrap:pretty">Подарок, в котором невозможно ошибиться</h1>
+              <div style="font-size:15px;color:var(--muted);margin-top:18px;max-width:480px;line-height:1.65">Швейцарские часы или украшение с бриллиантом — выберет тот, кому вы дарите. Бланк в подарочной упаковке доставим по городу.</div>
+              <button onClick="{{ scrollToGift }}" style="background:var(--cta);color:var(--bg);border:0;padding:18px 32px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:28px;min-height:52px">Выбрать сертификат</button>
+              <div style="font-size:12px;color:var(--muted);margin-top:12px">Доставка в день заказа · Сертификат бессрочный</div>
+            </div>
+            <div style="aspect-ratio:4/3;background:var(--warm2)"><image-slot id="gift-hero" shape="rect" placeholder="Фото: бланк сертификата в коробке с лентой и открыткой"></image-slot></div>
+          </div>
+
+          <sc-if value="{{ giftNotSent }}" hint-placeholder-val="{{ true }}">
+            <div data-gift-form style="padding:{{ f.padTop }}px {{ f.pad }};border-bottom:1px solid var(--line)">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">Соберите свой сертификат</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;margin-top:32px;align-items:start">
+                <div style="display:flex;flex-direction:column;gap:32px">
+                  <div>
+                    <div style="font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">Номинал</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px">
+                      <sc-for list="{{ giftAmounts }}" as="c" hint-placeholder-count="5">
+                        <button onClick="{{ c.go }}" style="border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};padding:12px 18px;font-size:14px;border-radius:3px;cursor:pointer;min-height:44px">{{ c.label }}</button>
+                      </sc-for>
+                      <button onClick="{{ giftCustomChip.go }}" style="border:1px solid {{ giftCustomChip.border }};background:{{ giftCustomChip.bg }};color:{{ giftCustomChip.color }};padding:12px 18px;font-size:14px;border-radius:3px;cursor:pointer;min-height:44px">{{ giftCustomChip.label }}</button>
+                    </div>
+                    <sc-if value="{{ giftCustomOn }}" hint-placeholder-val="{{ false }}">
+                      <input value="{{ gift.custom }}" onChange="{{ setGiftCustom }}" placeholder="Сумма, ₽" inputMode="numeric" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:18px;color:var(--ink);outline:none;margin-top:16px;width:180px">
+                    </sc-if>
+                    <div style="font-size:12px;color:var(--muted);margin-top:12px;max-width:380px;line-height:1.5">По сертификату можно доплатить и выбрать что-то дороже</div>
+                  </div>
+                  <div>
+                    <div style="font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">Дизайн бланка</div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px">
+                      <sc-for list="{{ giftDesigns }}" as="d" hint-placeholder-count="5">
+                        <div onClick="{{ d.select }}" style="cursor:pointer">
+                          <div style="aspect-ratio:16/10;background:var(--cool);outline:{{ d.width }} solid {{ d.border }};outline-offset:-1px;position:relative">
+                            <image-slot id="gift-d-{{ d.key }}" shape="rect" placeholder="Бланк: {{ d.label }} — {{ d.accentTxt }}"></image-slot>
+                            <sc-if value="{{ d.active }}" hint-placeholder-val="{{ false }}">
+                              <span style="position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:11px;display:flex;align-items:center;justify-content:center">✓</span>
+                            </sc-if>
+                          </div>
+                          <div style="font-size:13px;margin-top:8px;color:{{ d.labelColor }}">{{ d.label }}</div>
+                          <div style="font-size:11px;color:var(--muted);margin-top:2px">{{ d.occasion }}</div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:18px">
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Поздравление на открытке
+                      <textarea value="{{ gift.greeting }}" onChange="{{ setGiftGreeting }}" rows="3" placeholder="С днём рождения, любимая. Выбери то, что понравится." style="border:1px solid var(--line2);background:none;padding:12px;font-size:15px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0;resize:vertical;line-height:1.5"></textarea>
+                      <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);letter-spacing:0;text-transform:none;align-self:flex-end">{{ giftCount }} / 200</span>
+                    </label>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Имя получателя
+                      <input value="{{ gift.recipient }}" onChange="{{ setGiftRecipient }}" placeholder="Печатается на открытке" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                    </label>
+                  </div>
+                </div>
+
+                <div style="background:var(--warm);padding:{{ f.pad }};display:flex;flex-direction:column;gap:22px">
+                  <div>
+                    <div style="font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px">Кому доставить</div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                      <sc-for list="{{ giftDeliver }}" as="c" hint-placeholder-count="2">
+                        <button onClick="{{ c.go }}" style="border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};padding:10px 16px;font-size:13px;border-radius:3px;cursor:pointer;min-height:44px">{{ c.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <sc-if value="{{ giftToRecipient }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:16px;animation:fadeUp .25s ease">
+                      <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Телефон получателя
+                        <input value="{{ gift.rphone }}" onChange="{{ setGiftRphone }}" placeholder="+7 — курьер согласует время" inputMode="tel" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                      </label>
+                      <label onClick="{{ toggleNoPrice }}" style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:13px;line-height:1.5;color:var(--ink)">
+                        <span style="flex:0 0 auto;width:18px;height:18px;border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:12px;margin-top:1px">{{ noPriceMark }}</span>
+                        <span>Режим сюрприза<br><span style="color:var(--muted);font-size:12px">Получатель не увидит ни цены, ни чека</span></span>
+                      </label>
+                    </div>
+                  </sc-if>
+                  <div style="display:grid;grid-template-columns:1fr 84px;gap:12px">
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Адрес доставки
+                      <input value="{{ gift.address }}" onChange="{{ setGiftAddress }}" placeholder="Улица, дом" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                    </label>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Кв.
+                      <input value="{{ gift.flat }}" onChange="{{ setGiftFlat }}" placeholder="—" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                    </label>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <span style="font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Дата и время</span>
+                    <input value="{{ gift.date }}" onChange="{{ setGiftDate }}" type="date" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap">
+                      <sc-for list="{{ giftSlots }}" as="c" hint-placeholder-count="5">
+                        <button onClick="{{ c.go }}" style="border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};padding:10px 14px;font-size:13px;border-radius:3px;cursor:pointer;min-height:44px;font-family:ui-monospace,Menlo,monospace">{{ c.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px">
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Ваше имя
+                      <input value="{{ gift.name }}" onChange="{{ setGiftName }}" placeholder="Заказчик" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                    </label>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Телефон
+                      <input value="{{ gift.phone }}" onChange="{{ setGiftPhone }}" placeholder="+7" inputMode="tel" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                    </label>
+                  </div>
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Комментарий курьеру
+                    <input value="{{ gift.comment }}" onChange="{{ setGiftComment }}" placeholder="Код домофона, позвонить заранее" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                  </label>
+                  <label onClick="{{ toggleAgree }}" style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:12px;line-height:1.5;color:var(--muted)">
+                    <span style="flex:0 0 auto;width:18px;height:18px;border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink);margin-top:1px">{{ agreeMark }}</span>
+                    <span>Согласен на обработку персональных данных и с <a onClick="{{ openTerms }}" style="cursor:pointer">условиями сертификата</a></span>
+                  </label>
+                  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:20px">
+                    <div>
+                      <div style="font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">К оплате</div>
+                      <div style="font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1.1">{{ giftSumLabel }}</div>
+                    </div>
+                    <button onClick="{{ submitGift }}" style="background:{{ giftBtnBg }};color:{{ giftBtnColor }};border:0;padding:18px 30px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;min-height:52px">Оформить заказ</button>
+                  </div>
+                  <sc-if value="{{ giftIncomplete }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:12px;color:var(--muted)">Заполните адрес, дату, интервал, телефон и согласие — после этого кнопка станет активной.</div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ giftSent }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:{{ f.padTop }}px {{ f.pad }};border-bottom:1px solid var(--line);animation:fadeUp .4s ease">
+              <div style="width:44px;height:44px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px">✓</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05;margin-top:20px">Заказ оплачен</div>
+              <div style="font-size:15px;color:var(--muted);margin-top:12px;max-width:520px;line-height:1.65">Письмо с номером сертификата и SMS о доставке отправлены. Если что-то нужно изменить — позвоните в салон.</div>
+              <div style="margin-top:28px;display:grid;grid-template-columns:auto 1fr;gap:10px 24px;font-size:15px;max-width:520px">
+                <span style="color:var(--muted)">Номер заказа</span><span style="font-family:ui-monospace,Menlo,monospace">{{ giftNo }}</span>
+                <span style="color:var(--muted)">Номинал</span><span>{{ giftSumLabel }}</span>
+                <span style="color:var(--muted)">Дизайн бланка</span><span>{{ giftDesignLabel }}</span>
+                <span style="color:var(--muted)">Доставка</span><span>{{ giftDeliveryLine }}</span>
+              </div>
+              <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:28px">
+                <button onClick="{{ resetGift }}" style="background:none;border:0;padding:0 0 3px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);cursor:pointer">Оформить ещё один</button>
+                <a href="tel:+73532776330" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)">+7 (3532) 77-63-30</a>
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};background:var(--cool);border-bottom:1px solid var(--line)">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">Три шага</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;margin-top:32px">
+              <sc-for list="{{ giftSteps }}" as="s" hint-placeholder-count="3">
+                <div style="border-top:1px solid var(--ink);padding-top:16px">
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.2em;color:var(--muted)">{{ s.num }}</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:26px;line-height:1.15;margin-top:8px">{{ s.title }}</div>
+                  <div style="font-size:14px;color:var(--muted);line-height:1.65;margin-top:10px">{{ s.text }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};border-bottom:1px solid var(--line)">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">На что хватит сертификата</div>
+            <div style="font-size:15px;color:var(--muted);margin-top:14px;max-width:520px;line-height:1.65">Несколько примеров из витрины. Ассортимент шире — полный выбор в салоне.</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:28px 20px;margin-top:32px">
+              <sc-for list="{{ giftPicks }}" as="p" hint-placeholder-count="8">
+                <div>
+                  <div style="aspect-ratio:1;background:var(--cool)"><image-slot id="gift-p-{{ p.id }}" shape="rect" placeholder="Фото: {{ p.name }}"></image-slot></div>
+                  <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px">{{ p.brand }}</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.15;margin-top:4px">{{ p.name }}</div>
+                  <div style="font-size:13px;margin-top:6px">{{ p.price }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-size:12px;color:var(--muted);margin-top:24px">Цены действительны на дату публикации. Наличие уточняйте по телефону.</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;padding:{{ f.padTop }}px {{ f.pad }};background:var(--warm);border-bottom:1px solid var(--line);align-items:center">
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">Привезём в удобное время</div>
+              <div style="font-size:15px;color:var(--muted);margin-top:16px;max-width:520px;line-height:1.7">Доставляем по городу в день заказа, если оформили до 15:00. Можно указать адрес получателя и время — курьер вручит упаковку лично, а вы останетесь в стороне от сюрприза. Или привезём вам, чтобы вы подарили сами.</div>
+              <div style="font-size:13px;color:var(--ink);margin-top:18px;border-left:1px solid var(--line2);padding-left:12px">Получатель не увидит ни цены, ни чека</div>
+            </div>
+            <div style="aspect-ratio:4/3;background:var(--warm2)"><image-slot id="gift-delivery" shape="rect" placeholder="Фото: упаковка в руках курьера у двери"></image-slot></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;padding:{{ f.padTop }}px {{ f.pad }};border-bottom:1px solid var(--line);align-items:start">
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">Сертификаты для сотрудников и партнёров</div>
+              <div style="font-size:15px;color:var(--muted);margin-top:16px;max-width:480px;line-height:1.7">Оплата по счёту, закрывающие документы, единый заказ от пяти сертификатов. Подберём номиналы под бюджет и привезём одной партией.</div>
+            </div>
+            <div style="background:var(--cool);padding:{{ f.pad }}">
+              <sc-if value="{{ corpNotSent }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:16px">
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Организация
+                    <input value="{{ corp.org }}" onChange="{{ setCorpOrg }}" placeholder="Название" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                  </label>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px">
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">ИНН
+                      <input value="{{ corp.inn }}" onChange="{{ setCorpInn }}" placeholder="10 или 12 цифр" inputMode="numeric" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                    </label>
+                    <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Сертификатов
+                      <input value="{{ corp.qty }}" onChange="{{ setCorpQty }}" placeholder="от 5" inputMode="numeric" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                    </label>
+                  </div>
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase">Контактное лицо и телефон
+                    <input value="{{ corp.contact }}" onChange="{{ setCorpContact }}" placeholder="Имя, +7" style="border:0;border-bottom:1px solid var(--ink);background:none;padding:10px 0;font-size:16px;color:var(--ink);outline:none;text-transform:none;letter-spacing:0">
+                  </label>
+                  <button onClick="{{ submitCorp }}" style="background:var(--cta);color:var(--bg);border:0;padding:16px 28px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;min-height:48px;margin-top:6px">Запросить счёт</button>
+                  <div style="font-size:11px;color:var(--muted);line-height:1.5">Счёт выставляем в рабочее время. Онлайн-оплата для организаций не используется.</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ corpSent }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .4s ease">
+                  <div style="width:44px;height:44px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px">✓</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:26px;margin-top:18px">Заявка принята</div>
+                  <div style="font-size:14px;color:var(--muted);margin-top:10px;line-height:1.65">Подготовим счёт и вернёмся с номиналами под ваш бюджет.</div>
+                  <button onClick="{{ resetCorp }}" style="margin-top:20px;background:none;border:0;padding:0 0 3px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);cursor:pointer">Отправить ещё одну</button>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+          <div style="padding:{{ f.padTop }}px {{ f.pad }};border-bottom:1px solid var(--line)">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:{{ f.h2 }}px;line-height:1.05">Вопросы и ответы</div>
+            <div style="margin-top:28px;max-width:720px">
+              <sc-for list="{{ giftFaq }}" as="q" hint-placeholder-count="6">
+                <div style="border-top:1px solid var(--line)">
+                  <button onClick="{{ q.toggle }}" style="width:100%;display:flex;gap:16px;align-items:baseline;justify-content:space-between;background:none;border:0;padding:18px 0;cursor:pointer;text-align:left;color:var(--ink)">
+                    <span style="font-size:16px;line-height:1.4">{{ q.q }}</span>
+                    <span style="font-size:18px;color:var(--muted);flex:0 0 auto">{{ q.sign }}</span>
+                  </button>
+                  <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:14px;color:var(--muted);line-height:1.7;padding:0 0 20px;max-width:560px">{{ q.a }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="padding:{{ f.padTop }}px {{ f.pad }}">
+            <button onClick="{{ toggleTerms }}" style="display:flex;gap:12px;align-items:baseline;background:none;border:0;padding:0;cursor:pointer;color:var(--ink)">
+              <span style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Условия сертификата</span>
+              <span style="font-size:16px;color:var(--muted)">{{ termsSign }}</span>
+            </button>
+            <sc-if value="{{ termsOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:20px;max-width:640px;display:flex;flex-direction:column;gap:12px">
+                <div style="font-size:12px;color:var(--muted);line-height:1.6">Рамка условий. Итоговые формулировки согласовываются с юристом до публикации.</div>
+                <sc-for list="{{ giftTerms }}" as="t" hint-placeholder-count="6">
+                  <div style="font-size:14px;line-height:1.65;color:var(--ink);border-top:1px solid var(--line);padding-top:12px">{{ t.text }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+
+          <sc-if value="{{ f.mobile }}" hint-placeholder-val="{{ false }}">
+            <sc-if value="{{ giftNotSent }}" hint-placeholder-val="{{ true }}">
+              <div style="position:sticky;bottom:0;z-index:6;padding:10px 16px 14px;background:linear-gradient(to top,var(--bg) 70%,transparent);display:flex;gap:12px;align-items:center">
+                <div style="flex:0 0 auto">
+                  <div style="font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">Номинал</div>
+                  <div style="font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.1">{{ giftSumLabel }}</div>
+                </div>
+                <button onClick="{{ giftStickyAction }}" style="flex:1;background:{{ giftBtnBg }};color:{{ giftBtnColor }};border:0;padding:16px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;min-height:52px;box-shadow:0 12px 30px -12px rgba(28,27,25,.5)">{{ giftStickyLabel }}</button>
+              </div>
+            </sc-if>
+          </sc-if>
+        </sc-if>
+
+        <!-- footer -->
+        <div style="border-top:1px solid var(--line);padding:40px {{ f.pad }};display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;font-size:13px;color:var(--muted);line-height:1.7;background:var(--bg)">
+          <div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink)">Золотая середина</div>Швейцарские часы и украшения с бриллиантами</div>
+          <div>Оренбург, ул. Советская, 31<br>Вт–Сб 10:30–19:00</div>
+          <div><a href="tel:+73532776330" style="color:var(--ink)">+7 (3532) 77-63-30</a><br><a href="https://t.me/zolotayaseredina_orenburg" target="_blank">Telegram</a> · <a href="https://instagram.com/zolotayaseredina_orenburg" target="_blank">Instagram</a></div>
+          <div style="display:flex;flex-direction:column"><sc-for list="{{ nav }}" as="n" hint-placeholder-count="6"><a onClick="{{ n.go }}" style="cursor:pointer;color:var(--muted)">{{ n.label }}</a></sc-for><a onClick="{{ goGift }}" style="cursor:pointer;color:var(--ink)">Подарочный сертификат</a></div>
+        </div>
+        </div>
+
+        <!-- mobile sticky CTA -->
+        <sc-if value="{{ f.mobile }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ showSticky }}" hint-placeholder-val="{{ true }}">
+            <div style="position:sticky;bottom:0;z-index:6;padding:10px 16px 14px;background:linear-gradient(to top,var(--bg) 60%,transparent)">
+              <button onClick="{{ goBook }}" style="width:100%;background:var(--cta);color:var(--bg);border:0;padding:16px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;min-height:52px;box-shadow:0 12px 30px -12px rgba(28,27,25,.5)">Записаться на консультацию</button>
+            </div>
+          </sc-if>
+        </sc-if>
+      </div>
+    </div>
+  </sc-for>
+  </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;homeVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;a&quot;,&quot;options&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Прототип&quot;},&quot;startPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;watches&quot;,&quot;watch&quot;,&quot;jewelry&quot;,&quot;jewel&quot;,&quot;diamonds&quot;,&quot;master&quot;,&quot;services&quot;,&quot;why&quot;,&quot;about&quot;,&quot;contacts&quot;,&quot;gift&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Прототип&quot;},&quot;tone&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;ivory&quot;,&quot;options&quot;:[&quot;ivory&quot;,&quot;cool&quot;,&quot;white&quot;,&quot;champagne&quot;,&quot;dark&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Цвета&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#8a6d3b&quot;,&quot;options&quot;:[&quot;#8a6d3b&quot;,&quot;#2f5a44&quot;,&quot;#6e2f33&quot;,&quot;#2e3f5c&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Цвета&quot;},&quot;accentButtons&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Цвета&quot;}}">
+class Component extends DCLogic {
+  state = { page:(this.props&&this.props.startPage)||'home', variant:(this.props&&this.props.homeVariant)||'a', watch:null, brand:null, jewel:null, jbrand:null, gender:'all', mech:'all', jtype:'all', occasion:'all', menu:false, sent:false, scale:1,
+    form:{ name:'', phone:'', interest:'watches', time:'day', note:'' },
+    gift:{ amount:25000, custom:'', design:'classic', greeting:'', recipient:'', deliverTo:'me', rphone:'', noPrice:true, address:'', flat:'', date:'', slot:'', name:'', phone:'', comment:'', agree:false },
+    giftCustomOn:false, giftSent:false, giftNo:'', faq:null, terms:false, corpSent:false,
+    corp:{ org:'', inn:'', qty:'', contact:'' } };
+  wrap = React.createRef();
+  frames = [
+    { key:'d', w:1280, h:860, mobile:false, desktop:true, label:'Десктоп · 1280 px', pad:'56px', padTop:72, h1:72, h2:40, navH:72, logo:24, radius:10, heroH:620, stagger:64, cOrder:0 },
+    { key:'m', w:390, h:844, mobile:true, desktop:false, label:'Мобильный · 390 px', pad:'20px', padTop:40, h1:40, h2:28, navH:60, logo:20, radius:40, heroH:360, stagger:0, cOrder:1 }
+  ];
+  nav = [['watches','Часы'],['jewelry','Украшения'],['services','Услуги'],['why','Почему офлайн'],['about','О магазине'],['contacts','Контакты']];
+  brands = ['Longines','Rado','Hamilton','Tissot','Certina','Balmain','Maurice Lacroix','Raymond Weil','L’Duchen','Jaguar','Frederique Constant','Cover','Candino'];
+  data = [
+    ['lg1','Longines','Master Collection','L2.893.4.78.6','auto','m',40,289000,'Калибр L888.5, запас хода 72 ч','Сталь','Кожа аллигатора, коричневая','30 м','Сапфировое'],
+    ['lg2','Longines','DolceVita','L5.512.4.71.6','quartz','f','23 × 37',178000,'Кварцевый L178','Сталь','Стальной браслет','30 м','Сапфировое'],
+    ['rd1','Rado','Captain Cook','R32505313','auto','m',42,245000,'Калибр R763, 80 ч','Сталь, вращающийся безель','Стальной браслет','300 м','Сапфировое, куполообразное'],
+    ['rd2','Rado','True Thinline','R27955702','quartz','f',39,198000,'Кварцевый','Высокотехнологичная керамика','Керамический браслет','30 м','Сапфировое'],
+    ['hm1','Hamilton','Khaki Field Mechanical','H69439931','manual','m',38,62000,'H-50, ручной завод, 80 ч','Сталь','Текстильный NATO','50 м','Сапфировое'],
+    ['hm2','Hamilton','Jazzmaster Open Heart','H32675540','auto','m',42,125000,'H-10, 80 ч','Сталь','Кожа, чёрная','50 м','Сапфировое'],
+    ['ts1','Tissot','PRX Powermatic 80','T137.407.11.041.00','auto','m',40,79000,'Powermatic 80, 80 ч','Сталь','Интегрированный стальной браслет','100 м','Сапфировое'],
+    ['ts2','Tissot','Le Locle','T006.407.11.033.00','auto','m',39,68000,'Powermatic 80, 80 ч','Сталь','Стальной браслет','30 м','Сапфировое'],
+    ['ts3','Tissot','Bellissima','T126.010.11.013.00','quartz','f',26,42000,'Кварцевый ETA','Сталь','Стальной браслет','50 м','Сапфировое'],
+    ['ce1','Certina','DS Action Diver','C032.807.11.041.00','auto','m',43,92000,'Powermatic 80, 80 ч','Сталь, DS-концепт','Стальной браслет','300 м','Сапфировое'],
+    ['ml1','Maurice Lacroix','Aikon Automatic','AI6008-SS002-430-1','auto','m',42,215000,'ML115, 38 ч','Сталь','Стальной браслет','200 м','Сапфировое'],
+    ['fc1','Frederique Constant','Classics Index','FC-303NN5B6','auto','m',40,145000,'FC-303, 38 ч','Сталь','Кожа, чёрная','50 м','Сапфировое'],
+    ['rw1','Raymond Weil','Freelancer','2780-ST-20001','auto','m',42,240000,'RW1212, открытый баланс, 38 ч','Сталь','Стальной браслет','100 м','Сапфировое'],
+    ['bm1','Balmain','Beleganza','B4111.33.22','quartz','f',32,58000,'Кварцевый','Сталь','Кожа, бежевая','30 м','Сапфировое']
+  ];
+  brandInfo = {
+    'Longines':['Швейцария · Сент-Имье · с 1832','Один из старейших часовых домов Швейцарии. Классические, авиационные и спортивные коллекции; крылатые песочные часы — самый старый действующий товарный знак в часовой отрасли.'],
+    'Rado':['Швейцария · Ленгнау · с 1917','Мастера материалов: высокотехнологичная керамика, устойчивая к царапинам. Тонкие корпуса и лаконичный дизайн.'],
+    'Hamilton':['Швейцария · Биль · с 1892','Американские корни, швейцарское производство. Полевые и авиационные часы, известные по десяткам фильмов.'],
+    'Tissot':['Швейцария · Ле-Локль · с 1853','Швейцарская классика в доступном сегменте: PRX, Le Locle, Seastar. Официальный хронометрист крупных спортивных лиг.'],
+    'Certina':['Швейцария · Гренхен · с 1888','Надёжность как принцип: концепция двойной защиты DS, дайверские и спортивные модели.'],
+    'Balmain':['Швейцария · с 1987','Часы парижского дома моды, собранные в Швейцарии. Женские модели с фирменным орнаментом арабеск.'],
+    'Maurice Lacroix':['Швейцария · Сеньлежье · с 1975','Независимая марка с собственными калибрами и характерным дизайном Aikon и Pontos.'],
+    'Raymond Weil':['Швейцария · Женева · с 1976','Семейная женевская марка, вдохновлённая музыкой. Коллекции Freelancer, Maestro, Toccata.'],
+    'L’Duchen':['Швейцария','Швейцарские часы в классическом и деловом стиле. Описание марки — от поставщика.'],
+    'Jaguar':['Швейцария','Швейцарское подразделение группы Festina: спортивные и хронографические модели. Описание марки — от поставщика.'],
+    'Frederique Constant':['Швейцария · Женева · с 1988','Доступная женевская классика с собственными мануфактурными калибрами; знаковая серия Slimline и открытое сердце Heart Beat.'],
+    'Cover':['Швейцария','Швейцарские часы в тонком корпусе, женские и мужские модели. Описание марки — от поставщика.'],
+    'Candino':['Швейцария · Хербетсвиль · с 1947','Классические швейцарские часы в среднем сегменте. Описание марки — от поставщика.'],
+    'Смоленские бриллианты':['Россия · Смоленск · с 1963','Завод «Кристалл» — крупнейший огранщик бриллиантов в России. Изделия с собственными камнями и полным пакетом документов.'],
+    'Эстет':['Россия · Москва · с 1991','Дизайнерские украшения с бриллиантами и цветными камнями; собственное производство полного цикла.'],
+    'SOKOLOV':['Россия · Кострома · с 1993','Один из крупнейших ювелирных производителей страны. Широкий выбор изделий с бриллиантами на каждый день.'],
+    'Бронницкий ювелир':['Россия · Бронницы · с 1924','Столетняя история и классические формы: обручальные кольца, цепи, изделия с бриллиантами.'],
+    'Русские самоцветы':['Россия · Санкт-Петербург · с 1912','Петербургская школа ювелирного дела, наследник придворных мастерских. Классика и эмаль.'],
+    'Московский ювелирный завод':['Россия · Москва · с 1920','Одно из старейших ювелирных производств страны: изделия с бриллиантами, обручальные кольца, золотые цепи.']
+  };
+  mechName = { auto:'Автоматический', quartz:'Кварцевый', manual:'Механический, ручной завод' };
+  jbrands = ['Смоленские бриллианты','Эстет','SOKOLOV','Бронницкий ювелир','Русские самоцветы','Московский ювелирный завод'];
+  // id, type, name, brand, article, stone, metal, weight, price, occasions
+  jewelsData = [
+    ['r1','ring','Кольцо-солитер','Смоленские бриллианты','1010-0154','Бриллиант 0,71 ct · F / VS1 · GIA','Белое золото 585','2,9 г','по запросу',['proposal']],
+    ['e1','earrings','Серьги-пусеты','Эстет','01С621234','2 × 0,30 ct · G / VS2 · IGI','Белое золото 585','2,1 г','от 000 000 ₽',['anniversary','self']],
+    ['p1','pendant','Подвеска на цепочке','SOKOLOV','1030641','Бриллиант 0,40 ct · E / VVS2 · GIA','Розовое золото 585','1,6 г','по запросу',['birth','anniversary']],
+    ['b1','bracelet','Браслет-теннис','Русские самоцветы','БР-2210','38 камней · 3,2 ct · G–H / VS','Жёлтое золото 750','12,4 г','по запросу',['jubilee']],
+    ['r2','ring','Кольцо с дорожкой','Бронницкий ювелир','К7-3412','0,50 ct + 12 × 0,03 ct · G / VS','Белое золото 585','3,4 г','от 000 000 ₽',['anniversary','proposal']],
+    ['e2','earrings','Серьги-капли','Смоленские бриллианты','1021-0098','Груши 2 × 0,55 ct · F / VS1 · GIA','Белое золото 750','4,0 г','по запросу',['jubilee','self']],
+    ['r3','ring','Обручальное с бриллиантами','Московский ювелирный завод','ОК-1180','9 × 0,02 ct · G / VS','Жёлтое золото 585','3,1 г','от 000 000 ₽',['proposal']],
+    ['p2','pendant','Подвеска «Сердце»','Эстет','01П124568','21 × 0,01 ct · H / SI1','Розовое золото 585','1,3 г','от 000 000 ₽',['birth','self']]
+  ];
+  fmt(n){ return n.toLocaleString('ru-RU') + ' ₽'; }
+  go(page, extra){
+    this.setState({ page, menu:false, ...(extra||{}) });
+    requestAnimationFrame(()=>document.querySelectorAll('[data-frame]').forEach(e=>{ e.scrollTop = 0; }));
+  }
+  gset(k,v){ this.setState({ gift:{ ...this.state.gift, [k]:v } }); }
+  submitGift(){
+    if (!this.giftValues().canOrder) return;
+    this.setState({ giftSent:true, giftNo:'ЗС-'+(1000+Math.floor(Math.random()*9000)) });
+    requestAnimationFrame(()=>document.querySelectorAll('[data-frame]').forEach(e=>{ e.scrollTop = 0; }));
+  }
+  cset(k,v){ this.setState({ corp:{ ...this.state.corp, [k]:v } }); }
+  scrollToGift(){
+    document.querySelectorAll('[data-frame]').forEach(fr=>{
+      const t = fr.querySelector('[data-gift-form]');
+      if (t) fr.scrollTo({ top: Math.max(0, t.offsetTop - 16), behavior:'smooth' });
+    });
+  }
+  giftValues(){
+    const s = this.state, g = s.gift;
+    const sum = s.giftCustomOn ? (parseInt(String(g.custom).replace(/\D/g,''),10) || 0) : g.amount;
+    const designs = [
+      ['watches','Часы','Подарок мужчине, юбилей','циферблат, металл, сдержанность'],
+      ['diamonds','Бриллианты','8 марта, годовщина','блеск камня, светлая гамма'],
+      ['classic','Классика','Универсальный','логотип, фактура бумаги'],
+      ['wedding','Свадебный','Молодожёнам от гостей','светлый, парная символика'],
+      ['men','Мужской','От женщины мужчине','тёмный, графичный']
+    ];
+    const canOrder = sum >= 1000 && !!g.address && !!g.date && !!g.slot && !!g.name && !!g.phone && g.agree;
+    const designLabel = (designs.find(d=>d[0]===g.design)||[,'Классика'])[1];
+    const picks = [
+      ['ts3','Tissot','Bellissima', this.fmt(42000)], ['hm1','Hamilton','Khaki Field Mechanical', this.fmt(62000)],
+      ['ts2','Tissot','Le Locle', this.fmt(68000)], ['ts1','Tissot','PRX Powermatic 80', this.fmt(79000)],
+      ['ce1','Certina','DS Action Diver', this.fmt(92000)], ['hm2','Hamilton','Jazzmaster Open Heart', this.fmt(125000)],
+      ['p2','Эстет','Подвеска «Сердце»','цена в салоне'], ['e1','Эстет','Серьги-пусеты 2 × 0,30 ct','цена в салоне']
+    ].map(([id,brand,name,price])=>({ id, brand, name, price }));
+    const faq = [
+      ['Сколько действует сертификат?','Бессрочно. Прийти можно в любой момент.'],
+      ['А если понравится что-то дороже?','Доплатите разницу в салоне любым способом.'],
+      ['А если дешевле?','Остаток сохранится на сертификате, им можно воспользоваться позже.'],
+      ['Можно ли обменять на деньги?','Да, по письменному заявлению владельца сертификата.'],
+      ['Что если бланк потеряли?','Восстановим по номеру заказа и данным покупателя.'],
+      ['Действует ли на часы и на украшения?','На весь ассортимент салона.']
+    ].map(([q,a],i)=>({ q, a, open:s.faq===i, sign:s.faq===i?'−':'+', toggle:()=>this.setState({ faq: s.faq===i ? null : i }) }));
+    const terms = [
+      'Сертификат — аванс в счёт будущей покупки, а не товар. Номер бланка сквозной, учёт ведётся по номерам.',
+      'Срок действия: бессрочный (вариант на согласовании — 12 месяцев с продлением).',
+      'Частичное использование: остаток сохраняется на сертификате, доплата принимается любым способом.',
+      'Возврат денежных средств — по письменному заявлению владельца сертификата.',
+      'Утрата бланка: восстановление по номеру заказа и данным покупателя.',
+      'Правила доступны до оплаты; ссылка размещена рядом с кнопкой оплаты.'
+    ].map(text=>({ text }));
+    return { g, sum, designs, canOrder, designLabel, picks, faq, terms };
+  }
+  book(interest, note){ this.go('contacts', { sent:false, form:{ ...this.state.form, interest: interest||this.state.form.interest, note: note||'' } }); }
+  onScroll = (e)=>{
+    const src = e.target;
+    if (!(src instanceof Element) || !src.hasAttribute('data-frame') || this.syncing) return;
+    const max = src.scrollHeight - src.clientHeight;
+    const ratio = max > 0 ? src.scrollTop / max : 0;
+    this.syncing = true;
+    document.querySelectorAll('[data-frame]').forEach(o=>{ if (o!==src) o.scrollTop = ratio * (o.scrollHeight - o.clientHeight); });
+    requestAnimationFrame(()=>{ this.syncing = false; });
+  };
+  componentDidMount(){
+    document.addEventListener('scroll', this.onScroll, true);
+    this.fit();
+    this.ro = new ResizeObserver(()=>this.fit());
+    if (this.wrap.current) this.ro.observe(this.wrap.current);
+  }
+  componentWillUnmount(){ this.ro && this.ro.disconnect(); document.removeEventListener('scroll', this.onScroll, true); }
+  fit(){
+    const cw = this.wrap.current ? this.wrap.current.clientWidth : 1710;
+    const scale = Math.min(1, cw / 1710);
+    if (Math.abs(scale - this.state.scale) > 0.001) this.setState({ scale });
+  }
+  tchip(active, label, go){
+    return active ? { label, go, border:'#1c1b19', bg:'#1c1b19', color:'#faf9f7' } : { label, go, border:'#cfcac0', bg:'transparent', color:'#1c1b19' };
+  }
+  chip(active, label, go){
+    return active ? { label, go, border:'var(--ink)', bg:'var(--ink)', color:'var(--bg)' } : { label, go, border:'var(--line2)', bg:'transparent', color:'var(--ink)' };
+  }
+  ic = {
+    mech:'M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 3.6a3.4 3.4 0 1 1 0 6.8 3.4 3.4 0 0 1 0-6.8z',
+    quartz:'M9.4 1 3 9.2h3.6L5.8 15 12 6.9H8.5L9.4 1z',
+    water:'M8 1.2s4.2 5 4.2 8a4.2 4.2 0 0 1-8.4 0c0-3 4.2-8 4.2-8z',
+    glass:'M3 6l5-4.2L13 6l-5 8.2L3 6z',
+    caseIc:'M8 1l6 3.5v7L8 15 2 11.5v-7L8 1z'
+  };
+  tagsFor(mechKey, wr, glass, caseM){
+    const mechLabel = mechKey==='auto' ? 'Автоподзавод' : mechKey==='manual' ? 'Ручной завод' : 'Кварц';
+    const glassLabel = /апфир/i.test(glass||'') ? 'Сапфир' : (glass||'').replace(/ое$/,'') || '—';
+    const caseLabel = /ерамик/i.test(caseM||'') ? 'Керамика' : /Сталь/i.test(caseM||'') ? 'Сталь' : (caseM||'').split(/[,·]/)[0];
+    const soft = { bg:'var(--bg)', color:'var(--ink)' };
+    return [
+      { label:mechLabel, title:'Механизм: '+this.mechName[mechKey], icon: mechKey==='quartz' ? this.ic.quartz : this.ic.mech,
+        bg:'var(--ink)', color:'var(--bg)' },
+      { label:'до '+(wr||''), title:'Водозащита '+(wr||''), icon:this.ic.water, ...soft },
+      { label:glassLabel, title:'Стекло: '+(glass||''), icon:this.ic.glass, ...soft },
+      { label:caseLabel, title:'Корпус: '+(caseM||''), icon:this.ic.caseIc, ...soft }
+    ];
+  }
+  model(r){
+    const [id,brand,name,ref,mechKey,gender,size,price,cal,caseM,strap,wr,glass] = r;
+    const sizeStr = typeof size==='number' ? size+' мм' : size+' мм';
+    return { id, brand, name, ref, mechKey, gender, size:sizeStr, price:this.fmt(price), mech:this.mechName[mechKey],
+      tags:this.tagsFor(mechKey, wr, glass, caseM),
+      open:()=>this.go('watch',{watch:id}),
+      book:()=>this.book('watches', brand+' '+name+' ('+ref+')'),
+      selectBrand:()=>this.go('watches',{brand, gender:'all', mech:'all'}),
+      specs:[ {k:'Механизм',v:this.mechName[mechKey]}, {k:'Калибр',v:cal}, {k:'Диаметр',v:sizeStr}, {k:'Корпус',v:caseM}, {k:'Ремешок / браслет',v:strap}, {k:'Водозащита',v:wr}, {k:'Стекло',v:glass}, {k:'Гарантия',v:'Международная гарантия производителя'} ],
+      about:'Характеристики и фотографии — от производителя. В салоне подгоним браслет по запястью и покажем модель рядом с соседними по коллекции.' };
+  }
+  renderVals(){
+    const s = this.state, f = s.form;
+    const P = s.page;
+    const nav = this.nav.map(([id,label])=>({ id, label, go:()=>this.go(id), color: P===id||((P==='watch'||P==='master')&&id==='watches')||((P==='diamonds'||P==='jewel')&&id==='jewelry') ? 'var(--ink)' : 'var(--muted)', underline: P===id ? 'var(--ink)' : 'transparent' }));
+    const pageTabs = [['home','Главная'],['watches','Часы'],['wbrand','Бренд часов'],['watch','Карточка часов'],['jewelry','Украшения'],['jbrandp','Бренд украшений'],['jewel','Карточка украшения'],['diamonds','О бриллиантах'],['master','Часовой мастер'],['services','Услуги'],['why','Почему офлайн'],['about','О магазине'],['contacts','Контакты'],['gift','Сертификат']]
+      .map(([id,label])=>{
+        const active = id==='wbrand' ? (P==='watches'&&!!s.brand) : id==='jbrandp' ? (P==='jewelry'&&!!s.jbrand) : id==='watches' ? (P==='watches'&&!s.brand) : id==='jewelry' ? (P==='jewelry'&&!s.jbrand) : P===id;
+        const go = ()=> id==='watch' ? this.go('watch',{watch:s.watch||'lg1'}) : id==='jewel' ? this.go('jewel',{jewel:s.jewel||'r1'})
+          : id==='wbrand' ? this.go('watches',{brand:s.brand||'Longines',gender:'all',mech:'all'}) : id==='jbrandp' ? this.go('jewelry',{jbrand:s.jbrand||'Смоленские бриллианты',jtype:'all',occasion:'all'})
+          : id==='watches' ? this.go('watches',{brand:null}) : id==='jewelry' ? this.go('jewelry',{jbrand:null}) : this.go(id);
+        return this.tchip(active, label, go);
+      });
+    const variants = [['a','A · Развилка'],['b','B · Редакционный'],['c','C · Витрина']].map(([id,label])=>this.tchip(s.variant===id,label,()=>{ this.setState({variant:id}); if (P!=='home') this.go('home'); }));
+    const tones = {
+      ivory:   { ink:'#1c1b19', bg:'#faf9f7', muted:'#6b675f', line:'#e6e2da', line2:'#d9d4cb', warm:'#f7f3ec', warm2:'#f4efe6', cool:'#f2f3f3', cool2:'#e9ebeb' },
+      cool:    { ink:'#1a1b1d', bg:'#f6f6f5', muted:'#6a6b6b', line:'#e1e1de', line2:'#d0d0cc', warm:'#f0eeea', warm2:'#eae7e1', cool:'#ebeced', cool2:'#e0e2e4' },
+      white:   { ink:'#161616', bg:'#ffffff', muted:'#6b6b6b', line:'#e9e9e9', line2:'#d6d6d6', warm:'#f9f6f1', warm2:'#f3efe8', cool:'#f4f5f6', cool2:'#eaecee' },
+      dark:    { ink:'#f2efe9', bg:'#191917', muted:'#a19c93', line:'#34322e', line2:'#4a4741', warm:'#211f1b', warm2:'#2a2721', cool:'#1f2021', cool2:'#292b2c' },
+      champagne:{ ink:'#2a2320', bg:'#f7f1e8', muted:'#7a6c5e', line:'#e6dccd', line2:'#d6c9b5', warm:'#f1e7d8', warm2:'#eadfcd', cool:'#eeece7', cool2:'#e4e1da' }
+    };
+    const th = { ...(tones[this.props.tone] || tones.ivory), accent: this.props.accent || '#2f5a44' };
+    th.cta = this.props.accentButtons ? th.accent : th.ink;
+    const all = this.data.map(r=>this.model(r));
+    const models = all.filter(m=>(!s.brand||m.brand===s.brand)&&(s.gender==='all'||m.gender===s.gender)&&(s.mech==='all'||m.mechKey===s.mech));
+    const counts = {}; all.forEach(m=>counts[m.brand]=(counts[m.brand]||0)+1);
+    const brandItems = this.brands.map((b,i)=>{ const a=s.brand===b; const c=counts[b]||0; return { name:b, id:'wb-'+i, countLabel:c?c+(c===1?' модель':' модели'):'в салоне', select:()=>this.go('watches',{brand:b, gender:'all', mech:'all'}), border:a?'var(--ink)':'var(--line2)', bg:a?'var(--ink)':'var(--bg)', color:a?'var(--bg)':'var(--ink)' }; });
+    const genderChips = [['all','Все'],['m','Мужские'],['f','Женские']].map(([k,l])=>this.chip(s.gender===k,l,()=>this.setState({gender:k})));
+    const mechChips = [['all','Все'],['auto','Автомат'],['quartz','Кварц'],['manual','Ручной завод']].map(([k,l])=>this.chip(s.mech===k,l,()=>this.setState({mech:k})));
+    const w = all.find(m=>m.id===s.watch) || all[0];
+    const related = all.filter(m=>m.brand===w.brand&&m.id!==w.id).concat(all.filter(m=>m.brand!==w.brand)).slice(0,3);
+    const jtypeChips = [['all','Все'],['ring','Кольца'],['earrings','Серьги'],['pendant','Подвески'],['bracelet','Браслеты']].map(([k,l])=>this.chip(s.jtype===k,l,()=>this.setState({jtype:k})));
+    const occasionChips = [['all','Любой'],['proposal','Предложение'],['anniversary','Годовщина'],['birth','Рождение ребёнка'],['jubilee','Юбилей'],['self','Себе']].map(([k,l])=>this.chip(s.occasion===k,l,()=>this.setState({occasion:k})));
+    const jm = j=>({ id:j[0], type:j[1], name:j[2], brand:j[3], article:j[4], stone:j[5], metal:j[6], weight:j[7], price:j[8], occ:j[9],
+      open:()=>this.go('jewel',{jewel:j[0]}), book:()=>this.book('jewelry', j[3]+' — '+j[2]+' (арт. '+j[4]+')'),
+      selectBrand:()=>this.go('jewelry',{jbrand:j[3], jtype:'all', occasion:'all'}),
+      specs:[ {k:'Камни',v:j[5]}, {k:'Металл',v:j[6]}, {k:'Вес изделия',v:j[7]}, {k:'Производитель',v:j[3]}, {k:'Артикул',v:j[4]}, {k:'Сертификат',v:'Паспорт изделия и сертификат на камень — в салоне'} ] });
+    const allJ = this.jewelsData.map(jm);
+    const jewels = allJ.filter(j=>(!s.jbrand||j.brand===s.jbrand)&&(s.jtype==='all'||j.type===s.jtype)&&(s.occasion==='all'||j.occ.includes(s.occasion)));
+    const jcounts = {}; allJ.forEach(j=>jcounts[j.brand]=(jcounts[j.brand]||0)+1);
+    const jbrandItems = this.jbrands.map((b,i)=>{ const a=s.jbrand===b; const c=jcounts[b]||0; return { name:b, id:'jb-'+i, countLabel:c?c+(c===1?' изделие':c<5?' изделия':' изделий'):'в салоне', select:()=>this.go('jewelry',{jbrand:b, jtype:'all', occasion:'all'}), border:a?'var(--ink)':'var(--line2)', bg:a?'var(--ink)':'var(--bg)', color:a?'var(--bg)':'var(--ink)' }; });
+    const bInfo = (name, list)=>{ const i = list.indexOf(name); const d = this.brandInfo[name]||['','']; return { name, id:(list===this.brands?'wb-':'jb-')+i, meta:d[0], text:d[1] }; };
+    const bi = bInfo(s.brand||'', this.brands), jbi = bInfo(s.jbrand||'', this.jbrands);
+    const jw = allJ.find(j=>j.id===s.jewel) || allJ[0];
+    const jrelated = allJ.filter(j=>j.brand===jw.brand&&j.id!==jw.id).concat(allJ.filter(j=>j.brand!==jw.brand)).slice(0,3);
+    const services = [
+      ['01','Ремонт часов','Замена батареек, регулировка хода, замена стекла, сервис механизма. Работаем с швейцарскими калибрами, детали — оригинальные.','от 1 дня · диагностика бесплатно'],
+      ['02','Чистка украшений','Ультразвук и полировка, проверка закрепки камней. Изделие возвращается в состоянии «как из витрины».','20–30 минут, пока вы в салоне'],
+      ['03','Оценка и скупка','Оценка бриллиантов, золота и часов. Скупка или зачёт стоимости при покупке нового.','по записи · 30 минут'],
+      ['04','Гравировка','Надписи и даты на задней крышке часов, внутри кольца, на подвеске. Шрифт согласуем на макете.','1–2 дня'],
+      ['05','Подгонка размера','Изменение размера кольца, укорачивание браслета часов и цепочек.','от 30 минут до 2 дней']
+    ].map(([num,name,text,term])=>({ num,name,text,term, book:()=>this.book(num==='01'||num==='05'?'watches':'services', name) }));
+    const whyWatch = [
+      { id:'w1', a:'Запястье 16 см · те же 40 мм', b:'Запястье 19 см · те же 40 мм', text:'Диаметр в характеристиках ничего не говорит о посадке: та же модель на узком запястье выглядит крупной, на широком — сдержанной. Смотреть надо на ушки корпуса и то, как браслет ложится на кость.' },
+      { id:'w2', a:'Стальной браслет · 165 г', b:'Кожаный ремешок · 95 г', text:'Вес не передаётся фотографией. Одни и те же часы на браслете и на ремешке ощущаются как две разные вещи — и по-разному ведут себя под манжетой.' }
+    ];
+    const whyJewel = [
+      { id:'j1', a:'Дневной свет у окна', b:'Тёплая лампа в ресторане', text:'Бриллиант не имеет собственного цвета — он отражает то, что вокруг. На экране камень всегда снят в идеальном студийном свете; в жизни вы будете видеть его при десятке разных.' },
+      { id:'j2', a:'0,70 ct · G / VS1', b:'0,70 ct · J / SI2', text:'Два камня одного веса и почти одного размера на фото неотличимы. Рядом, при одном свете, разница в цвете и чистоте видна за секунду — и стоит она вдвое.' }
+    ];
+    const reviews = [
+      { text:'«Очень приятная девушка-консультант помогла подобрать идеальную модель часов, именно то, что я и хотела».', who:'Ольга Е. · Яндекс Карты' },
+      { text:'«Огромный выбор ювелирных украшений… обратите внимание на заднюю длинную витрину у стены».', who:'Покупатель · Яндекс Карты' },
+      { text:'«Интерьер выполнен с большим вкусом, создаёт атмосферу уюта и роскоши одновременно».', who:'Ольга Е. · Яндекс Карты' }
+    ];
+    const certs = [ {id:'c1',name:'Дилерское соглашение — марка 1'}, {id:'c2',name:'Дилерское соглашение — марка 2'}, {id:'c3',name:'Сертификат сервисного центра'}, {id:'c4',name:'Диплом геммолога'} ];
+    const masterWorks = [ {id:'k1',name:'Сервис механизма',note:'разборка, чистка, смазка, регулировка'}, {id:'k2',name:'Замена стекла',note:'сапфир, с проверкой герметичности'}, {id:'k3',name:'Реставрация винтажных часов',note:'механика 1960-х'}, {id:'k4',name:'Полировка корпуса и браслета',note:'сталь, золото'}, {id:'k5',name:'Регулировка хода',note:'на таймграфере, 6 позиций'}, {id:'k6',name:'Подгонка браслета',note:'при покупке — бесплатно'} ];
+    const tgPosts = [ {id:'t1',text:'Новое поступление: серьги-пусеты 2 × 0,25 ct, G/VS. Уже в витрине.',meta:'сегодня · 312 просмотров'}, {id:'t2',text:'Longines Master Collection — приехала версия с синим циферблатом, 40 мм.',meta:'вчера · 540 просмотров'}, {id:'t3',text:'Кольцо-солитер 0,71 ct из портфолио нашло владельца. Похожее привезём под заказ.',meta:'3 дня назад · 428 просмотров'} ];
+    const G = this.giftValues(), g = G.g;
+    const giftAmounts = [5000,10000,25000,50000,100000].map(a=>this.chip(!s.giftCustomOn && g.amount===a, this.fmt(a), ()=>this.setState({ giftCustomOn:false, gift:{...g, amount:a} })));
+    const giftCustomChip = this.chip(s.giftCustomOn, 'Другая сумма', ()=>this.setState({ giftCustomOn:true }));
+    const giftDesigns = G.designs.map(([key,label,occasion,accentTxt])=>{
+      const a = g.design===key;
+      return { key, label, occasion, accentTxt, active:a, select:()=>this.gset('design',key),
+        border: a?'var(--ink)':'var(--line2)', width: a?'2px':'1px', labelColor: a?'var(--ink)':'var(--muted)' };
+    });
+    const giftDeliver = [['me','Мне — подарю сам'],['recipient','Получателю']].map(([k,l])=>this.chip(g.deliverTo===k, l, ()=>this.gset('deliverTo',k)));
+    const giftSlots = ['10:00–12:00','12:00–14:00','14:00–16:00','16:00–18:00','18:00–20:00'].map(t=>this.chip(g.slot===t, t, ()=>this.gset('slot',t)));
+    const giftDate = g.date ? String(g.date).split('-').reverse().join('.') : '';
+    const giftDeliveryLine = (g.deliverTo==='recipient' ? 'Получателю' : 'Вам') + (giftDate?(', '+giftDate):'') + (g.slot?(', '+g.slot):'');
+    const interestChips = [['watches','Часы'],['jewelry','Украшения'],['services','Сервис']].map(([k,l])=>this.chip(f.interest===k,l,()=>this.setState({form:{...f,interest:k}})));
+    const timeChips = [['morning','Утро, 10:30–13:00'],['day','День, 13:00–16:00'],['evening','Вечер, 16:00–19:00']].map(([k,l])=>this.chip(f.time===k,l,()=>this.setState({form:{...f,time:k}})));
+    const label = (arr,k)=>(arr.find(c=>c.go&&c.label&&k)||{}).label;
+    const interestLabel = {watches:'Часы',jewelry:'Украшения',services:'Сервис'}[f.interest];
+    const timeLabel = {morning:'Утро, 10:30–13:00',day:'День, 13:00–16:00',evening:'Вечер, 16:00–19:00'}[f.time];
+    return {
+      th, frames:this.frames, scale:s.scale, scaledH: Math.round(900*s.scale)+8, wrapRef:this.wrap,
+      nav, pageTabs, variants, menu:s.menu, toggleMenu:()=>this.setState({menu:!s.menu}),
+      isHome:P==='home', isWatches:P==='watches', isWatch:P==='watch', isJewelry:P==='jewelry', isDiamonds:P==='diamonds', isMaster:P==='master', isServices:P==='services', isWhy:P==='why', isAbout:P==='about', isContacts:P==='contacts',
+      isVarA:s.variant==='a', isVarB:s.variant==='b', isVarC:s.variant==='c',
+      goHome:()=>this.go('home'), goWatches:()=>this.go('watches'), goJewelry:()=>this.go('jewelry'), goDiamonds:()=>this.go('diamonds'), goMaster:()=>this.go('master'), goWhy:()=>this.go('why'),
+      goBook:()=>this.book(), goBookWatches:()=>this.book('watches', s.brand?('Марка '+s.brand):''), goBookJewelry:()=>this.book('jewelry'), goBookServices:()=>this.book('services','Диагностика часов'),
+      bi, jbi, brandSel:!!s.brand, noBrandSel:!s.brand, jbrandSel:!!s.jbrand, noJbrandSel:!s.jbrand, clearBrand:()=>this.go('watches',{brand:null}), clearJbrand:()=>this.go('jewelry',{jbrand:null}),
+      brandItems, genderChips, mechChips, models, hasModels:models.length>0, noModels:models.length===0, brandName:s.brand||'этой марки',
+      resultLabel: models.length ? models.length+' моделей' : 'Нет моделей', resetFilters:()=>this.setState({brand:null,gender:'all',mech:'all'}),
+      w, related, jtypeChips, occasionChips, jewels, jbrandItems, jw, jrelated, isJewel:P==='jewel', hasJewels:jewels.length>0, noJewels:jewels.length===0, jbrandName:s.jbrand||'этого производителя', jresultLabel: jewels.length ? jewels.length+' изделий' : 'Нет изделий', resetJFilters:()=>this.setState({jbrand:null,jtype:'all',occasion:'all'}), tgPosts, masterWorks, services, whyWatch, whyJewel, reviews, certs,
+      form:f, setName:e=>this.setState({form:{...f,name:e.target.value}}), setPhone:e=>this.setState({form:{...f,phone:e.target.value}}),
+      interestChips, timeChips, hasNote:!!f.note, notSent:!s.sent, sent:s.sent,
+      submit:()=>this.setState({sent:true}), resetForm:()=>this.setState({sent:false, form:{...f,name:'',phone:'',note:''}}),
+      sentName: f.name ? f.name+', ' : '', sentPhone: f.phone || 'указанный номер', sentInterest: interestLabel + (f.note ? ' — '+f.note : ''), sentTime: timeLabel,
+      showSticky: P!=='contacts' && P!=='gift',
+      isGift:P==='gift', goGift:()=>this.go('gift'), scrollToGift:()=>this.scrollToGift(),
+      gift:g, giftCustomOn:s.giftCustomOn, giftToRecipient:g.deliverTo==='recipient',
+      giftAmounts, giftCustomChip, giftDesigns, giftDeliver, giftSlots,
+      giftSteps:[
+        { num:'01', title:'Вы оформляете заказ', text:'выбираете номинал и дизайн, оплачиваете на сайте' },
+        { num:'02', title:'Мы привозим', text:'бланк в фирменной упаковке с вашим поздравлением, по адресу и ко времени' },
+        { num:'03', title:'Он выбирает', text:'приходит в салон, меряет, советуется с консультантом и забирает то, что понравилось' }
+      ],
+      giftCount:(g.greeting||'').length, giftSumLabel:this.fmt(G.sum), giftPicks:G.picks, giftFaq:G.faq, giftTerms:G.terms,
+      giftDesignLabel:G.designLabel, giftDeliveryLine, giftNo:s.giftNo, giftSent:s.giftSent, giftNotSent:!s.giftSent,
+      giftIncomplete:!G.canOrder, giftBtnBg: G.canOrder?'var(--cta)':'var(--line2)', giftBtnColor: G.canOrder?'var(--bg)':'var(--muted)',
+      giftStickyLabel: G.canOrder ? 'Оформить заказ' : 'Заполнить данные',
+      giftStickyAction: G.canOrder ? ()=>this.submitGift() : ()=>this.scrollToGift(),
+      noPriceMark: g.noPrice?'✓':'', toggleNoPrice:()=>this.gset('noPrice',!g.noPrice),
+      agreeMark: g.agree?'✓':'', toggleAgree:()=>this.gset('agree',!g.agree),
+      setGiftCustom:e=>this.gset('custom',e.target.value), setGiftGreeting:e=>this.gset('greeting',e.target.value.slice(0,200)),
+      setGiftRecipient:e=>this.gset('recipient',e.target.value), setGiftRphone:e=>this.gset('rphone',e.target.value),
+      setGiftAddress:e=>this.gset('address',e.target.value), setGiftFlat:e=>this.gset('flat',e.target.value),
+      setGiftDate:e=>this.gset('date',e.target.value), setGiftName:e=>this.gset('name',e.target.value),
+      setGiftPhone:e=>this.gset('phone',e.target.value), setGiftComment:e=>this.gset('comment',e.target.value),
+      submitGift:()=>this.submitGift(), resetGift:()=>this.setState({ giftSent:false }),
+      termsOpen:s.terms, termsSign:s.terms?'−':'+', toggleTerms:()=>this.setState({terms:!s.terms}), openTerms:()=>this.setState({terms:true}),
+      corp:s.corp, corpSent:s.corpSent, corpNotSent:!s.corpSent,
+      setCorpOrg:e=>this.cset('org',e.target.value), setCorpInn:e=>this.cset('inn',e.target.value),
+      setCorpQty:e=>this.cset('qty',e.target.value), setCorpContact:e=>this.cset('contact',e.target.value),
+      submitCorp:()=>this.setState({corpSent:true}), resetCorp:()=>this.setState({corpSent:false, corp:{org:'',inn:'',qty:'',contact:''}})
+    };
+  }
+}
+</script>
+</body>
+</html>

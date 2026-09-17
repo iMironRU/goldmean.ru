@@ -1,0 +1,53 @@
+/* Золотая середина — дизайн-токены MVP
+   Акцент зафиксирован: #8a6d3b (тёплое золото). Кнопки — акцентные. */
+
+:root {
+  /* палитра (тон ivory — основной и единственный для MVP) */
+  --ink:   #1c1b19;  /* основной текст, тёмные плашки */
+  --bg:    #faf9f7;  /* фон страницы */
+  --muted: #6b675f;  /* вторичный текст */
+  --line:  #e6e2da;  /* разделители */
+  --line2: #d9d4cb;  /* границы контролов, чипов, карточек */
+  --warm:  #f7f3ec;  /* фон секций «украшения» */
+  --warm2: #f4efe6;  /* плейсхолдеры фото, тёплые */
+  --cool:  #f2f3f3;  /* фон секций «часы» */
+  --cool2: #e9ebeb;  /* плейсхолдеры фото, холодные */
+
+  --accent: #8a6d3b; /* единственный акцент проекта */
+  --cta:    var(--accent); /* фон первичных кнопок = акцент */
+
+  /* типографика */
+  --font-display: 'Cormorant Garamond', Georgia, serif; /* 400 / 500 / 600 + italic */
+  --font-text:    'Figtree', system-ui, sans-serif;     /* 300 / 400 / 500 / 600 */
+  --font-mono:    ui-monospace, Menlo, monospace;       /* артикулы, референсы */
+
+  /* радиусы — «минимальное скругление» по всему проекту */
+  --radius: 3px;
+
+  /* сетка и отступы */
+  --pad-desktop: 56px;
+  --pad-mobile: 20px;
+  --section-top-desktop: 72px;
+  --section-top-mobile: 40px;
+  --nav-h-desktop: 72px;
+  --nav-h-mobile: 60px;
+  --col-min: 320px; /* repeat(auto-fit, minmax(320px, 1fr)) — базовая сетка */
+}
+
+/* Тёмная тема (опция пост-MVP, не входит в первый релиз) */
+[data-theme="dark"] {
+  --ink:#f2efe9; --bg:#191917; --muted:#a19c93; --line:#34322e; --line2:#4a4741;
+  --warm:#211f1b; --warm2:#2a2721; --cool:#1f2021; --cool2:#292b2c;
+}
+
+/* Типографическая шкала (десктоп / мобильный) */
+/* h1 hero      72px / 40px   Cormorant Garamond 400, line-height 1.02
+   h2 секция    40px / 28px   Cormorant Garamond 400, line-height 1.05–1.1
+   h3 карточка  24px          Cormorant Garamond 400
+   цифра-факт   34px          Cormorant Garamond 400
+   body         15px          Figtree 400, line-height 1.65
+   body small   14px          Figtree 400, line-height 1.6–1.7
+   caption      13px          Figtree 400, color var(--muted)
+   label/eyebrow 12px         Figtree 500, uppercase, letter-spacing .16em
+   button       12px          Figtree 500, uppercase, letter-spacing .1em
+   mono/артикул 11px          ui-monospace, letter-spacing .02em            */

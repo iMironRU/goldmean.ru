@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { HomeVariantScript } from "@/components/home/HomeVariantScript";
 import { site } from "@/lib/content/site";
+import { METRIKA_COUNTER_ID, METRIKA_INLINE_SCRIPT } from "@/lib/metrika";
 
 // Корневой layout — только документ, шрифты и метаданные.
 //
@@ -54,8 +55,21 @@ export default function RootLayout({
     >
       <head>
         <HomeVariantScript />
+        {/* Яндекс.Метрика */}
+        <script dangerouslySetInnerHTML={{ __html: METRIKA_INLINE_SCRIPT }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <noscript>
+          <div>
+            <img
+              src={`https://mc.yandex.ru/watch/${METRIKA_COUNTER_ID}`}
+              style={{ position: "absolute", left: "-9999px" }}
+              alt=""
+            />
+          </div>
+        </noscript>
+      </body>
     </html>
   );
 }

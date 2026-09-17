@@ -137,9 +137,12 @@ async function main() {
     if (!keep.has(f)) await fs.unlink(path.join(OUT_IMG, f));
   }
 
+  // Метки времени в файле нет намеренно. С ней он менялся при каждом запуске
+  // даже тогда, когда канал молчал, — и расписание коммитило и пересобирало
+  // сайт раз в час впустую. Когда лента обновлялась, видно по истории git.
   await fs.writeFile(
     OUT_JSON,
-    JSON.stringify({ channel: CHANNEL, fetchedAt: new Date().toISOString(), posts: out }, null, 2) + "\n",
+    JSON.stringify({ channel: CHANNEL, posts: out }, null, 2) + "\n",
   );
 
   console.log(`постов: ${out.length}, с картинками: ${out.filter((p) => p.image).length}`);

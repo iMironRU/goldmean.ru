@@ -5,6 +5,7 @@ import { BrandArticle } from "@/components/catalog/BrandArticle";
 import { BrandHeader } from "@/components/catalog/BrandHeader";
 import { MasterTeaser } from "@/components/catalog/MasterTeaser";
 import { WatchCatalog } from "@/components/catalog/WatchCatalog";
+import { coverFor } from "@/lib/content/photos";
 import { getBrandArticle } from "@/lib/content/markdown-page";
 import { brandBySlug, watches } from "@/lib/content/catalog";
 
@@ -60,7 +61,10 @@ export default async function WatchBrandPage({ params }: { params: Promise<Param
       />
 
       <Suspense fallback={<div className="pad-x py-[40px] text-[13px] text-muted">Загружаем модели…</div>}>
-        <WatchCatalog models={models} brandName={b.name} />
+        <WatchCatalog
+          models={models.map((m) => ({ ...m, cover: coverFor(m.id) }))}
+          brandName={b.name}
+        />
       </Suspense>
 
       {article ? <BrandArticle article={article} brandName={b.name} /> : null}

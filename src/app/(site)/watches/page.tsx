@@ -4,6 +4,7 @@ import Link from "next/link";
 import { BrandTiles } from "@/components/catalog/BrandTiles";
 import { MasterTeaser } from "@/components/catalog/MasterTeaser";
 import { WatchCatalog } from "@/components/catalog/WatchCatalog";
+import { coverFor } from "@/lib/content/photos";
 import { WATCH_FORMS, watches } from "@/lib/content/catalog";
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default function WatchesPage() {
       {/* Suspense обязателен: фильтры живут в адресе, а при статическом
           экспорте сервер query не знает. */}
       <Suspense fallback={<div className="pad-x py-[40px] text-[13px] text-muted">Загружаем каталог…</div>}>
-        <WatchCatalog models={watches.models} />
+        <WatchCatalog models={watches.models.map((m) => ({ ...m, cover: coverFor(m.id) }))} />
       </Suspense>
 
       <MasterTeaser />

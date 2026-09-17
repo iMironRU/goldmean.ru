@@ -6,6 +6,7 @@ import { GuaranteeBlock } from "@/components/catalog/GuaranteeBlock";
 import { RelatedGrid } from "@/components/catalog/RelatedGrid";
 import { SpecTable } from "@/components/catalog/SpecTable";
 import { ImageSlot } from "@/components/ImageSlot";
+import { photosFor } from "@/lib/content/photos";
 import {
   brandByName,
   brandBySlug,
@@ -48,6 +49,7 @@ export default async function WatchPage({ params }: { params: Promise<Params> })
   if (!b || !m || m.brand !== b.name) notFound();
 
   const d = watches.detail;
+  const photos = photosFor(m.id);
   const note = `${m.brand} ${m.name} (${m.ref})`;
   const bookHref = `/contacts?note=${encodeURIComponent(note)}`;
 
@@ -64,8 +66,25 @@ export default async function WatchPage({ params }: { params: Promise<Params> })
       <div className="pad-x grid-auto gap-[40px] pt-[24px] pb-[64px]">
         <div>
           <div className="aspect-square bg-cool">
-            <ImageSlot photo={`Основной ракурс: ${m.brand} ${m.name}`} tone="cool" />
+            <ImageSlot
+              photo={`Основной ракурс: ${m.brand} ${m.name}`}
+              src={photos[0]}
+              tone="cool"
+            />
           </div>
+
+          {/* Остальные ракурсы. В прототипе слот один — ряд превью появляется
+              только когда снимков действительно несколько. */}
+          {photos.length > 1 && (
+            <div className="mt-[8px] grid grid-cols-4 gap-[8px]">
+              {photos.slice(1, 5).map((src) => (
+                <div key={src} className="aspect-square bg-cool">
+                  <ImageSlot photo={`${m.brand} ${m.name}`} src={src} tone="cool" />
+                </div>
+              ))}
+            </div>
+          )}
+
           <p className="mt-[10px] text-[12px] leading-[1.5] text-muted">{d.photoNote}</p>
         </div>
 

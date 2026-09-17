@@ -11,7 +11,7 @@ import { tagsFor } from "@/lib/catalog-tags";
 
 // Карточка модели часов (§6 хендоффа). Ярлыки характеристик лежат поверх
 // фотографии, в левом нижнем углу; у каждого — title с полной формулировкой.
-export function WatchCard({ model }: { model: WatchModel }) {
+export function WatchCard({ model }: { model: WatchModel & { cover?: string } }) {
   const tags = tagsFor(model.mechanism, model.waterResistance, model.glass, model.case);
   const brand = brandByName(watches.brands, model.brand);
   const href = `/watches/${brand?.slug ?? ""}/${refSlug(model.ref)}`;
@@ -21,7 +21,11 @@ export function WatchCard({ model }: { model: WatchModel }) {
   return (
     <div className="flex flex-col">
       <Link href={href} className="relative block aspect-square bg-cool">
-        <ImageSlot photo={`Фото от бренда: ${model.brand} ${model.name}`} tone="cool" />
+        <ImageSlot
+          photo={`Фото от бренда: ${model.brand} ${model.name}`}
+          src={model.cover}
+          tone="cool"
+        />
         <div className="pointer-events-none absolute inset-x-[8px] bottom-[8px] flex flex-wrap gap-[4px]">
           {tags.map((t) => (
             <span

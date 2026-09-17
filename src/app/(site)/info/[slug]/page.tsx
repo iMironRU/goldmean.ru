@@ -40,13 +40,21 @@ export default async function InfoPage({ params }: { params: Promise<Params> }) 
 
   return (
     <>
+      {/* Справочная страница — это чтение, а не витрина: колонка «оглавление
+          плюс текст» шириной 956 px центрируется, иначе на широком экране она
+          жалась бы к левому краю с пустотой справа. Подложка заголовка при
+          этом остаётся во всю ширину, как у остальных секций сайта. */}
       <div className="pad-x pad-t border-b border-line bg-cool pb-[32px]">
-        <div className="eyebrow mb-[12px] text-muted">Покупателю</div>
-        <h1 className="h1-hero max-w-[820px]">{page.h1}</h1>
+        <div className="mx-auto w-full max-w-[956px]">
+          <div className="eyebrow mb-[12px] text-muted">Покупателю</div>
+          <h1 className="h1-hero">{page.h1}</h1>
+        </div>
       </div>
 
       <div className="pad-x pad-y">
-        <ArticleBody page={page} tocLabel="Разделы" ariaLabel={`Разделы страницы «${page.h1}»`} />
+        <div className="mx-auto w-full max-w-[956px]">
+          <ArticleBody page={page} tocLabel="Разделы" ariaLabel={`Разделы страницы «${page.h1}»`} />
+        </div>
       </div>
     </>
   );

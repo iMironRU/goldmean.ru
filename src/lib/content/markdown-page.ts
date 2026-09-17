@@ -68,6 +68,17 @@ function linkifyRefs(html: string, selfHref?: string): string {
 // [ПРОВЕРИТЬ …] — вопросы автора текста к салону, оставленные прямо в тексте.
 // Подсвечиваем, чтобы на показе было видно: это не готовая формулировка.
 // Когда вопросы закроются, скобки уйдут из md, и подсветка пропадёт сама.
+// Таблицы в справочнике широкие (до шести колонок), и на телефоне они
+// растягивали колонку сетки за край экрана: у грид-трека `1fr` минимальная
+// ширина по умолчанию — auto, то есть по содержимому. Оборачиваем каждую
+// таблицу в контейнер с горизонтальной прокруткой: уезжает таблица, а не
+// страница.
+function wrapTables(html: string): string {
+  return html
+    .replace(/<table>/g, '<div class="table-scroll"><table>')
+    .replace(/<\/table>/g, "</table></div>");
+}
+
 function markTodos(html: string): string {
   return html.replace(
     /\[ПРОВЕРИТЬ[^\]]*\]/g,
@@ -95,7 +106,7 @@ function readPage(file: string, selfHref?: string): MarkdownPage | null {
   const md = stripLeadingH1(stripEditorNotes(content)).trim();
 
   let html = marked.parse(md, { gfm: true, async: false }) as string;
-  html = markTodos(linkifyRefs(html, selfHref));
+  html = wrapTables(markTodos(linkifyRefs(html, selfHref)));
 
   // Якоря и оглавление. Проще дописать id в готовый HTML, чем переопределять
   // рендерер marked: разметка наша собственная, из файлов в репозитории.

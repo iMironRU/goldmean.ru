@@ -287,6 +287,10 @@
   .chip {
     display: inline-flex;
     align-items: center;
+    /* Чип может стоять в ячейке сетки и быть шире своего текста — тогда
+       надпись должна оставаться по центру, а не липнуть влево. */
+    justify-content: center;
+    text-align: center;
     min-height: 36px;
     padding: 7px 12px;
     font-size: 12px;

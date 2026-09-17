@@ -68,7 +68,7 @@ export function JewelCatalog({
           <p className="mt-[14px] text-[14px] leading-[1.6] text-muted">
             {jewelry.empty.text.replace("{brand}", brandName ?? "этого производителя")}
           </p>
-          <div className="mt-[24px] flex flex-wrap gap-[12px]">
+          <div className="mt-[24px] flex flex-col items-stretch gap-[12px] desktop:flex-row desktop:flex-wrap desktop:items-center">
             <Link href="/contacts" data-page-cta className="btn-primary px-[24px] py-[14px]">
               Уточнить наличие
             </Link>

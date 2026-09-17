@@ -153,7 +153,10 @@ export function GiftConstructor() {
               <div className="mb-[12px] text-[12px] uppercase tracking-[.06em] text-muted">
                 {L.amount}
               </div>
-              <div className="flex flex-wrap gap-[6px]">
+              {/* Сетка, а не перенос: при переносе каждый чип обжимался по
+                  своему тексту, и ряды получались рваными. Равные ячейки
+                  выстраивают их в колонки. */}
+              <div className="grid grid-cols-2 gap-[6px] desktop:grid-cols-3">
                 {gift.amounts.map((a) => (
                   <Chip
                     key={a}
@@ -257,7 +260,7 @@ export function GiftConstructor() {
               <div className="mb-[10px] text-[12px] uppercase tracking-[.06em] text-muted">
                 {L.deliverTo}
               </div>
-              <div className="flex flex-wrap gap-[6px]">
+              <div className="grid grid-cols-2 gap-[6px]">
                 {gift.deliverTo.map((c) => (
                   <Chip
                     key={c.key}
@@ -319,7 +322,7 @@ export function GiftConstructor() {
                 aria-label={L.datetime}
                 className={inputClass}
               />
-              <div className="flex flex-wrap gap-[6px]">
+              <div className="grid grid-cols-2 gap-[6px] desktop:grid-cols-3">
                 {gift.slots.map((t) => (
                   <Chip key={t} mono active={s.slot === t} onClick={() => set("slot", t)}>
                     {t}

@@ -66,7 +66,7 @@ export function BrandHeader({
               Во всю ширину не растягиваем — это сломало бы пропорции макета,
               где кнопки обжаты по тексту, и «Все производители» выглядела бы
               главным действием, хотя это возврат к списку. */}
-          <div className="mt-[24px] flex w-fit flex-col items-stretch gap-[10px]">
+          <div className="mt-[24px] flex w-full flex-col items-stretch gap-[10px] desktop:w-fit">
             <Link href="/contacts" data-page-cta className="btn-primary px-[24px] py-[14px]">
               {bookLabel}
             </Link>

@@ -131,8 +131,11 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
           <div className="mt-[24px] text-[22px]">{j.price}</div>
           <div className="mt-[4px] text-[12px] text-muted">{d.availability}</div>
 
-          <div className="mt-[24px] flex flex-wrap gap-[10px]">
-            <Link href={bookHref} data-page-cta className="btn-primary flex-auto">
+          {/* На мобильном кнопки во всю ширину столбиком, на десктопе в
+              строку. При переносе они обжимались по своему тексту и ряд
+              получался рваным. */}
+          <div className="mt-[24px] flex flex-col items-stretch gap-[10px] desktop:flex-row desktop:flex-wrap desktop:items-center">
+            <Link href={bookHref} data-page-cta className="btn-primary desktop:flex-auto">
               {d.book}
             </Link>
             <Link

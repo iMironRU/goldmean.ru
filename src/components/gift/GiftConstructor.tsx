@@ -143,10 +143,10 @@ export function GiftConstructor() {
 
   return (
     <>
-      <div id="gift-form" className="pad-x pad-y scroll-mt-[76px] border-b border-line">
-        <div className="h2-sec">{gift.formTitle}</div>
-
-        <div className="grid-auto mt-[32px] items-start gap-[40px] [--col-min:300px]">
+      {/* Заголовок и рамку секции рисует раскрытие, внутри которого стоит
+          конструктор, — второй заголовок был бы лишним. */}
+      <div id="gift-form" className="scroll-mt-[76px] pt-[8px]">
+        <div className="grid-auto items-start gap-[40px] [--col-min:300px]">
           {/* ── Левая колонка: что дарим ─────────────────────────────── */}
           <div className="flex flex-col gap-[32px]">
             <div>
@@ -390,9 +390,16 @@ export function GiftConstructor() {
       </div>
 
       {/* Мобильная панель оплаты: номинал слева, действие справа. Пока форма
-          не собрана, кнопка прокручивает к ней, а не притворяется активной. */}
+          не собрана, кнопка прокручивает к ней, а не притворяется активной.
+
+          fixed, а не sticky. Панель стоит в потоке сразу после формы, и
+          sticky держал её у низа экрана лишь пока человек ВЫШЕ формы: стоило
+          пройти её — и панель всплывала наверх, накрывая шапку сайта.
+          Глобальный sticky-CTA на /gift скрыт (§6), так что конфликта нет.
+          Рисуется только при раскрытом конструкторе — он монтируется по
+          требованию. */}
       <div
-        className="sticky bottom-0 z-[6] flex items-center gap-[12px] px-[16px] pt-[10px] pb-[14px] desktop:hidden"
+        className="fixed inset-x-0 bottom-0 z-[6] flex items-center gap-[12px] px-[16px] pt-[10px] pb-[14px] desktop:hidden"
         style={{ background: "linear-gradient(to top, var(--bg) 70%, transparent)" }}
       >
         <div className="flex-none">

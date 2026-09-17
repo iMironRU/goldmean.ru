@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { CorpForm } from "@/components/gift/CorpForm";
+import { Disclosure } from "@/components/gift/Disclosure";
+import { GiftCallback } from "@/components/gift/GiftCallback";
 import { GiftConstructor } from "@/components/gift/GiftConstructor";
 import { GiftFaq } from "@/components/gift/GiftFaq";
 import { GiftTerms } from "@/components/gift/GiftTerms";
@@ -25,7 +27,7 @@ export default function GiftPage() {
           </p>
           {/* Якорь, а не кнопка с обработчиком: плавный скролл делает CSS
               (scroll-behavior: smooth в globals.css), и ссылка работает без JS. */}
-          <a href="#gift-form" className="btn-primary mt-[28px] min-h-[52px] px-[32px] py-[18px]">
+          <a href="#gift-order" className="btn-primary mt-[28px] min-h-[52px] px-[32px] py-[18px]">
             {gift.heroCta}
           </a>
           <div className="mt-[12px] text-[12px] text-muted">{gift.heroNote}</div>
@@ -35,8 +37,20 @@ export default function GiftPage() {
         </div>
       </div>
 
-      {/* ── Конструктор или экран успеха ──────────────────────────────── */}
-      <GiftConstructor />
+      {/* ── Заказ: короткий путь и конструктор ────────────────────────────
+          Заявка выше конструктора намеренно: оплаты на сайте пока нет (§9),
+          и девять полей, которые заканчиваются ничем, хуже двух, которые
+          заканчиваются звонком. Конструктор из §8 остался целиком — ниже,
+          под раскрытием. Появится эквайринг — меняем порядок обратно. */}
+      <div id="gift-order" className="pad-x pad-y scroll-mt-[76px] border-b border-line">
+        <GiftCallback />
+
+        <div className="mt-[40px]">
+          <Disclosure label={gift.builderToggle.open} hint={gift.builderToggle.hint}>
+            <GiftConstructor />
+          </Disclosure>
+        </div>
+      </div>
 
       {/* ── Три шага ──────────────────────────────────────────────────── */}
       <div className="pad-x pad-y border-b border-line bg-cool">
@@ -59,7 +73,7 @@ export default function GiftPage() {
           {gift.picksLead}
         </p>
         <div className="grid-fill mt-[32px] gap-[28px_20px] [--col-min:200px]">
-          {gift.picks.map((p) => (
+          {gift.picks.slice(0, gift.picksShown).map((p) => (
             <div key={p.id}>
               <div className="aspect-square bg-cool">
                 <ImageSlot photo={`Фото: ${p.name}`} />
@@ -104,7 +118,11 @@ export default function GiftPage() {
           </p>
         </div>
         <div className="pad-x bg-cool py-[20px] desktop:py-[56px]">
-          <CorpForm />
+          <Disclosure label={gift.corp.labels.submit}>
+            <div className="pt-[8px]">
+              <CorpForm />
+            </div>
+          </Disclosure>
         </div>
       </div>
 

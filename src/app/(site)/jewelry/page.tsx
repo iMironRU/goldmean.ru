@@ -49,7 +49,7 @@ export default function JewelryPage() {
           counts={counts}
           forms={JEWEL_FORMS}
           base="/jewelry"
-          minWidth={180}
+          minWidth={160}
         />
       </div>
 

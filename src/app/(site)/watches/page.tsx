@@ -30,7 +30,7 @@ export default function WatchesPage() {
           counts={counts}
           forms={WATCH_FORMS}
           base="/watches"
-          minWidth={150}
+          minWidth={160}
         />
       </div>
 

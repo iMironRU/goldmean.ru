@@ -17,13 +17,21 @@ export function BrandTiles({
   forms: [string, string, string];
   /** Корень раздела: «/watches» или «/jewelry». */
   base: string;
+  /**
+   * Минимальная ширина плитки на мобильном. Держать не больше 163 px:
+   * §11 хендоффа требует минимум две колонки марок на 390 px. Считать надо
+   * не от 390, а от 335 — в десктопном браузере на узком окне полоса
+   * прокрутки съедает ещё 15 px, и на 170 вторая колонка уже отваливалась.
+   */
   minWidth: number;
   activeSlug?: string;
 }) {
   return (
+    // Ширина плитки: мобильное значение приходит пропом, десктопное задаёт
+    // класс .brand-tiles в globals.css — см. комментарий там.
     <div
-      className="grid-fill mt-[32px] gap-[8px]"
-      style={{ ["--col-min" as string]: `${minWidth}px` }}
+      className="grid-fill brand-tiles mt-[32px] gap-[8px]"
+      style={{ ["--col-min-narrow" as string]: `${minWidth}px` }}
     >
       {brands.map((b) => {
         const active = b.slug === activeSlug;
@@ -33,7 +41,7 @@ export function BrandTiles({
             className="flex min-w-0 flex-col overflow-hidden border bg-bg"
             style={{ borderColor: active ? "var(--ink)" : "var(--line2)" }}
           >
-            <div className="mx-[14px] mt-[10px] h-[56px]">
+            <div className="mx-[10px] mt-[12px] h-[72px]">
               <ImageSlot photo={`Логотип ${b.name}`} src={b.logo} fit="contain" />
             </div>
             <Link

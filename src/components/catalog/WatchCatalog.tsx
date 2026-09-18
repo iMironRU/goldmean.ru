@@ -71,12 +71,12 @@ export function WatchCatalog({
             {watches.empty.text.replace("{brand}", brandName ?? "этой марки")}
           </p>
           <div className="mt-[24px] flex flex-col items-stretch gap-[12px] desktop:flex-row desktop:flex-wrap desktop:items-center">
-            <Link href="/contacts" data-page-cta className="btn-primary px-[24px] py-[14px]">
+            <Link href="/contacts" data-page-cta className="btn-primary py-[14px]">
               Уточнить наличие
             </Link>
             <Link
               href="/watches"
-              className="inline-flex min-h-[44px] items-center rounded-[3px] border border-line2 px-[24px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
+              className="inline-flex min-h-[44px] items-center rounded-[3px] border border-line2 px-[20px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
             >
               Все марки
             </Link>

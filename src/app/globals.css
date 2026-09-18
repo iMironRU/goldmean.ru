@@ -165,7 +165,9 @@
     background: var(--cta);
     color: var(--bg);
     border: 0;
-    padding: 16px 28px;
+    /* Поля по горизонтали — 20 px у ВСЕХ кнопок сайта, закрашенных и
+       обводочных. Своё px-* у отдельной кнопки не ставить: только py-*. */
+    padding: 16px 20px;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -192,7 +194,7 @@
 
   /* В шапке кнопка компактнее. */
   .btn-primary-nav {
-    padding: 12px 22px;
+    padding: 12px 20px;
     min-height: 40px;
   }
 

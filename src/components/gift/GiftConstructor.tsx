@@ -373,7 +373,7 @@ export function GiftConstructor() {
                 type="button"
                 disabled={!canOrder}
                 onClick={() => setSent(orderNumber())}
-                className="btn-primary min-h-[52px] px-[30px] py-[18px] disabled:cursor-not-allowed"
+                className="btn-primary min-h-[52px] py-[18px] disabled:cursor-not-allowed"
                 style={
                   canOrder
                     ? undefined
@@ -412,7 +412,7 @@ export function GiftConstructor() {
             if (canOrder) setSent(orderNumber());
             else document.getElementById("gift-form")?.scrollIntoView({ behavior: "smooth" });
           }}
-          className="btn-primary min-h-[52px] flex-1 p-[16px]"
+          className="btn-primary min-h-[52px] flex-1 py-[16px]"
           style={
             canOrder
               ? { boxShadow: "0 12px 30px -12px rgba(28,27,25,.5)" }

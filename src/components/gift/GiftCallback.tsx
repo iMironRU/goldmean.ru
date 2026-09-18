@@ -85,14 +85,14 @@ export function GiftCallback() {
           disabled={!ready}
           onClick={() => setSent(phone)}
           data-page-cta
-          className="btn-primary min-h-[52px] px-[30px] py-[18px] disabled:cursor-not-allowed"
+          className="btn-primary min-h-[52px] py-[18px] disabled:cursor-not-allowed"
           style={ready ? undefined : { background: "var(--line2)", color: "var(--muted)" }}
         >
           {c.submit}
         </button>
         <a
           href={site.phoneHref}
-          className="inline-flex min-h-[52px] items-center justify-center rounded-[3px] border border-line2 px-[24px] text-[14px] text-ink transition-colors hover:border-ink"
+          className="inline-flex min-h-[52px] items-center justify-center rounded-[3px] border border-line2 px-[20px] text-[14px] text-ink transition-colors hover:border-ink"
         >
           {site.phone}
         </a>

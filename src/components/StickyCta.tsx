@@ -33,7 +33,7 @@ export function StickyCta() {
       <Link
         href={site.cta.href}
         tabIndex={covered ? -1 : undefined}
-        className="btn-primary w-full min-h-[52px] p-[16px]"
+        className="btn-primary w-full min-h-[52px] py-[16px]"
         style={{ boxShadow: "0 12px 30px -12px rgba(28,27,25,.5)" }}
       >
         {site.cta.label}

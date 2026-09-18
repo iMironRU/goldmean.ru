@@ -103,7 +103,7 @@ export default async function WatchPage({ params }: { params: Promise<Params> })
             </Link>
             <Link
               href={bookHref}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-ink px-[22px] py-[16px] text-[12px] font-medium uppercase tracking-[.1em] text-ink"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-ink px-[20px] py-[16px] text-[12px] font-medium uppercase tracking-[.1em] text-ink"
             >
               {d.ask}
             </Link>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PageStub } from "@/components/PageStub";
 
 export const metadata: Metadata = {
-  title: "Почему офлайн",
+  title: "Почему в салоне",
   description: "Почему часы и бриллиант нельзя выбрать по фотографии.",
 };
 

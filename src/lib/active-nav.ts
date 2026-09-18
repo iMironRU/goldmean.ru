@@ -8,7 +8,6 @@ const RULES: Array<[RegExp, string]> = [
   [/^\/master(\/|$)/, "/watches"],
   [/^\/jewelry(\/|$)/, "/jewelry"],
   [/^\/diamonds(\/|$)/, "/jewelry"],
-  [/^\/services(\/|$)/, "/services"],
   [/^\/why-offline(\/|$)/, "/why-offline"],
   [/^\/about(\/|$)/, "/about"],
   [/^\/contacts(\/|$)/, "/contacts"],

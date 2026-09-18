@@ -33,12 +33,13 @@ export function SiteFooter() {
           Instagram
         </a>
       </div>
-      {/* Две колонки по четыре строки, чтение сверху вниз: семь пунктов
-          столбиком были самым длинным блоком подвала. Сертификат — того же
-          цвета, что и остальные: в прототипе он выделен --ink, но в списке
-          это читалось как сбой, а не как акцент (решение заказчика). */}
-      <div className="grid flex-none grid-flow-col grid-rows-4 justify-start gap-x-[24px]">
-        {[...site.nav, site.gift].map((n) => (
+      {/* Две колонки по три строки, чтение сверху вниз: слева что купить
+          (часы, украшения, сертификат), справа всё о салоне. Порядок задан
+          здесь, а не в site.nav: сертификата в меню шапки нет. Цвет у всех
+          пунктов один — в прототипе сертификат выделен --ink, но в списке
+          это читалось как сбой (решение заказчика). */}
+      <div className="grid flex-none grid-flow-col grid-rows-3 justify-start gap-x-[24px]">
+        {[site.nav[0], site.nav[1], site.gift, ...site.nav.slice(2)].map((n) => (
           <Link key={n.href} href={n.href} className="whitespace-nowrap text-muted">
             {n.label}
           </Link>

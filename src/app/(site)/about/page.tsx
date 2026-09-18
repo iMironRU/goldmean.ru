@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { TelegramFeed } from "@/components/catalog/TelegramFeed";
 import { ImageSlot } from "@/components/ImageSlot";
 import { watches } from "@/lib/content/catalog";
-import { about } from "@/lib/content/site";
+import { about, site } from "@/lib/content/site";
 
 export const metadata: Metadata = {
   title: "О магазине",
@@ -74,7 +74,7 @@ export default function AboutPage() {
         <div className="eyebrow mb-[10px] text-muted">{about.stores.eyebrow}</div>
         <h2 className="h2-sec">{about.stores.title}</h2>
         <div className="grid-auto mt-[32px] gap-[24px] [--col-min:300px]">
-          {about.stores.items.map((s, i) => (
+          {site.stores.map((s, i) => (
             <div key={s.name}>
               <div className={`aspect-3/2 ${i === 0 ? "bg-warm2" : "bg-cool2"}`}>
                 <ImageSlot photo={s.photo} tone={i === 0 ? "warm" : "cool"} />

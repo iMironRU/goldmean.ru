@@ -23,10 +23,17 @@ export function SiteFooter() {
         </Link>
         <div className="mt-[8px]">{site.tagline}</div>
       </div>
-      <div>
-        {site.address}
-        <br />
-        {site.hours}
+      {/* Оба магазина из site.stores. У магазина в ТЦ «Север» пока нет
+          адреса и часов — вместо них строка о том, что там продают; заказчик
+          даст данные — встанут адрес и часы, как у салона. */}
+      <div className="flex flex-col gap-[10px]">
+        {site.stores.map((st) => (
+          <div key={st.name}>
+            {st.address || st.name}
+            <br />
+            {st.hours || st.what}
+          </div>
+        ))}
       </div>
       <div>
         <a href={site.phoneHref} className="text-ink">

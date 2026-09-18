@@ -58,11 +58,13 @@ export function BrandHeader({
 
               В ряд — только когда ряд помещается в колонку шапки целиком
               (контейнерный запрос по @container выше), иначе столбиком.
-              Кнопка «Записаться на консультацию» — 276 px: трём нужно 848 px,
-              двум (у часовых марок) — 562. Колонка на 1280 px — 557, так что
-              на ноутбуке столбик у всех, на мониторе ряд встаёт сам: у часов
-              с ~1300 px, у украшений с ~1880. flex-wrap не годится — он ломал
-              ряд как 2+1 кнопками разной ширины. Порог считается от ширины
+              Кнопка «Записаться на консультацию» — 268 px: трём нужно 824 px,
+              двум (у часовых марок) — 546. Колонка на 1280 px — 557, так что
+              у часов ряд уже на ноутбуке, у украшений — с окна ~1840 px. Ради
+              этого поля кнопок здесь 20 px, а не 24, как на остальном сайте:
+              с 24 кнопка была 276 px, и часам на 1280 не хватало 5 px.
+              flex-wrap не годится — он ломал ряд как 2+1 кнопками разной
+              ширины. Порог считается от ширины
               КОЛОНКИ, а не окна: переставят сетку шапки — не сломается.
               Поменяете надпись кнопки — пересчитайте пороги. Классы порога
               записаны целиком, а не склеены из числа: Tailwind находит их по
@@ -74,11 +76,11 @@ export function BrandHeader({
           <div
             className={`mt-[24px] grid w-full gap-[10px] desktop:w-fit ${
               anchor
-                ? "@min-[850px]:grid-flow-col @min-[850px]:auto-cols-fr"
-                : "@min-[565px]:grid-flow-col @min-[565px]:auto-cols-fr"
+                ? "@min-[830px]:grid-flow-col @min-[830px]:auto-cols-fr"
+                : "@min-[550px]:grid-flow-col @min-[550px]:auto-cols-fr"
             }`}
           >
-            <Link href="/contacts" data-page-cta className="btn-primary px-[24px] py-[14px]">
+            <Link href="/contacts" data-page-cta className="btn-primary px-[20px] py-[14px]">
               {site.cta.label}
             </Link>
             {anchor && (
@@ -86,14 +88,14 @@ export function BrandHeader({
               // ему не нужен. Плавность даёт scroll-behavior в globals.css.
               <a
                 href={anchor.href}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-line2 px-[24px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
+                className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-line2 px-[20px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
               >
                 {anchor.label}
               </a>
             )}
             <Link
               href={base}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-line2 px-[24px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
+              className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-line2 px-[20px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
             >
               {allLabel}
             </Link>

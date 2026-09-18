@@ -46,7 +46,10 @@ export function BrandTiles({
             className="flex min-w-0 flex-col overflow-hidden border bg-bg transition-colors hover:!border-ink"
             style={{ borderColor: active ? "var(--ink)" : "var(--line2)" }}
           >
-            <div className="mx-[10px] mt-[12px] h-[72px]">
+            {/* Поля вокруг логотипа со всех сторон: логотип вписывается
+                (contain) во всё, что ему дали, и без полей широкие упирались
+                в бока плитки, высокие — в верх, а все — в линию под собой. */}
+            <div className="h-[92px] px-[20px] py-[16px]">
               <ImageSlot photo={`Логотип ${b.name}`} src={b.logo} fit="contain" />
             </div>
             <div

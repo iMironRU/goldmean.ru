@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
 import type { Brand } from "@/lib/content/catalog";
+import { site } from "@/lib/content/site";
 
 // Шапка страницы марки: хлебные крошки, логотип, название, справка о марке и
 // имиджевое фото (§7 хендоффа). Один и тот же экран для часов и украшений,
@@ -9,7 +10,6 @@ export function BrandHeader({
   brand,
   base,
   rootLabel,
-  bookLabel,
   allLabel,
   tone,
   anchor,
@@ -17,7 +17,6 @@ export function BrandHeader({
   brand: Brand;
   base: string;
   rootLabel: string;
-  bookLabel: string;
   allLabel: string;
   tone: "cool" | "warm";
   /**
@@ -58,15 +57,16 @@ export function BrandHeader({
               сжимает сетку до неё, auto-cols-fr уравнивает колонки.
 
               В ряд — только когда ряд помещается в колонку шапки целиком
-              (контейнерный запрос по @container выше), иначе столбиком. Три
-              кнопки по 240 px — это 740 px, а колонка на 1280 px — 557: на
-              ноутбуке ряд переносился как 2+1 кнопками разной ширины, и
-              столбик одинаковых читается ровнее ломаного ряда. На мониторе
-              от ~1650 px колонка шире, и ряд встаёт сам. Двум кнопкам (у
-              часовых марок) хватает 490 px — у них ряд уже с 1280, как в
-              прототипе. Порог считается от ширины КОЛОНКИ, а не окна:
-              переставят сетку шапки — не сломается. Классы порога записаны
-              целиком, а не склеены из числа: Tailwind находит их по тексту.
+              (контейнерный запрос по @container выше), иначе столбиком.
+              Кнопка «Записаться на консультацию» — 276 px: трём нужно 848 px,
+              двум (у часовых марок) — 562. Колонка на 1280 px — 557, так что
+              на ноутбуке столбик у всех, на мониторе ряд встаёт сам: у часов
+              с ~1300 px, у украшений с ~1880. flex-wrap не годится — он ломал
+              ряд как 2+1 кнопками разной ширины. Порог считается от ширины
+              КОЛОНКИ, а не окна: переставят сетку шапки — не сломается.
+              Поменяете надпись кнопки — пересчитайте пороги. Классы порога
+              записаны целиком, а не склеены из числа: Tailwind находит их по
+              тексту.
 
               Во всю ширину колонки не растягиваем — это сломало бы пропорции
               макета, где кнопки обжаты по тексту, и «Все производители»
@@ -74,12 +74,12 @@ export function BrandHeader({
           <div
             className={`mt-[24px] grid w-full gap-[10px] desktop:w-fit ${
               anchor
-                ? "@min-[760px]:grid-flow-col @min-[760px]:auto-cols-fr"
-                : "@min-[510px]:grid-flow-col @min-[510px]:auto-cols-fr"
+                ? "@min-[850px]:grid-flow-col @min-[850px]:auto-cols-fr"
+                : "@min-[565px]:grid-flow-col @min-[565px]:auto-cols-fr"
             }`}
           >
             <Link href="/contacts" data-page-cta className="btn-primary px-[24px] py-[14px]">
-              {bookLabel}
+              {site.cta.label}
             </Link>
             {anchor && (
               // Обычный <a>: это переход по якорю внутри страницы, basePath

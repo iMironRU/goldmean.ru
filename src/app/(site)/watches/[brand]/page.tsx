@@ -55,7 +55,6 @@ export default async function WatchBrandPage({ params }: { params: Promise<Param
         brand={b}
         base="/watches"
         rootLabel={watches.title}
-        bookLabel="Записаться на примерку"
         allLabel="Все марки"
         tone="cool"
       />

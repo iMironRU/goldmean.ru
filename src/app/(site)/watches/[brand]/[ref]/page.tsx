@@ -9,6 +9,7 @@ import { SpecTable } from "@/components/catalog/SpecTable";
 import { ProductGallery } from "@/components/catalog/ProductGallery";
 import { ImageSlot } from "@/components/ImageSlot";
 import { photosFor } from "@/lib/content/photos";
+import { site } from "@/lib/content/site";
 import {
   brandByName,
   brandBySlug,
@@ -98,7 +99,7 @@ export default async function WatchPage({ params }: { params: Promise<Params> })
               получался рваным. */}
           <div className="mt-[24px] flex flex-col items-stretch gap-[10px] desktop:flex-row desktop:flex-wrap desktop:items-center">
             <Link href={bookHref} data-page-cta className="btn-primary desktop:flex-auto">
-              {d.book}
+              {site.cta.label}
             </Link>
             <Link
               href={bookHref}

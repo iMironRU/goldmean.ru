@@ -36,16 +36,20 @@ export function BrandTiles({
       {brands.map((b) => {
         const active = b.slug === activeSlug;
         return (
-          <div
+          // Ссылка — вся плитка, а не только полоска с названием: логотип
+          // занимает большую часть плитки, и нажатие по нему ничего не
+          // делало. Внутри больше нет ссылок, так что вложенных не будет.
+          <Link
             key={b.slug}
-            className="flex min-w-0 flex-col overflow-hidden border bg-bg"
+            href={`${base}/${b.slug}`}
+            aria-current={active ? "page" : undefined}
+            className="flex min-w-0 flex-col overflow-hidden border bg-bg transition-colors hover:!border-ink"
             style={{ borderColor: active ? "var(--ink)" : "var(--line2)" }}
           >
             <div className="mx-[10px] mt-[12px] h-[72px]">
               <ImageSlot photo={`Логотип ${b.name}`} src={b.logo} fit="contain" />
             </div>
-            <Link
-              href={`${base}/${b.slug}`}
+            <div
               className="flex min-w-0 flex-col items-center gap-[2px] border-t border-line px-[8px] pt-[8px] pb-[9px] transition-colors"
               style={{
                 background: active ? "var(--ink)" : "transparent",
@@ -58,8 +62,8 @@ export function BrandTiles({
               <span className="text-[10px] tracking-[.06em] opacity-60">
                 {countLabel(counts[b.name] ?? 0, forms)}
               </span>
-            </Link>
-          </div>
+            </div>
+          </Link>
         );
       })}
     </div>

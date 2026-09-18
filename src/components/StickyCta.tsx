@@ -2,50 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { site } from "@/lib/content/site";
+import { usePageCtaVisible } from "@/lib/use-page-cta";
 
 // Sticky-CTA внизу экрана. В прототипе — только на мобильной рамке, и только
 // на страницах кроме «Контактов» и «Сертификата»: там своя кнопка отправки
 // формы, две кнопки подряд спорили бы друг с другом (§6).
 const HIDDEN = ["/contacts", "/gift"];
 
-// Пока главная кнопка самой страницы на экране, sticky прячется: иначе рядом
-// оказывались две одинаковые акцентные кнопки, ведущие в одно и то же место.
-// На главной в варианте B они вообще совпадали слово в слово — «Записаться
-// на консультацию» и в первом экране, и внизу.
-//
-// Кнопки страниц помечены атрибутом data-page-cta. Это явная пометка, а не
-// поиск по классу или адресу: так видно, какая кнопка на странице главная,
-// и правило не сломается от смены вёрстки кнопки.
-const PAGE_CTA = "[data-page-cta]";
-
+// Пока главная кнопка самой страницы на экране, панель гаснет — см.
+// usePageCtaVisible. На главной в варианте B кнопки совпадали слово в слово.
 export function StickyCta() {
   const pathname = usePathname();
-  const [covered, setCovered] = useState(false);
-
-  useEffect(() => {
-    // Кнопок может быть несколько (на главной — по одной в каждом варианте),
-    // поэтому считаем видимые, а не смотрим на одну.
-    const visible = new Set<Element>();
-    const io = new IntersectionObserver((entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) visible.add(e.target);
-        else visible.delete(e.target);
-      }
-      setCovered(visible.size > 0);
-    });
-
-    document.querySelectorAll(PAGE_CTA).forEach((t) => io.observe(t));
-
-    // Сброс — в уборке, а не в теле эффекта: на странице без своей кнопки
-    // наблюдатель не сработает ни разу, и covered должен вернуться к false
-    // при уходе с предыдущей страницы.
-    return () => {
-      io.disconnect();
-      setCovered(false);
-    };
-  }, [pathname]);
+  const covered = usePageCtaVisible();
 
   const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
   if (HIDDEN.includes(path)) return null;

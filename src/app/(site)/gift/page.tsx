@@ -27,7 +27,7 @@ export default function GiftPage() {
           </p>
           {/* Якорь, а не кнопка с обработчиком: плавный скролл делает CSS
               (scroll-behavior: smooth в globals.css), и ссылка работает без JS. */}
-          <a href="#gift-order" className="btn-primary mt-[28px] min-h-[52px] px-[32px] py-[18px]">
+          <a href="#gift-order" data-page-cta className="btn-primary mt-[28px] min-h-[52px] px-[32px] py-[18px]">
             {gift.heroCta}
           </a>
           <div className="mt-[12px] text-[12px] text-muted">{gift.heroNote}</div>

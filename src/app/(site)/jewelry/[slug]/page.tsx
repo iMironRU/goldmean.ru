@@ -13,6 +13,7 @@ import { SpecTable } from "@/components/catalog/SpecTable";
 import { TelegramFeed } from "@/components/catalog/TelegramFeed";
 import { ImageSlot } from "@/components/ImageSlot";
 import { getBrandArticle } from "@/lib/content/markdown-page";
+import { site } from "@/lib/content/site";
 import {
   brandByName,
   brandBySlug,
@@ -78,7 +79,6 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
           brand={brand}
           base="/jewelry"
           rootLabel={jewelry.title}
-          bookLabel="Записаться на просмотр"
           allLabel="Все производители"
           tone="warm"
           anchor={{ href: "#vitrina", label: jewelry.telegram.title }}
@@ -136,7 +136,7 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
               получался рваным. */}
           <div className="mt-[24px] flex flex-col items-stretch gap-[10px] desktop:flex-row desktop:flex-wrap desktop:items-center">
             <Link href={bookHref} data-page-cta className="btn-primary desktop:flex-auto">
-              {d.book}
+              {site.cta.label}
             </Link>
             <Link
               href={bookHref}

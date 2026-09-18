@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/content/site";
 import { activeNavHref } from "@/lib/active-nav";
+import { usePageCtaVisible } from "@/lib/use-page-cta";
 
 // Шапка: sticky, 72 px на десктопе и 60 px на мобильном, фон — полупрозрачный
 // --bg с blur (§6 хендоффа).
@@ -12,6 +13,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const active = activeNavHref(pathname);
   const [menu, setMenu] = useState(false);
+  const covered = usePageCtaVisible();
 
   // Меню открыто — страница под ним не должна прокручиваться.
   useEffect(() => {
@@ -54,9 +56,15 @@ export function SiteHeader() {
               </Link>
             ))}
           </nav>
+          {/* Гаснет, пока на экране главная кнопка страницы (data-page-cta):
+              иначе в кадре две акцентные кнопки записи сразу — в шапке и на
+              странице. Не удаляется, а гаснет, чтобы шапка не прыгала. */}
           <Link
             href={site.cta.href}
-            className="btn-primary btn-primary-nav hidden desktop:inline-flex"
+            className="btn-primary btn-primary-nav hidden transition-opacity duration-200 desktop:inline-flex"
+            style={{ opacity: covered ? 0 : 1, pointerEvents: covered ? "none" : undefined }}
+            aria-hidden={covered}
+            tabIndex={covered ? -1 : undefined}
           >
             {site.cta.label}
           </Link>

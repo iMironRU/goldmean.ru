@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/content/site";
 import { activeNavHref } from "@/lib/active-nav";
+import { asset } from "@/lib/asset";
 import { usePageCtaVisible } from "@/lib/use-page-cta";
 
 // Шапка: sticky, 72 px на десктопе и 60 px на мобильном, фон — полупрозрачный
@@ -33,11 +34,29 @@ export function SiteHeader() {
         }}
       >
         <div className="pad-x flex h-[60px] items-center justify-between gap-4 desktop:h-[72px]">
-          <Link
-            href="/"
-            className="whitespace-nowrap font-display text-[20px] font-medium tracking-[.02em] text-ink desktop:text-[24px]"
-          >
-            {site.name}
+          {/* Логотип: надпись в строку — с 1280 px, круглая эмблема — уже.
+              Надпись шириной 227 px на ноутбуках 1024–1190 не оставляла места:
+              пункты меню переносились на две строки, кнопка сжималась. Эмблема
+              уже на 183 px, и с ней меню и кнопка встают в строку с 1024. На
+              телефоне надпись ~10:1 в шапке 60 px и вовсе была бы нечитаемой.
+              Обычный <img>, а не next/image: при статическом экспорте
+              оптимизатора нет, а SVG ему и не нужен. Путь — через asset(),
+              иначе на Pages будет 404 (basePath). */}
+          <Link href="/" className="flex shrink-0 items-center" aria-label={site.name}>
+            <img
+              src={asset(site.logo.emblem)}
+              alt=""
+              width={44}
+              height={44}
+              className="h-[44px] w-[44px] min-[1280px]:hidden"
+            />
+            <img
+              src={asset(site.logo.full)}
+              alt=""
+              width={228}
+              height={22}
+              className="hidden h-[22px] w-auto min-[1280px]:block"
+            />
           </Link>
 
           {/* Десктоп: шесть пунктов и кнопка записи */}
@@ -46,7 +65,7 @@ export function SiteHeader() {
               <Link
                 key={n.href}
                 href={n.href}
-                className="border-b py-[6px] text-[13px] tracking-[.04em] transition-colors"
+                className="whitespace-nowrap border-b py-[6px] text-[13px] tracking-[.04em] transition-colors"
                 style={{
                   color: active === n.href ? "var(--ink)" : "var(--muted)",
                   borderColor: active === n.href ? "var(--ink)" : "transparent",
@@ -61,7 +80,7 @@ export function SiteHeader() {
               странице. Не удаляется, а гаснет, чтобы шапка не прыгала. */}
           <Link
             href={site.cta.href}
-            className="btn-primary hidden transition-opacity duration-200 desktop:inline-flex"
+            className="btn-primary hidden shrink-0 whitespace-nowrap transition-opacity duration-200 desktop:inline-flex"
             style={{ opacity: covered ? 0 : 1, pointerEvents: covered ? "none" : undefined }}
             aria-hidden={covered}
             tabIndex={covered ? -1 : undefined}

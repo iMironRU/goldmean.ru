@@ -25,12 +25,22 @@ export function BookingForm() {
   const [phone, setPhone] = useState("");
   const [interest, setInterest] = useState(initialInterest);
   const [time, setTime] = useState(f.timeDefault);
+  const [store, setStore] = useState(site.stores[0].name);
   const [comment, setComment] = useState("");
   const [sent, setSent] = useState(false);
 
   const ready = name.trim().length > 1 && phone.replace(/\D/g, "").length >= 10;
   const interestLabel = f.interests.find((i) => i.key === interest)?.label ?? "";
   const timeLabel = f.times.find((t) => t.key === time)?.label ?? "";
+
+  // В магазине «только часы» украшений нет: при интересе «Украшения» он
+  // недоступен, а если был выбран — заявка уходит в салон. Иначе салон
+  // получил бы «украшения в ТЦ «Север»», где их не бывает. Сервис не
+  // ограничиваем: где мастерская принимает часы, решает салон по звонку.
+  const storeBlocked = (s: (typeof site.stores)[number]) => interest === "jewelry" && s.watchesOnly;
+  const current = site.stores.find((s) => s.name === store);
+  const effectiveStore = current && !storeBlocked(current) ? store : site.stores[0].name;
+  const showWatchesOnlyNote = site.stores.some(storeBlocked);
 
   if (sent) {
     return (
@@ -60,6 +70,8 @@ export function BookingForm() {
           </span>
           <br />
           {f.sentTime}: <span className="text-ink">{timeLabel}</span>
+          <br />
+          {f.sentStore}: <span className="text-ink">{effectiveStore}</span>
         </div>
         <button
           type="button"
@@ -125,6 +137,27 @@ export function BookingForm() {
               </Chip>
             ))}
           </div>
+        </div>
+
+        {/* Два магазина — салон и часовой в ТЦ «Север». В хендоффе поля нет,
+            добавлено по решению заказчика вместе со вторым адресом. */}
+        <div className="flex flex-col gap-[8px]">
+          <span className="text-[12px] uppercase tracking-[.06em] text-muted">{f.storeLabel}</span>
+          <div className="grid grid-cols-2 gap-[6px]">
+            {site.stores.map((s) => (
+              <Chip
+                key={s.name}
+                active={effectiveStore === s.name}
+                disabled={storeBlocked(s)}
+                onClick={() => setStore(s.name)}
+              >
+                {s.name}
+              </Chip>
+            ))}
+          </div>
+          {showWatchesOnlyNote && (
+            <p className="text-[12px] leading-[1.5] text-muted">{f.storeWatchesOnly}</p>
+          )}
         </div>
 
         {note && (

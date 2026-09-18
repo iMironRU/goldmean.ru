@@ -30,6 +30,9 @@
       { "key": "evening", "label": "Вечер, 16:00–19:00" }
     ],
     "timeDefault": "day",
+    "storeLabel": "Где удобнее",
+    "storeWatchesOnly": "В ТЦ «Север» только часы и часовые аксессуары — украшения смотрим в салоне.",
+    "sentStore": "Магазин",
     "commentLabel": "Комментарий",
     "commentPlaceholder": "Модель, размер или вопрос — по желанию",
     "notePrefix": "Модель:",

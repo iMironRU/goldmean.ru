@@ -59,18 +59,22 @@ export function Chip({
   onClick,
   children,
   mono,
+  disabled,
 }: {
   active: boolean;
   onClick: () => void;
   children: ReactNode;
   mono?: boolean;
+  /** Недоступный вариант: виден, но не выбирается (магазин без украшений). */
+  disabled?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
+      disabled={disabled}
       aria-pressed={active}
-      className={`chip min-h-[44px] px-[16px] py-[12px] text-[13px] ${mono ? "font-mono" : ""}`}
+      className={`chip min-h-[44px] px-[16px] py-[12px] text-[13px] disabled:cursor-not-allowed disabled:opacity-40 ${mono ? "font-mono" : ""}`}
       style={
         active
           ? { background: "var(--ink)", borderColor: "var(--ink)", color: "var(--bg)" }

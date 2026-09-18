@@ -61,7 +61,7 @@ export function SiteHeader() {
               странице. Не удаляется, а гаснет, чтобы шапка не прыгала. */}
           <Link
             href={site.cta.href}
-            className="btn-primary btn-primary-nav hidden transition-opacity duration-200 desktop:inline-flex"
+            className="btn-primary hidden transition-opacity duration-200 desktop:inline-flex"
             style={{ opacity: covered ? 0 : 1, pointerEvents: covered ? "none" : undefined }}
             aria-hidden={covered}
             tabIndex={covered ? -1 : undefined}

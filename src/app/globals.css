@@ -165,16 +165,18 @@
     background: var(--cta);
     color: var(--bg);
     border: 0;
-    /* Поля по горизонтали — 20 px у ВСЕХ кнопок сайта, закрашенных и
-       обводочных. Своё px-* у отдельной кнопки не ставить: только py-*. */
-    padding: 16px 20px;
+    /* Размер у ВСЕХ кнопок сайта один: высота 48 px, поля по горизонтали
+       20 px — и у закрашенных, и у обводочных. Своих px-*, py-* и min-h-*
+       у отдельной кнопки не ставить. Высота задана минимумом, а не жёстко:
+       не влезет надпись в строку — кнопка вырастет, а не обрежет текст. */
+    padding: 0 20px;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     cursor: pointer;
     border-radius: var(--radius);
-    min-height: 44px;
+    min-height: 48px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -190,12 +192,6 @@
   .btn-primary-inv {
     background: var(--bg);
     color: var(--ink);
-  }
-
-  /* В шапке кнопка компактнее. */
-  .btn-primary-nav {
-    padding: 12px 20px;
-    min-height: 40px;
   }
 
   /* Вторичная / ссылка-действие. */

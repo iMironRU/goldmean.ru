@@ -30,7 +30,7 @@ export default function JewelryPage() {
         <div className="mt-[28px] flex flex-wrap gap-[8px]">
           <Link
             href="/diamonds"
-            className="inline-flex min-h-[44px] items-center rounded-[3px] border border-ink px-[20px] py-[10px] text-[12px] uppercase tracking-[.08em] text-ink"
+            className="inline-flex min-h-[48px] items-center rounded-[3px] border border-ink px-[20px] text-[12px] uppercase tracking-[.08em] text-ink"
           >
             О бриллиантах
           </Link>
@@ -38,7 +38,7 @@ export default function JewelryPage() {
             href={site.social.telegram}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-[44px] items-center rounded-[3px] border border-line2 px-[20px] py-[10px] text-[12px] uppercase tracking-[.08em] text-ink transition-colors hover:border-ink"
+            className="inline-flex min-h-[48px] items-center rounded-[3px] border border-line2 px-[20px] text-[12px] uppercase tracking-[.08em] text-ink transition-colors hover:border-ink"
           >
             Живой ассортимент в Telegram
           </a>

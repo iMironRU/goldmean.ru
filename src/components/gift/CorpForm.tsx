@@ -69,7 +69,7 @@ export function CorpForm() {
       <button
         type="button"
         onClick={() => setSent(true)}
-        className="btn-primary mt-[6px] min-h-[48px]"
+        className="btn-primary mt-[6px]"
       >
         {L.submit}
       </button>

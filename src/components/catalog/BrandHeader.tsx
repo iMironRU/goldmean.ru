@@ -79,7 +79,7 @@ export function BrandHeader({
                 : "@min-[550px]:grid-flow-col @min-[550px]:auto-cols-fr"
             }`}
           >
-            <Link href="/contacts" data-page-cta className="btn-primary py-[14px]">
+            <Link href="/contacts" data-page-cta className="btn-primary">
               {site.cta.label}
             </Link>
             {anchor && (
@@ -87,14 +87,14 @@ export function BrandHeader({
               // ему не нужен. Плавность даёт scroll-behavior в globals.css.
               <a
                 href={anchor.href}
-                className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-line2 px-[20px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-[3px] border border-line2 px-[20px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
               >
                 {anchor.label}
               </a>
             )}
             <Link
               href={base}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-[3px] border border-line2 px-[20px] py-[14px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-[3px] border border-line2 px-[20px] text-[12px] font-medium uppercase tracking-[.1em] text-ink transition-colors hover:border-ink"
             >
               {allLabel}
             </Link>

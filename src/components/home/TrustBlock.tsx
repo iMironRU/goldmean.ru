@@ -20,7 +20,7 @@ export function TrustBlock() {
                 href={site.social.telegram}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-[40px] items-center gap-[8px] rounded-[3px] border border-line2 px-[20px] py-[9px] text-[12px] text-ink"
+                className="inline-flex min-h-[48px] items-center gap-[8px] rounded-[3px] border border-line2 px-[20px] text-[12px] text-ink"
               >
                 <span className="h-[8px] w-[8px] rounded-full bg-ink" />
                 Telegram
@@ -29,7 +29,7 @@ export function TrustBlock() {
                 href={site.social.instagram}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-[40px] items-center gap-[8px] rounded-[3px] border border-line2 px-[20px] py-[9px] text-[12px] text-ink"
+                className="inline-flex min-h-[48px] items-center gap-[8px] rounded-[3px] border border-line2 px-[20px] text-[12px] text-ink"
               >
                 <span className="h-[8px] w-[8px] rounded-full border border-ink" />
                 Instagram

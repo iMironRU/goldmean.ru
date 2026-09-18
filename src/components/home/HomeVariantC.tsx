@@ -30,7 +30,7 @@ export function HomeVariantC() {
 
       <Link href="/watches" className="grid-auto border-b border-line">
         <div className="aspect-3/2 bg-cool">
-          <ImageSlot photo={v.watches.photo} tone="cool" />
+          <ImageSlot photo={v.watches.photo} src={v.watches.src} tone="cool" />
         </div>
         <div className="pad-x flex flex-col justify-center gap-[14px] py-[20px] desktop:py-[56px]">
           <div className="eyebrow text-muted">{v.watches.number}</div>
@@ -56,7 +56,7 @@ export function HomeVariantC() {
           </div>
         </div>
         <div className="aspect-3/2 order-1 bg-warm2 desktop:order-none">
-          <ImageSlot photo={v.jewelry.photo} tone="warm" />
+          <ImageSlot photo={v.jewelry.photo} src={v.jewelry.src} tone="warm" />
         </div>
       </Link>
     </>

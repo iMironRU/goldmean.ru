@@ -28,7 +28,7 @@ export function HomeVariantB() {
         ].map(({ href, card, tone, bg }) => (
           <Link key={href} href={href} className="block">
             <div className={`aspect-4/5 ${bg}`}>
-              <ImageSlot photo={card.photo} tone={tone} />
+              <ImageSlot photo={card.photo} src={card.src} tone={tone} />
             </div>
             <div className="mt-[14px] flex items-baseline justify-between gap-[16px] border-b border-ink pb-[12px]">
               <span className="h2-sec text-ink">{card.title}</span>

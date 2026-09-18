@@ -17,7 +17,7 @@ export function WhyInStore() {
         </Link>
       </div>
       <div className="aspect-4/3 bg-warm2">
-        <ImageSlot photo={v.photo} tone="warm" />
+        <ImageSlot photo={v.photo} src={v.src} tone="warm" />
       </div>
     </div>
   );

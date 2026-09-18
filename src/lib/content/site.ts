@@ -3,6 +3,7 @@ import homeJson from "../../../content/home.json";
 import previewJson from "../../../content/preview.json";
 import giftJson from "../../../content/gift.json";
 import aboutJson from "../../../content/about.json";
+import contactsJson from "../../../content/contacts.json";
 
 export type NavItem = { href: string; label: string };
 
@@ -34,3 +35,8 @@ export const gift: Gift = giftJson;
 
 export type About = typeof aboutJson;
 export const about: About = aboutJson;
+
+// ─── Контакты ────────────────────────────────────────────────────────────
+
+export type Contacts = typeof contactsJson;
+export const contacts: Contacts = contactsJson;

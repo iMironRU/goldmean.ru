@@ -54,7 +54,7 @@ export default async function WatchPage({ params }: { params: Promise<Params> })
   const d = watches.detail;
   const photos = photosFor(m.id);
   const note = `${m.brand} ${m.name} (${m.ref})`;
-  const bookHref = `/contacts?note=${encodeURIComponent(note)}`;
+  const bookHref = `/contacts?interest=watches&note=${encodeURIComponent(note)}`;
 
   return (
     <>

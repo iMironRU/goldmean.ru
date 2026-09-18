@@ -99,7 +99,7 @@ export default async function JewelrySlugPage({ params }: { params: Promise<Para
   const d = jewelry.detail;
   const itemBrand = brandByName(jewelry.brands, j.brand);
   const note = `${j.brand} — ${j.name} (арт. ${j.article})`;
-  const bookHref = `/contacts?note=${encodeURIComponent(note)}`;
+  const bookHref = `/contacts?interest=jewelry&note=${encodeURIComponent(note)}`;
 
   return (
     <>

@@ -2,6 +2,7 @@ import siteJson from "../../../content/site.json";
 import homeJson from "../../../content/home.json";
 import previewJson from "../../../content/preview.json";
 import giftJson from "../../../content/gift.json";
+import aboutJson from "../../../content/about.json";
 
 export type NavItem = { href: string; label: string };
 
@@ -28,3 +29,8 @@ export const HOME_VARIANT: HomeVariant = (
 
 export type Gift = typeof giftJson;
 export const gift: Gift = giftJson;
+
+// ─── О магазине ──────────────────────────────────────────────────────────
+
+export type About = typeof aboutJson;
+export const about: About = aboutJson;

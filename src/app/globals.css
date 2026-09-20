@@ -447,6 +447,35 @@
   .fade-up {
     animation: fadeUp 0.45s ease;
   }
+
+  /* Медленное «дыхание» фото в кнопках-фотографиях на главной (вариант A).
+     Анимируется САМА картинка, а не блок-ссылка: элемент с анимацией
+     трансформации становится содержащим блоком для position:fixed внутри
+     (см. правило про fade-up). Внутри <img> потомков нет — ловушка не
+     срабатывает.
+
+     Обрезку даёт .ken-burns (overflow: hidden): без неё увеличенное фото
+     вылезало бы за край блока. */
+  .ken-burns {
+    overflow: hidden;
+  }
+
+  .ken-burns img {
+    animation: kenBurns 28s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* Второе фото идёт со смещённой фазой: иначе оба блока дышат в такт и
+     движение бросается в глаза. */
+  .ken-burns-late img {
+    animation-delay: -14s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ken-burns img {
+      animation: none;
+    }
+  }
 }
 
 /* ─── Переключение вариантов главной (§3.1) ──────────────────────────────
@@ -465,6 +494,20 @@ html[data-home="a"] [data-home-variant="a"],
 html[data-home="b"] [data-home-variant="b"],
 html[data-home="c"] [data-home-variant="c"] {
   display: block;
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06) translate3d(-1.5%, -1%, 0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes fadeUp {

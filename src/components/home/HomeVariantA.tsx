@@ -25,7 +25,10 @@ export function HomeVariantA() {
         href="/watches"
         className="relative block h-[360px] bg-cool desktop:h-[620px]"
       >
-        <div className="absolute inset-0">
+        {/* Фото медленно приближается и уходит обратно — 28 секунд на цикл
+            (класс .ken-burns в globals.css). Движение на самой картинке,
+            обрезка — на обёртке. */}
+        <div className="ken-burns absolute inset-0">
           <ImageSlot photo={v.watches.photo} src={v.watches.src} tone="cool" />
         </div>
         <div
@@ -50,7 +53,7 @@ export function HomeVariantA() {
         href="/jewelry"
         className="relative block h-[360px] bg-warm2 desktop:h-[620px]"
       >
-        <div className="absolute inset-0">
+        <div className="ken-burns ken-burns-late absolute inset-0">
           <ImageSlot photo={v.jewelry.photo} src={v.jewelry.src} tone="warm" />
         </div>
         <div

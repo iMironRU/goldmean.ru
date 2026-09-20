@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 import { HOME_VARIANTS, preview, type HomeVariant } from "@/lib/content/site";
 import {
@@ -25,6 +25,8 @@ import {
 // Внутри iframe панель не рисуется — миниатюры на /preview показывают сам
 // макет, а не инструмент показа поверх него.
 export function PreviewBar() {
+  const router = useRouter();
+  const pathname = usePathname();
   const q = useSearchParams().get("home");
   const fromUrl: HomeVariant | null = (HOME_VARIANTS as readonly string[]).includes(
     q ?? "",
@@ -38,13 +40,17 @@ export function PreviewBar() {
     getPreviewServerSnapshot,
   );
 
-  // Адрес главнее хранилища: открыли ?home=c — значит показываем C и
-  // запоминаем его на остальные страницы.
+  // Адрес только ЗАПИСЫВАЕТ вариант в хранилище — при смене самого адреса.
+  // Сравнения с хранилищем здесь нет намеренно: иначе крестик не закрывал
+  // панель на главной. Он чистит хранилище, но ?home=a в адресе ещё остаётся
+  // на один рендер (чистка адреса асинхронная), и эффект писал вариант
+  // обратно. Теперь эффект на очистку хранилища не реагирует.
   useEffect(() => {
-    if (fromUrl && fromUrl !== stored) setPreviewVariant(fromUrl);
-  }, [fromUrl, stored]);
+    if (fromUrl) setPreviewVariant(fromUrl);
+  }, [fromUrl]);
 
-  const variant = fromUrl ?? (stored as HomeVariant | null);
+  // Источник правды — хранилище: крестик его чистит, и панель исчезает.
+  const variant = stored as HomeVariant | null;
 
   // Рендер здесь всегда клиентский (layout оборачивает в Suspense), window есть.
   const inIframe = typeof window !== "undefined" && window.self !== window.top;
@@ -94,9 +100,15 @@ export function PreviewBar() {
         </span>
       ) : null}
 
+      {/* Крестик чистит и хранилище, и адрес. Только хранилища мало: вариант
+          берётся сначала из ?home=, поэтому на главной с ?home=a панель тут
+          же возвращала себя из адреса, и крестик выглядел сломанным. */}
       <button
         type="button"
-        onClick={() => setPreviewVariant(null)}
+        onClick={() => {
+          setPreviewVariant(null);
+          if (q) router.replace(pathname, { scroll: false });
+        }}
         aria-label="Выйти из режима показа"
         title="Выйти из режима показа"
         className="ml-auto flex h-[28px] w-[28px] flex-none items-center justify-center rounded-[3px] border border-line2 bg-transparent text-[14px] text-muted transition-colors hover:border-ink hover:text-ink"

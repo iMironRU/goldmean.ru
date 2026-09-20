@@ -7,7 +7,8 @@
       "title": "Часы",
       "action": "Смотреть каталог →",
       "photo": "Фото: часы на запястье, студийный свет, холодные тона",
-      "src": "/home/watches-demo.jpg"
+      "src": "/home/watches-demo.jpg",
+      "video": "/home/watches-loop.mp4"
     },
     "jewelry": {
       "eyebrow": "Сертифицированные камни · смотр в салоне",
@@ -15,7 +16,8 @@
       "titleEm": "с бриллиантами",
       "action": "Смотреть изделия →",
       "photo": "Фото: макро бриллианта в кольце, тёплый свет",
-      "src": "/home/jewelry-demo.jpg"
+      "src": "/home/jewelry-demo.jpg",
+      "video": "/home/jewelry-loop.mp4"
     }
   },
   "b": {

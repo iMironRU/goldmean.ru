@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ImageSlot } from "@/components/ImageSlot";
+import { PhotoLoop } from "@/components/home/PhotoLoop";
 import { home } from "@/lib/content/site";
 
 // Затемнение под белым текстом — отдельным слоем на всё фото, а не на блоке
@@ -25,11 +25,15 @@ export function HomeVariantA() {
         href="/watches"
         className="relative block h-[360px] bg-cool desktop:h-[620px]"
       >
-        {/* Фото медленно приближается и уходит обратно — 28 секунд на цикл
-            (класс .ken-burns в globals.css). Движение на самой картинке,
-            обрезка — на обёртке. */}
+        {/* Приближение теперь внутри ролика, а не в CSS: .ken-burns здесь
+            оставлен ради обрезки (overflow: hidden). */}
         <div className="ken-burns absolute inset-0">
-          <ImageSlot photo={v.watches.photo} src={v.watches.src} tone="cool" />
+          <PhotoLoop
+            photo={v.watches.photo}
+            src={v.watches.src}
+            video={v.watches.video}
+            tone="cool"
+          />
         </div>
         <div
           aria-hidden
@@ -53,8 +57,13 @@ export function HomeVariantA() {
         href="/jewelry"
         className="relative block h-[360px] bg-warm2 desktop:h-[620px]"
       >
-        <div className="ken-burns ken-burns-late absolute inset-0">
-          <ImageSlot photo={v.jewelry.photo} src={v.jewelry.src} tone="warm" />
+        <div className="ken-burns absolute inset-0">
+          <PhotoLoop
+            photo={v.jewelry.photo}
+            src={v.jewelry.src}
+            video={v.jewelry.video}
+            tone="warm"
+          />
         </div>
         <div
           aria-hidden

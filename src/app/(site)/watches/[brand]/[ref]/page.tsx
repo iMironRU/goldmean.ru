@@ -15,11 +15,12 @@ import {
   brandByName,
   brandBySlug,
   formatPrice,
+  MECH_NAMES,
   modelByRef,
   refSlug,
   relatedModels,
-  watchSpecs,
   watches,
+  watchSpecs,
 } from "@/lib/content/catalog";
 
 type Params = { brand: string; ref: string };
@@ -40,8 +41,15 @@ export async function generateMetadata({
   const m = modelByRef(ref);
   if (!m) return {};
   return {
-    title: cityTitle(`${m.brand} ${m.name}`),
-    description: `${m.brand} ${m.name}, референс ${m.ref}. ${m.caliber}. Примерка в салоне «Золотая середина», Оренбург.`,
+    // «Часы» в начале — так люди и ищут: «часы Longines Master Collection».
+    // В описании — то, что человек проверяет глазами: механизм, размер,
+    // водозащита, стекло. Калибра там больше нет: он ничего не говорит тому,
+    // кто выбирает первые часы.
+    title: cityTitle(`Часы ${m.brand} ${m.name}`),
+    description:
+      `${m.brand} ${m.name}, реф. ${m.ref}: ${(MECH_NAMES[m.mechanism] ?? m.mechanism).toLowerCase()}, ` +
+      `${m.size} мм, водозащита ${m.waterResistance}, стекло ${m.glass.toLowerCase()}. ` +
+      `Примерка в салоне, Оренбург.`,
   };
 }
 

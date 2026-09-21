@@ -115,10 +115,21 @@ export function modelByRef(ref: string): WatchModel | undefined {
 // характеристики (content/spec-hints.json): две ссылки в одной строке —
 // на значении и в подсказке — спорили бы друг с другом.
 export function watchSpecs(m: WatchModel): { k: string; v: string }[] {
+  // Калибр показываем, только если он назван. У части кварцевых моделей в
+  // данных вместо индекса стоит просто «Кварцевый» — строка повторяла
+  // механизм слово в слово. «Кварцевый ETA» или «Кварцевый L178» остаются.
+  const caliber = m.caliber.trim();
+  const named = !/^(кварцевый|механический)$/i.test(caliber);
+
+  // Диаметр есть у круглого корпуса. У прямоугольных в данных два размера
+  // через «×» — там это «Размер корпуса» (подсказка «?» для него заведена
+  // в spec-hints.json под тем же названием).
+  const sizeKey = m.size.includes("×") ? "Размер корпуса" : "Диаметр";
+
   return [
     { k: "Механизм", v: MECH_NAMES[m.mechanism] ?? m.mechanism },
-    { k: "Калибр", v: m.caliber },
-    { k: "Диаметр", v: `${m.size} мм` },
+    ...(named ? [{ k: "Калибр", v: caliber }] : []),
+    { k: sizeKey, v: `${m.size} мм` },
     { k: "Корпус", v: m.case },
     { k: "Ремешок / браслет", v: m.strap },
     { k: "Водозащита", v: m.waterResistance },

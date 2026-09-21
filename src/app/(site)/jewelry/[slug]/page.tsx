@@ -66,7 +66,11 @@ export async function generateMetadata({
   if (j) {
     return {
       title: cityTitle(`${j.name} — ${j.brand}`),
-      description: `${j.name}, ${j.brand}, артикул ${j.article}. ${j.stone}. Просмотр в салоне «Золотая середина», Оренбург.`,
+      // Камень, металл и вес — то, по чему выбирают украшение. Цены нет:
+      // её на сайте нет ни у одного изделия.
+      description:
+        `${j.name}, ${j.brand}, арт. ${j.article}: ${j.stone}, ${j.metal}, ${j.weight}. ` +
+        `Цена по запросу, просмотр в салоне, Оренбург.`,
     };
   }
   return {};

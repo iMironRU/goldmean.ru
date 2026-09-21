@@ -92,7 +92,10 @@ def gemini(system, user):
            f"{GEMINI_MODEL}:generateContent?key={os.environ['GEMINI_API_KEY']}")
     body = {"systemInstruction": {"parts": [{"text": system}]},
             "contents": [{"role": "user", "parts": [{"text": user}]}],
-            "generationConfig": {"temperature": 0.4, "maxOutputTokens": 32000}}
+            "generationConfig": {"temperature": 0.4, "maxOutputTokens": 32000,
+                                 # просят JSON в промпте — просим и API: меньше битых ответов
+                                 **({"responseMimeType": "application/json"}
+                                    if "только JSON" in system else {})}}
     r = post(url, {"Content-Type": "application/json"}, body)
     parts = r["candidates"][0]["content"]["parts"]
     return "".join(p.get("text", "") for p in parts)

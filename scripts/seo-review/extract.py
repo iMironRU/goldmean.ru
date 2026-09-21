@@ -8,7 +8,7 @@ div-заголовки .h1-hero / .h2-sec), подписи над ними (.eye
 решил не трогать. Шапка, подвал и панели показа — тоже: они общие.
 
 Запуск (после `NEXT_PUBLIC_BASE_PATH= npm run build`):
-    python3 scripts/seo-review/extract.py > seo-review/corpus.json
+    python3 scripts/seo-review/extract.py [all|showcase|cards] > seo-review/corpus.json
 """
 import json
 import re
@@ -53,7 +53,10 @@ class Collector(HTMLParser):
             return
         if tag == "main":
             self._in_main = True
-        skip = tag in SKIP_TAGS or "prose-doc" in cls or "filters-sticky" in cls
+        # .hint-reveal — расшифровки «?»: они одинаковые на всех карточках и
+        # раздули бы корпус вчетверо. Их редактируют через spec-hints.json.
+        skip = (tag in SKIP_TAGS or "prose-doc" in cls or "filters-sticky" in cls
+                or "hint-reveal" in cls)
         variant = a.get("data-home-variant")
         if variant:
             self._variant.append(variant)
@@ -69,8 +72,17 @@ class Collector(HTMLParser):
                 kind = "заголовок-не-тег"
             elif "eyebrow" in cls.split():
                 kind = "подпись"
-            elif "font-display" in cls.split() and tag == "div":
+            elif "font-display" in cls.split() and tag in ("div", "a"):
                 kind = "подзаголовок"
+            elif "fact-num" in cls.split() or "text-[22px]" in cls.split():
+                kind = "цена"
+            elif "font-mono" in cls.split():
+                kind = "референс"
+            elif tag == "div" and "text-muted" in cls.split():
+                kind = "текст"
+            elif tag in ("dt", "dd", "td", "th"):
+                # строки характеристик в карточке товара
+                kind = "характеристика"
             elif tag in ("p", "blockquote"):
                 kind = "текст"
             if kind:
@@ -118,7 +130,10 @@ def page(path):
     # подряд идущие дубли (три варианта главной часто повторяют блоки)
     seen, blocks = set(), []
     for k, t in c.blocks:
-        if (k, t) in seen:
+        # Повторы схлопываем: три варианта главной часто дублируют блоки.
+        # Характеристики — исключение: у «Механизма» и «Калибра» значение
+        # бывает одинаковым («Кварцевый»), и без этого таблица разъезжалась.
+        if k != "характеристика" and (k, t) in seen:
             continue
         seen.add((k, t))
         if len(t) < 2:
@@ -143,10 +158,32 @@ def brand_pages():
     return out
 
 
+def card_pages():
+    """Карточки товара: /watches/<марка>/<референс>/ и /jewelry/<артикул>/."""
+    out = []
+    for d in sorted((OUT / "watches").iterdir()):
+        if not d.is_dir():
+            continue
+        for c in sorted(d.iterdir()):
+            if (c / "index.html").exists():
+                out.append(f"/watches/{d.name}/{c.name}/")
+    for d in sorted((OUT / "jewelry").iterdir()):
+        # у украшений марка и изделие в одном сегменте: карточку отличаем по
+        # тому, что на ней нет кнопки «Все производители»
+        idx = d / "index.html"
+        if idx.exists() and "Все производители" not in idx.read_text(encoding="utf-8"):
+            out.append(f"/jewelry/{d.name}/")
+    return out
+
+
 def main():
     if not (OUT / "index.html").exists():
         sys.exit("Нет out/ — сначала NEXT_PUBLIC_BASE_PATH= npm run build")
-    pages = [page(p) for p in STATIC + brand_pages()]
+    only = sys.argv[1] if len(sys.argv) > 1 else "all"
+    urls = {"all": STATIC + brand_pages() + card_pages(),
+            "showcase": STATIC + brand_pages(),
+            "cards": card_pages()}[only]
+    pages = [page(p) for p in urls]
     json.dump(pages, sys.stdout, ensure_ascii=False, indent=1)
 
 

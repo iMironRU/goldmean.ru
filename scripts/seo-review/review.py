@@ -99,20 +99,28 @@ def gemini(system, user):
 
 
 def batches(corpus):
-    main = [p for p in corpus if not p["адрес"].count("/") > 2 or p["адрес"].startswith("/info/")]
-    watches = [p for p in corpus if p["адрес"].startswith("/watches/") and p not in main]
-    jewelry = [p for p in corpus if p["адрес"].startswith("/jewelry/") and p not in main]
-    return {"основные": main, "часовые-марки": watches, "ювелирные-марки": jewelry}
+    import re as _re
+    card = _re.compile(r"^/watches/[^/]+/[^/]+/$|^/jewelry/[a-z]\d+/$")
+    cards_w = [p for p in corpus if p["адрес"].startswith("/watches/") and card.match(p["адрес"])]
+    cards_j = [p for p in corpus if p["адрес"].startswith("/jewelry/") and card.match(p["адрес"])]
+    rest = [p for p in corpus if p not in cards_w and p not in cards_j]
+    main = [p for p in rest if p["адрес"].count("/") <= 2 or p["адрес"].startswith("/info/")]
+    watches = [p for p in rest if p["адрес"].startswith("/watches/") and p not in main]
+    jewelry = [p for p in rest if p["адрес"].startswith("/jewelry/") and p not in main]
+    out = {"основные": main, "часовые-марки": watches, "ювелирные-марки": jewelry,
+           "карточки-часов": cards_w, "карточки-украшений": cards_j}
+    return {k: v for k, v in out.items() if v}
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--env", type=Path, default=DEFAULT_ENV)
-    ap.add_argument("--only", help="одна пачка: основные | часовые-марки | ювелирные-марки")
+    ap.add_argument("--corpus", default="seo-review/corpus.json")
+    ap.add_argument("--only", help="одна пачка: основные | часовые-марки | ювелирные-марки | карточки-часов | карточки-украшений")
     args = ap.parse_args()
     load_env(args.env)
 
-    corpus = json.loads((ROOT / "seo-review/corpus.json").read_text())
+    corpus = json.loads((ROOT / args.corpus).read_text())
     facts = (HERE / "facts.md").read_text()
     common = (PROMPTS / "common.md").read_text()
     out = ROOT / "seo-review" / date.today().isoformat()

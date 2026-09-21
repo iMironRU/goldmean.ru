@@ -14,6 +14,7 @@ import { TelegramFeed } from "@/components/catalog/TelegramFeed";
 import { ImageSlot } from "@/components/ImageSlot";
 import { getBrandArticle } from "@/lib/content/markdown-page";
 import { site } from "@/lib/content/site";
+import { cityTitle } from "@/lib/seo";
 import {
   brandByName,
   brandBySlug,
@@ -64,7 +65,7 @@ export async function generateMetadata({
   const j = jewelry.items.find((x) => x.id === slug);
   if (j) {
     return {
-      title: `${j.name} — ${j.brand}`,
+      title: cityTitle(`${j.name} — ${j.brand}`),
       description: `${j.name}, ${j.brand}, артикул ${j.article}. ${j.stone}. Просмотр в салоне «Золотая середина», Оренбург.`,
     };
   }

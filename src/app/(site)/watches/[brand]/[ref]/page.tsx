@@ -10,6 +10,7 @@ import { ProductGallery } from "@/components/catalog/ProductGallery";
 import { ImageSlot } from "@/components/ImageSlot";
 import { photosFor } from "@/lib/content/photos";
 import { site } from "@/lib/content/site";
+import { cityTitle } from "@/lib/seo";
 import {
   brandByName,
   brandBySlug,
@@ -39,7 +40,7 @@ export async function generateMetadata({
   const m = modelByRef(ref);
   if (!m) return {};
   return {
-    title: `${m.brand} ${m.name}`,
+    title: cityTitle(`${m.brand} ${m.name}`),
     description: `${m.brand} ${m.name}, референс ${m.ref}. ${m.caliber}. Примерка в салоне «Золотая середина», Оренбург.`,
   };
 }

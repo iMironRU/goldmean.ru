@@ -41,6 +41,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--env", type=Path, default=review.DEFAULT_ENV)
     ap.add_argument("--slots", default="scripts/seo-review/slots-home.json")
+    ap.add_argument("--name", default="home", help="имя отчёта: copy-<name>.md")
     args = ap.parse_args()
     review.load_env(args.env)
 
@@ -97,10 +98,10 @@ def main():
     print("покупатель: готово", flush=True)
 
     result = {"slots": slots, "items": items, "flagged": flagged, "picks": picks}
-    (out / "copy-home.json").write_text(json.dumps(result, ensure_ascii=False, indent=1))
+    (out / f"copy-{args.name}.json").write_text(json.dumps(result, ensure_ascii=False, indent=1))
 
     # Читаемый отчёт
-    lines = ["# Варианты для главной — сырой отчёт", ""]
+    lines = [f"# Варианты: {args.name} — сырой отчёт", ""]
     for s in slots:
         sid = s["id"]
         lines += [f"## {sid}", "", f"**Сейчас:** " + " · ".join(f"{k}: «{t}»" for k, t in s["части"].items()), ""]
@@ -118,8 +119,8 @@ def main():
             parts = " · ".join(f"{k}: «{x}»" for k, x in v["части"].items())
             lines.append(f"- {v['key']} ({v['author']}): {parts}{mark}{fake}")
         lines += ["", "</details>", ""]
-    (out / "copy-home.md").write_text("\n".join(lines))
-    print(f"Отчёт: {(out / 'copy-home.md').relative_to(ROOT)}")
+    (out / f"copy-{args.name}.md").write_text("\n".join(lines))
+    print(f"Отчёт: {(out / f'copy-{args.name}.md').relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

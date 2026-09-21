@@ -4,6 +4,7 @@ import previewJson from "../../../content/preview.json";
 import giftJson from "../../../content/gift.json";
 import aboutJson from "../../../content/about.json";
 import contactsJson from "../../../content/contacts.json";
+import whyJson from "../../../content/why.json";
 
 export type NavItem = { href: string; label: string };
 
@@ -40,3 +41,8 @@ export const about: About = aboutJson;
 
 export type Contacts = typeof contactsJson;
 export const contacts: Contacts = contactsJson;
+
+// ─── Почему в салоне ─────────────────────────────────────────────────────
+
+export type Why = typeof whyJson;
+export const why: Why = whyJson;

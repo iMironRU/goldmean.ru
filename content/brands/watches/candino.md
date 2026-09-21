@@ -2,8 +2,8 @@
 brand: Candino
 catalog_url: https://goldmean.ru/shop/candino/
 brand_url: ""
-seo_title: "Часы Candino — швейцарские часы с 1947 года | Золотая середина"
-seo_description: "Швейцарские часы Candino из Хербетсвиля: Elegance, Titanium, Classic Timeless, Sport Chronos, Automatic. Собственное производство, Festina Group, доступные цены."
+seo_title: "Часы Candino в Оренбурге — с 1947 года · Золотая середина"
+seo_description: "Часы Candino в Оренбурге: марка из Хербетсвиля, собственное производство Festina Group. Коллекции Elegance, Titanium, Sport Chronos. Примерка в салоне."
 h1: "Часы Candino"
 ---
 

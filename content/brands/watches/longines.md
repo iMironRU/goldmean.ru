@@ -2,8 +2,8 @@
 brand: Longines
 catalog_url: https://goldmean.ru/shop/longines/
 brand_url: https://goldmean.ru/brand/longines
-seo_title: "Часы Longines — купить оригинальные швейцарские часы | Золотая середина"
-seo_description: "Швейцарские часы Longines: Conquest, HydroConquest, La Grande Classique, Présence и другие коллекции. История марки с 1832 года, подбор модели, доставка."
+seo_title: "Часы Longines в Оренбурге — с 1832 года · Золотая середина"
+seo_description: "Часы Longines в Оренбурге: история с 1832 года. Conquest, HydroConquest, La Grande Classique, Présence. Примерка и подбор модели в салоне."
 h1: "Часы Longines"
 ---
 

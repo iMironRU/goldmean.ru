@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PhotoLoop } from "@/components/home/PhotoLoop";
+import { watches } from "@/lib/content/catalog";
 import { home } from "@/lib/content/site";
 
 // Затемнение под белым текстом — отдельным слоем на всё фото, а не на блоке
@@ -18,6 +19,9 @@ const SCRIM = (rgb: string) =>
 // решение «часы или украшения» принимается сразу (§3.1).
 export function HomeVariantA() {
   const v = home.a;
+  // Число марок берём из каталога: в тексте оно устаревало — на главной
+  // оставалось «13», когда марок стало 14.
+  const eyebrow = v.watches.eyebrow.replace("{brands}", String(watches.brands.length));
 
   return (
     <div className="grid-auto gap-px bg-line">
@@ -42,11 +46,11 @@ export function HomeVariantA() {
         />
         <div className="pad-x pointer-events-none absolute inset-x-0 bottom-0 py-[20px] desktop:py-[56px]">
           <div className="eyebrow mb-[10px] text-[#f2efe9]">
-            {v.watches.eyebrow}
+            {eyebrow}
           </div>
-          <div className="h1-hero text-[#faf9f7]" style={{ lineHeight: 1 }}>
+          <h2 className="h1-hero text-[#faf9f7]" style={{ lineHeight: 1 }}>
             {v.watches.title}
-          </div>
+          </h2>
           <div className="mt-[16px] inline-block border-b border-[rgba(250,249,247,.6)] pb-[4px] text-[13px] tracking-[.06em] text-[#faf9f7]">
             {v.watches.action}
           </div>
@@ -74,11 +78,11 @@ export function HomeVariantA() {
           <div className="eyebrow mb-[10px] text-[#f2efe9]">
             {v.jewelry.eyebrow}
           </div>
-          <div className="h1-hero text-[#faf9f7]" style={{ lineHeight: 1 }}>
+          <h2 className="h1-hero text-[#faf9f7]" style={{ lineHeight: 1 }}>
             {v.jewelry.title}
             <br />
             <em className="font-normal">{v.jewelry.titleEm}</em>
-          </div>
+          </h2>
           <div className="mt-[16px] inline-block border-b border-[rgba(250,249,247,.6)] pb-[4px] text-[13px] tracking-[.06em] text-[#faf9f7]">
             {v.jewelry.action}
           </div>

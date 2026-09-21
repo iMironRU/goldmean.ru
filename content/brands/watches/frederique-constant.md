@@ -2,8 +2,8 @@
 brand: Frederique Constant
 catalog_url: https://goldmean.ru/shop/frederique-constant/
 brand_url: ""
-seo_title: "Часы Frederique Constant — женевская мануфактура | Золотая середина"
-seo_description: "Швейцарские часы Frederique Constant: Classics, Slimline, Highlife, Manufacture. Женевская марка с 1988 года, собственные калибры, Heart Beat и Worldtimer."
+seo_title: "Часы Frederique Constant в Оренбурге · Золотая середина"
+seo_description: "Часы Frederique Constant в Оренбурге: женевская марка с 1988 года, собственные калибры. Коллекции Classics, Slimline, Highlife. Примерка в салоне."
 h1: "Часы Frederique Constant"
 ---
 

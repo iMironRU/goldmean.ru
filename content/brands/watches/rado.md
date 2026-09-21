@@ -2,8 +2,8 @@
 brand: Rado
 catalog_url: https://goldmean.ru/shop/rado/
 brand_url: https://goldmean.ru/brand/rado
-seo_title: "Часы Rado — керамические швейцарские часы | Золотая середина"
-seo_description: "Швейцарские часы Rado из высокотехнологичной керамики: True, Centrix, Captain Cook, DiaStar и другие коллекции. История марки «мастера материалов», подбор модели."
+seo_title: "Часы Rado в Оренбурге — керамика · Золотая середина"
+seo_description: "Часы Rado в Оренбурге: высокотехнологичная керамика, устойчивая к царапинам. True, Centrix, Captain Cook, DiaStar. Примерка в салоне."
 h1: "Часы Rado"
 ---
 

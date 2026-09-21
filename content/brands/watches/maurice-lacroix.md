@@ -2,8 +2,8 @@
 brand: Maurice Lacroix
 catalog_url: https://goldmean.ru/shop/maurice-lacroix/
 brand_url: ""
-seo_title: "Часы Maurice Lacroix — Aikon, Pontos, Masterpiece | Золотая середина"
-seo_description: "Швейцарские часы Maurice Lacroix: Aikon с интегрированным браслетом, Eliros, Pontos, Masterpiece. Мануфактура в Санлежье, собственные калибры. Подбор модели."
+seo_title: "Часы Maurice Lacroix в Оренбурге — Aikon · Золотая середина"
+seo_description: "Часы Maurice Lacroix в Оренбурге: Aikon с интегрированным браслетом, Eliros, Pontos, Masterpiece. Мануфактура в Санлежье. Примерка в салоне."
 h1: "Часы Maurice Lacroix"
 ---
 

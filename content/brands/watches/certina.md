@@ -2,8 +2,8 @@
 brand: Certina
 catalog_url: https://goldmean.ru/shop/certina/
 brand_url: https://goldmean.ru/brand/certina
-seo_title: "Часы Certina — швейцарские часы с концепцией DS | Золотая середина"
-seo_description: "Часы Certina: DS Action, DS PH200M, DS-8 и другие коллекции. Марка из Гренхена с 1888 года, концепция Double Security, механика Powermatic 80 и кварц Precidrive."
+seo_title: "Часы Certina в Оренбурге — концепция DS · Золотая середина"
+seo_description: "Часы Certina в Оренбурге: концепция Double Security. Коллекции DS Action, DS PH200M, DS-8, механика Powermatic 80. Примерка в салоне."
 h1: "Часы Certina"
 ---
 

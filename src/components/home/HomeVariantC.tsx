@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
-import { home, site } from "@/lib/content/site";
+import { watches } from "@/lib/content/catalog";
+import { home, HOME_VARIANT, site } from "@/lib/content/site";
+import { numberWord } from "@/lib/ru-number";
 
 // Вариант «c» — витрина. Тёмный блок-манифест, ниже две широкие секции-полосы
 // 3:2 с нумерацией 01/02 (§3.1).
@@ -9,12 +11,21 @@ import { home, site } from "@/lib/content/site";
 // перед текстом (§11).
 export function HomeVariantC() {
   const v = home.c;
+  // «…и ещё десять марок» — остаток от четырёх названных, прописью и из
+  // каталога: в тексте стояло «девять», а марок уже четырнадцать.
+  // H1 — только у варианта по умолчанию (см. HomeVariantB).
+  const Title = HOME_VARIANT === "c" ? "h1" : "div";
+
+  const watchesTitle = v.watches.title.replace(
+    "{rest}",
+    numberWord(watches.brands.length - 4),
+  );
 
   return (
     <>
       <div className="pad-x pad-y bg-ink text-bg">
         <div className="eyebrow mb-[20px] opacity-60">{v.eyebrow}</div>
-        <h1 className="h1-hero max-w-[820px]">{v.title}</h1>
+        <Title className="h1-hero max-w-[820px]">{v.title}</Title>
         <div className="mt-[28px] flex flex-wrap items-center gap-[12px]">
           <Link href={site.cta.href} data-page-cta className="btn-primary btn-primary-inv">
             {site.cta.label}
@@ -34,7 +45,7 @@ export function HomeVariantC() {
         </div>
         <div className="pad-x flex flex-col justify-center gap-[14px] py-[20px] desktop:py-[56px]">
           <div className="eyebrow text-muted">{v.watches.number}</div>
-          <div className="h2-sec text-ink">{v.watches.title}</div>
+          <div className="h2-sec text-ink">{watchesTitle}</div>
           <div className="max-w-[420px] text-[14px] leading-[1.6] text-muted">
             {v.watches.text}
           </div>

@@ -2,8 +2,8 @@
 brand: Hamilton
 catalog_url: https://goldmean.ru/shop/hamilton/
 brand_url: https://goldmean.ru/brand/hamilton
-seo_title: "Часы Hamilton — купить швейцарские часы с американскими корнями | Золотая середина"
-seo_description: "Часы Hamilton: Khaki Field, Khaki Aviation, Jazzmaster, Ventura. Американская история с 1892 года и швейцарское производство. Подбор модели и доставка."
+seo_title: "Часы Hamilton в Оренбурге — история США · Золотая середина"
+seo_description: "Часы Hamilton в Оренбурге: американская история с 1892 года и швейцарское производство. Khaki Field, Jazzmaster, Ventura. Примерка в салоне."
 h1: "Часы Hamilton"
 ---
 

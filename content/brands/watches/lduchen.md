@@ -2,8 +2,8 @@
 brand: L'Duchen
 catalog_url: https://goldmean.ru/shop/lduchen/
 brand_url: ""
-seo_title: "Часы L'Duchen — швейцарские часы из Санлежье | Золотая середина"
-seo_description: "Швейцарские часы L'Duchen: классический дизайн, механика и кварц, коллекция Spacematic с механизмами Soprod. Марка из кантона Юра. Мужские и женские модели."
+seo_title: "Часы L’Duchen в Оренбурге — классика из Юры · Золотая середина"
+seo_description: "Часы L’Duchen в Оренбурге: классический швейцарский дизайн из кантона Юра. Механика и кварц, коллекция Spacematic. Примерка в салоне."
 h1: "Часы L'Duchen"
 ---
 

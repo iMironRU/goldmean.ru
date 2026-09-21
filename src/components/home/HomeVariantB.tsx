@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { ImageSlot } from "@/components/ImageSlot";
-import { home, site } from "@/lib/content/site";
+import { home, HOME_VARIANT, site } from "@/lib/content/site";
 
 // Вариант «b» — редакционный. Крупный текстовый заголовок и CTA, ниже две
 // карточки 4:5 с подписями (§3.1).
 export function HomeVariantB() {
   const v = home.b;
+  // H1 — только у варианта по умолчанию: в HTML лежат все три первых
+  // экрана, и поиск видел бы три H1 на одной странице.
+  const Title = HOME_VARIANT === "b" ? "h1" : "div";
 
   return (
     <>
       <div className="pad-x pad-t pb-[24px]">
-        <h1 className="h1-hero max-w-[900px]">{v.title}</h1>
+        <Title className="h1-hero max-w-[900px]">{v.title}</Title>
         <div className="mt-[28px] flex flex-wrap items-center gap-[12px]">
           <Link href={site.cta.href} data-page-cta className="btn-primary">
             {site.cta.label}

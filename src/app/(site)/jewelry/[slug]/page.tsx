@@ -53,6 +53,11 @@ export async function generateMetadata({
         description: article.seoDescription || b.text,
       };
     }
+    // У марок без статьи заголовок и описание лежат в каталоге: в них есть
+    // город, без которого страница не отвечает на «<марка> Оренбург».
+    if (b.seoTitle) {
+      return { title: { absolute: b.seoTitle }, description: b.seoDescription || b.text };
+    }
     return { title: `${b.name} — украшения с бриллиантами`, description: b.text };
   }
 

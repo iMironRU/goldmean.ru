@@ -2,8 +2,8 @@
 brand: Jaguar
 catalog_url: https://goldmean.ru/shop/jaguar/
 brand_url: ""
-seo_title: "Швейцарские часы Jaguar — купить | Золотая середина"
-seo_description: "Часы Jaguar — швейцарская марка с 1938 года в составе Festina Group: Acamar, Executive, Connected, Woman, Special Edition. Кварц, автоматика и гибридные смарт-часы."
+seo_title: "Часы Jaguar в Оренбурге — Festina Group · Золотая середина"
+seo_description: "Часы Jaguar в Оренбурге: швейцарская марка Festina Group с 1938 года. Acamar, Executive, Connected, Woman; кварц и автоматика. Примерка в салоне."
 h1: "Часы Jaguar"
 ---
 

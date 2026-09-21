@@ -2,8 +2,8 @@
 brand: Swiss Alpine Military
 catalog_url: https://goldmean.ru/shop/swiss-alpine-millitary/
 brand_url: ""
-seo_title: "Часы Swiss Alpine Military by Grovana — купить | Золотая середина"
-seo_description: "Swiss Alpine Military by Grovana — швейцарские часы в военном и спортивном стиле: хронографы, дайверы, пилотские модели. Фабрика Grovana работает с 1924 года."
+seo_title: "Часы Swiss Alpine Military в Оренбурге · Золотая середина"
+seo_description: "Swiss Alpine Military by Grovana в Оренбурге: военный и спортивный стиль. Хронографы, дайверские и пилотские модели. Примерка в салоне."
 h1: "Часы Swiss Alpine Military"
 ---
 

@@ -2,8 +2,8 @@
 brand: Raymond Weil
 catalog_url: https://goldmean.ru/shop/raymond-weil/
 brand_url: ""
-seo_title: "Часы Raymond Weil — семейная женевская марка | Золотая середина"
-seo_description: "Швейцарские часы Raymond Weil: Toccata, Tango, Maestro, Freelancer, Millesime. Независимая семейная марка из Женевы с 1976 года, коллекции с музыкальными названиями."
+seo_title: "Часы Raymond Weil в Оренбурге — Женева · Золотая середина"
+seo_description: "Часы Raymond Weil в Оренбурге: независимая семейная марка из Женевы с 1976 года. Toccata, Tango, Maestro, Freelancer. Примерка в салоне."
 h1: "Часы Raymond Weil"
 ---
 

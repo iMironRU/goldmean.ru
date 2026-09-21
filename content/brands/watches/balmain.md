@@ -2,8 +2,8 @@
 brand: Balmain
 catalog_url: https://goldmean.ru/shop/balmain/
 brand_url: https://goldmean.ru/brand/balmanwatches
-seo_title: "Часы Balmain — швейцарские часы с французским шиком | Золотая середина"
-seo_description: "Часы Balmain: парижская мода в швейцарском исполнении Swatch Group. Коллекции Balmainia, Madrigal, Beleganza, Laelia, Classic R. Женские и мужские модели."
+seo_title: "Часы Balmain в Оренбурге — узор арабеск · Золотая середина"
+seo_description: "Часы Balmain в Оренбурге: парижская мода в швейцарском исполнении Swatch Group. Коллекции Balmainia, Madrigal, Beleganza. Примерка в салоне."
 h1: "Часы Balmain"
 ---
 

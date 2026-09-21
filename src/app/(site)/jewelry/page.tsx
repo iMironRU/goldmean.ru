@@ -8,8 +8,8 @@ import { JEWEL_FORMS, jewelry } from "@/lib/content/catalog";
 import { site } from "@/lib/content/site";
 
 export const metadata: Metadata = {
-  title: `${jewelry.title} ${jewelry.titleEm}`,
-  description: jewelry.lead,
+  title: jewelry.seoTitle,
+  description: jewelry.seoDescription,
 };
 
 export default function JewelryPage() {

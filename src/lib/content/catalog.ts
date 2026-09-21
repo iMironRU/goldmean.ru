@@ -12,6 +12,10 @@ export type Brand = {
   genitive?: string;
   /** Путь к логотипу в public/. Нет файла — слот остаётся плейсхолдером. */
   logo?: string;
+  /** Заголовок и описание для поиска — у марок без статьи в content/brands.
+   *  С городом: без него страница не отвечает на «<марка> Оренбург». */
+  seoTitle?: string;
+  seoDescription?: string;
 };
 
 export type WatchModel = (typeof watchesJson.models)[number];

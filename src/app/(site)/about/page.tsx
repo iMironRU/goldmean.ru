@@ -5,8 +5,9 @@ import { watches } from "@/lib/content/catalog";
 import { about, site } from "@/lib/content/site";
 
 export const metadata: Metadata = {
-  title: "О магазине",
-  description: about.history.lead,
+  title: "О салоне в Оренбурге",
+  description:
+    "Швейцарские часы и украшения с бриллиантами в центре Оренбурга. 26 лет работы, официальный дилер, собственная мастерская и сервис после покупки.",
 };
 
 // «О магазине» (§4 хендоффа): история, документы, отзывы, лента Telegram.

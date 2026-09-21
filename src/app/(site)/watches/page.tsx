@@ -8,8 +8,8 @@ import { coverFor } from "@/lib/content/photos";
 import { WATCH_FORMS, watches } from "@/lib/content/catalog";
 
 export const metadata: Metadata = {
-  title: watches.title,
-  description: watches.lead,
+  title: watches.seoTitle,
+  description: watches.seoDescription,
 };
 
 export default function WatchesPage() {

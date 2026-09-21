@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import { HomeVariantScript } from "@/components/home/HomeVariantScript";
+import { watches } from "@/lib/content/catalog";
 import { site } from "@/lib/content/site";
 import { METRIKA_COUNTER_ID, METRIKA_INLINE_SCRIPT } from "@/lib/metrika";
 
@@ -34,11 +35,12 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   metadataBase: new URL("https://goldmean.ru"),
   title: {
-    default: `${site.name} — швейцарские часы и украшения с бриллиантами в Оренбурге`,
+    default: `Часы и украшения с бриллиантами в Оренбурге · ${site.name}`,
     template: `%s · ${site.name}`,
   },
+  // Число марок — из каталога: в тексте оно устаревало (было «13» при 14).
   description:
-    "Салон «Золотая середина», Оренбург, ул. Советская, 31. Швейцарские часы 13 марок и украшения с бриллиантами. Примерка и консультация в салоне.",
+    `Швейцарские часы ${watches.brands.length} марок и украшения с бриллиантами. Оренбург, ул. Советская, 31. Примерка и консультация в салоне, официальный дилер.`,
 };
 
 export default function RootLayout({

@@ -2,8 +2,8 @@
 brand: Cover
 catalog_url: https://goldmean.ru/shop/cover/
 brand_url: ""
-seo_title: "Часы Cover — швейцарские часы из Золотурна | Золотая середина"
-seo_description: "Швейцарские часы Cover от семейной компании Chrono AG (Золотурн): стильный дизайн, качественные материалы и доступные цены. Коллекции Trend и Classic."
+seo_title: "Часы Cover в Оренбурге — тонкие корпуса · Золотая середина"
+seo_description: "Часы Cover в Оренбурге: марка семейной Chrono AG из Золотурна. Тонкие корпуса, коллекции Trend и Classic. Примерка и консультация в салоне."
 h1: "Часы Cover"
 ---
 

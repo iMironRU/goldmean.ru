@@ -2,8 +2,8 @@
 brand: Tissot
 catalog_url: https://goldmean.ru/shop/tissot/
 brand_url: https://goldmean.ru/brand/tissot
-seo_title: "Часы Tissot — купить швейцарские часы Tissot | Золотая середина"
-seo_description: "Швейцарские часы Tissot: PRX, Seastar, Gentleman, Le Locle, Everytime, T-Touch. Марка из Ле-Локля с 1853 года. Кварц и механика Powermatic 80, подбор модели."
+seo_title: "Часы Tissot в Оренбурге — PRX, Seastar · Золотая середина"
+seo_description: "Часы Tissot в Оренбурге: PRX, Seastar, Gentleman, Le Locle, T-Touch. Марка из Ле-Локля с 1853 года. Примерка в салоне."
 h1: "Часы Tissot"
 ---
 

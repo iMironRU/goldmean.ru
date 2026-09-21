@@ -1,8 +1,8 @@
 ---
 brand: MIUZ Diamonds
 brand_site: https://miuz.ru
-seo_title: "MIUZ Diamonds (Московский ювелирный завод) — украшения с бриллиантами | Золотая середина"
-seo_description: "Украшения MIUZ Diamonds — бывший Московский ювелирный завод, история с 1920 года. Золото с российскими бриллиантами, коллекции Royal Diamond и Royal Fancy Diamond."
+seo_title: "Украшения MIUZ Diamonds в Оренбурге · Золотая середина"
+seo_description: "MIUZ Diamonds в Оренбурге — бывший Московский ювелирный завод с 1920 года. Золото с бриллиантами, коллекции Royal Diamond. Примерка в салоне."
 h1: "Украшения MIUZ Diamonds"
 ---
 

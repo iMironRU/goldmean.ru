@@ -10,8 +10,8 @@ import { ImageSlot } from "@/components/ImageSlot";
 import { gift } from "@/lib/content/site";
 
 export const metadata: Metadata = {
-  title: "Подарочный сертификат",
-  description: gift.lead,
+  title: gift.seoTitle,
+  description: gift.seoDescription,
 };
 
 export default function GiftPage() {

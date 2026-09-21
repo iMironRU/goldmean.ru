@@ -16,3 +16,6 @@ InBox/_doc/
 # медиабиблиотеки бренда (§12 п.5 хендоффа).
 public/preview-photos/
 content/photos.local.json
+
+# Кэш Python от скриптов прогона редакторов
+__pycache__/

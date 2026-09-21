@@ -48,8 +48,12 @@ export function HomeVariantA() {
           <div className="eyebrow mb-[10px] text-[#f2efe9]">
             {eyebrow}
           </div>
+          {/* Заголовок — приглашение («Найдите свои»), а не название раздела.
+              Скрытое слово договаривает его для диктора и поиска: иначе при
+              переходе по заголовкам звучали бы два почти одинаковых. */}
           <h2 className="h1-hero text-[#faf9f7]" style={{ lineHeight: 1 }}>
             {v.watches.title}
+            <span className="sr-only"> {v.watches.titleSr}</span>
           </h2>
           <div className="mt-[16px] inline-block border-b border-[rgba(250,249,247,.6)] pb-[4px] text-[13px] tracking-[.06em] text-[#faf9f7]">
             {v.watches.action}
@@ -80,8 +84,13 @@ export function HomeVariantA() {
           </div>
           <h2 className="h1-hero text-[#faf9f7]" style={{ lineHeight: 1 }}>
             {v.jewelry.title}
-            <br />
-            <em className="font-normal">{v.jewelry.titleEm}</em>
+            <span className="sr-only"> {v.jewelry.titleSr}</span>
+            {v.jewelry.titleEm && (
+              <>
+                <br />
+                <em className="font-normal">{v.jewelry.titleEm}</em>
+              </>
+            )}
           </h2>
           <div className="mt-[16px] inline-block border-b border-[rgba(250,249,247,.6)] pb-[4px] text-[13px] tracking-[.06em] text-[#faf9f7]">
             {v.jewelry.action}

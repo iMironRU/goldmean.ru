@@ -1,10 +1,12 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
 
-/* Шрифты подключает next/font (src/app/layout.tsx) — он сам хостит файлы и
-   не ходит на fonts.googleapis.com на каждой загрузке. Имена семейств он
-   генерирует, поэтому подменяем ими значения из tokens.css; порядок фолбэков
-   сохранён ровно тот, что в токенах.
+/* Шрифты self-hosted через @fontsource (src/app/layout.tsx): те же файлы
+   woff2 и unicode-range, что скачивал next/font/google, но без сетевой
+   зависимости на сборке (next/font/google флейково ломал Turbopack — см.
+   vercel/next.js#99114). @fontsource объявляет семейства литеральными
+   именами «Manrope» и «Cormorant Garamond», поэтому значения переменных
+   задаём здесь; порядок фолбэков сохранён ровно тот, что в токенах.
 
    В токенах для текста указан Figtree — но у него в Google Fonts нет
    кириллицы (только latin/latin-ext), а сайт русский целиком: весь текст
@@ -13,6 +15,8 @@
    характера, с кириллицей и теми же начертаниями. Решение согласовано;
    tokens.css оставлен нетронутым, он копия файла из design-ref. */
 :root {
+  --font-cormorant: "Cormorant Garamond";
+  --font-manrope: "Manrope";
   --font-display: var(--font-cormorant), Georgia, serif;
   --font-text: var(--font-manrope), system-ui, sans-serif;
 }
